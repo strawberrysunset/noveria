@@ -1,25 +1,22 @@
-import React, { createContext } from 'react' 
-import { useCoins, useExchangeRates, usePortfolio } from '.'
+import React, { createContext, useEffect } from 'react' 
+import { useInterval, useUserProfile, useAPI } from '../hooks'
 
 export const GlobalContext = createContext();
 
 export const GlobalContextProvider = ({ children }) => {
     
-    const coins = useCoins();
-    const exchangeRates = useExchangeRates();
-    const portfolio = usePortfolio();
+    const API = useAPI();
+    const userProfile = useUserProfile();
+    
+    const { changeInterval } = useInterval({ action : API.refresh, interval : userProfile.refreshInterval });
 
-    const api = {
-        coins,
-        exchangeRates,
-        refresh : () => {
-            coins.refresh();
-            exchangeRates.refresh();
-        }
-    }
+    useEffect(() => {
+        changeInterval(userProfile.refreshInterval)
+    }, [userProfile.refreshInterval])
+    
 
     return (    
-        <GlobalContext.Provider value={{ portfolio, api }}>
+        <GlobalContext.Provider value={{ API, user }}>
             { children }
         </GlobalContext.Provider>
     )
