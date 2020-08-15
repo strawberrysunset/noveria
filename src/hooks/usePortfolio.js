@@ -1,30 +1,38 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export const usePortfolio = () => {
 
-    const [portfolio, setPortfolio] = useState([]);
+    const [accounts, setAccounts] = useState([])
+    const [currentAccount, setCurrentAccount] = useState('MyAccount')
 
-    return { 
-
-        // State values.
-        state : portfolio, 
-        count : portfolio.length,
-        total : portfolio.reduce((asset, total) => total += asset.value, 0).toFixed(2),
-
-        // State mutation methods.
-        addAsset(asset) {
-            setPortfolio([...portfolio, asset])
-        },
-        removeAsset (targetId) { 
-            const filtered = portfolio.filter(({ Id }) => Id !== targetId);
-            setPortfolio(filtered);
-        },
-        clearAll() {
-            setPortfolio([])
-        }
-    }
-}
-
-export const test = () => {
+    const numberOfAccounts = accounts.length;
+    const total = accounts.reduce((account, total) => total += account.total).toFixed(2);
     
+    useEffect(() => {
+        setPortfolio({
+            accounts : [ createAccount({ name: 'default'}) ], 
+            currentAccount : 'MyAccount',
+           
+        })
+    }, [])
+
+    const methods = {
+        addAccount(name){
+            setAccounts({...accounts, createAccount({ name })})
+        },
+
+        removeAccount(targetAccountID){
+            const filtered = accounts.filter(({ id }) => id !== targetAccountID);
+            setAccounts(filtered);
+        },
+        setCurrentAccount
+    }
+    
+    return { 
+        accounts, 
+        currentAccount, 
+        numberOfAccounts, 
+        total, 
+        ...methods
+    };
 }
