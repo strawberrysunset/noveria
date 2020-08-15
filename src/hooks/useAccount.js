@@ -5,8 +5,6 @@ export const useAccount = ({ name }) => {
 
     const [assets, setAssets] = useState([])
     const [name, setName] = useState(name)
-    const [ id ] = useIDGenerator();
-
 
     const methods = {
         addAsset(asset) {
