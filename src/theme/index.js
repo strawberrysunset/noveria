@@ -1,17 +1,17 @@
 export const colors = {
     blue : {
-        100 : '#3E4349',
-        200 : '#8295AA',
-        300 : '#D3DEEA',
-        400 : '#E3E8EF',
+        100 : '#191523',
+        200 : '#1b1b21',
+        300 : '#6020ad',
+        400 : '#E3E8EF'
     },
     green : {
-        100 : '#66BF84'
+        100 : '#3aaa69'
     },
     neutral : {
-        100: '#D1D4D9',
+        100: '#39393d',
         200 : '#DFE0E1',
-        300 : '#F4F7F9'
+        300 : '#e5def7'
     },
     red : {
         100 : '#E19696'
@@ -20,11 +20,11 @@ export const colors = {
 
 export const typeScale = {
     h1 : '3rem',
-    h2 : '2rem',
+    h2 : '2.5rem',
     h3 : '1.6rem',
     h4 : '1.25rem',
     body : '1rem',
-    small : '0.8rem',
+    bodySmall : '0.8rem',
     caption : '0.625rem'
 }
 
