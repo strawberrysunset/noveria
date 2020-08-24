@@ -1,2 +1,2 @@
 # ⛰️ Noveria
-An open-source, accountless PWA for managing your cryptocurrency portfolio. 
+An open-source, accountless PWA for tracking your cryptocurrency portfolio. 
