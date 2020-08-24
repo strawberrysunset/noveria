@@ -1,5 +1,3 @@
-import {Switch, BrowserRouter as Router, Route} from 'react-router-dom'
+import { Switch, BrowserRouter as Router, Route } from 'react-router-dom'
 
-export const PageRouter = () => {
-    
-}
+export const PageRouter = () => {}
