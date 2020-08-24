@@ -1,12 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
-import {colors, typeScale} from '../../theme'
-import {NoveriaLogo} from '../../assets'
+import { colors, typeScale } from '../../theme'
+import { NoveriaLogo } from '../../assets'
+import Menu from '../menu'
 import { MdMenu as MenuIcon } from 'react-icons/md'
-import { RiMoonFoggyLine as Share } from 'react-icons/ri'
+import { RiMoonFoggyLine as DarkModeButton } from 'react-icons/ri'
 
-const Wrapper = styled.div`
-    /* background: ${colors.blue[100]}; */
+const Wrapper = styled.header`
+    background: ${colors.blue[100]};
     border-bottom: 1px solid ${colors.neutral[100]};
     width: 100%;
     display: grid;
@@ -14,7 +15,6 @@ const Wrapper = styled.div`
     grid-auto-flow: column;
     align-items: center;
     padding: 0.75rem 1rem;
-    
 `
 
 const Page = styled.p`
@@ -23,14 +23,15 @@ const Page = styled.p`
 `
 
 export const Header = () => {
-
-   
-
     return (
         <Wrapper>
-            <MenuIcon style={{justifySelf: 'start'}} size="2rem"  color={colors.neutral[300]} />
+            <Menu.Button />
             <NoveriaLogo />
-            <Share style={{justifySelf: 'end'}} size="1.5rem"  color={colors.neutral[300]}  />
+            <DarkModeButton
+                style={{ justifySelf: 'end' }}
+                size="1.5rem"
+                color={colors.neutral[300]}
+            />
         </Wrapper>
     )
 }
