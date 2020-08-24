@@ -7,18 +7,13 @@ const Wrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    color : ${colors.neutral[300]};
-`
-const Title = styled.div`
-    font-weight: bold;
+    color: ${colors.neutral[300]};
 `
 
 export const NoveriaLogo = ({ style }) => {
     return (
         <Wrapper style={style}>
-            <Noveria size="2rem" color={colors.neutral[300]}/>
-            {/* <Title>NOVERIA</Title> */}
+            <Noveria size="2rem" color={colors.neutral[300]} />
         </Wrapper>
-        
     )
 }
