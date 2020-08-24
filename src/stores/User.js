@@ -1,26 +1,13 @@
-import { createZustandStore } from 'utilities'
+import { createStore } from 'utilities'
 
-export const useUser = createZustandStore(set => ({
-    user : {
+export const createUser = () => {
+    return createStore((set) => ({
         baseCurrency: 'USD',
-        refreshRate : 10,
-        theme : 'dark',
-        currentAccount : ''
-    },
-    setBaseCurrency: ({ currency }) => set(({ user }) => {
-        user.baseCurrency = currency;
-    }),
-    setRefreshRate: input => set(({ user }) => {
-        user.refreshRate = input.refreshRate
-    }),
-    setTheme: input => set(({ user }) => {
-        user.theme = input.theme;
-    }),
-    loadFromLocalStorage : () => set((state) => {
-        state.user = localStorage.getItem('user');
-    }),
-    saveToLocalStorage: () => set((state) => {
-        localStorage.setItem('user', state.user);
-    })
-}))
-
+        refreshRate: 10,
+        theme: 'dark',
+        setBaseCurrency: (currency) =>
+            set((state) => (state.currency = currency)),
+        setRefreshRate: (rate) => set((state) => (state.rate = rate)),
+        setTheme: (theme) => set((state) => (state.theme = theme)),
+    }))
+}
