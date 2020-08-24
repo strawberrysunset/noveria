@@ -1,20 +1,20 @@
-import React, {useState, useEffect} from 'react'
-import styled, {css, keyframes} from 'styled-components'
-import {colors} from '../../theme'
-import {motion, useMotionValue} from 'framer-motion'
+import React, { useEffect } from 'react'
+import styled from 'styled-components'
+import { colors } from '../../theme'
+import { motion, useSpring } from 'framer-motion'
 
 const Bar = styled(motion.div)`
-    transform: ${props => css`scaleX(${props.percentage}%)`};
     background: ${colors.neutral[300]};
     height: 0.25rem;
     width: 3rem;
 `
 
-export const LoadingBar = ({ percentage : target }) => {
+export const LoadingBar = ({ percentage }) => {
+    const width = useSpring(percentage, { stiffness: 300 })
 
-    const percentage = useMotionValue(0);
+    useEffect(() => {
+        width.set(percentage / 2)
+    }, [percentage])
 
-    return (
-        <Bar percentage={{percentage}}/>
-    )
+    return <Bar style={{ width }} />
 }
