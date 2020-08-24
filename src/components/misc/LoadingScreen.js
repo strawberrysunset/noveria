@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react'
-import styled, { css } from 'styled-components'
+import React from 'react'
+import styled from 'styled-components'
 import { NoveriaLogo } from '../../assets'
-import {colors} from '../../theme'
-import {LoadingBar} from './LoadingBar'
+import { colors } from '../../theme'
+import { LoadingBar } from './LoadingBar'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useAPI } from '../../stores'
 
-
-
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
     position: absolute;
     top: 0;
     bottom: 0;
@@ -22,11 +22,21 @@ const Wrapper = styled.div`
     flex-direction: column;
 `
 
-export const LoadingScreen = ({ percentage }) => {
+export const LoadingScreen = () => {
+    const api = useAPI()
+
     return (
-        <Wrapper>
-            <NoveriaLogo/>
-            <LoadingBar percentage={percentage}/>
-        </Wrapper>
+        <AnimatePresence>
+            {api.initialLoad && (
+                <Wrapper
+                    initial={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    <NoveriaLogo />
+                    <LoadingBar percentage={api.fetching.percentage} />
+                </Wrapper>
+            )}
+        </AnimatePresence>
     )
 }
