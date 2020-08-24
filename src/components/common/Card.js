@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import {colors, typeScale} from '../../theme'
+import { colors, typeScale } from '../../theme'
 
 const Wrapper = styled.div`
     border-top: 1px solid ${colors.neutral[100]};
@@ -9,7 +9,7 @@ const Wrapper = styled.div`
 
 const Label = styled.h3`
     color: ${colors.neutral[300]};
-    font-size: ${typeScale.h5}
+    font-size: ${typeScale.h5};
 `
 
 const Header = styled.div`

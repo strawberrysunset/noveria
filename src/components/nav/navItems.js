@@ -2,24 +2,24 @@ import {
     MdHome as SummaryIcon,
     MdPieChart as PortfolioIcon,
     MdWhatshot as NewsIcon,
-    MdShowChart as MarketsIcon
+    MdShowChart as MarketsIcon,
 } from 'react-icons/md'
 
 export const navItems = [
     {
         name: 'Summary',
-        icon: SummaryIcon
+        icon: SummaryIcon,
     },
     {
         name: 'Portfolio',
-        icon: PortfolioIcon
+        icon: PortfolioIcon,
     },
     {
         name: 'News',
-        icon: NewsIcon
+        icon: NewsIcon,
     },
     {
         name: 'Markets',
-        icon: MarketsIcon
-    }
+        icon: MarketsIcon,
+    },
 ]
