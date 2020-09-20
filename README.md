@@ -1,2 +1,3 @@
-# Noveria
-An accountless client-side cryptocurrency portfolio tracker and statistics provider.
+# ☄️ Noveria
+### An accountless, open-source, client-side PWA for tracking your cryptocurrency portfolio. 
+
