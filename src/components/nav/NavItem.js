@@ -1,22 +1,40 @@
 import React from 'react'
-import styled from 'styled-components'
-import { colors, typeScale } from '../../theme'
+import styled, {css} from 'styled-components/macro'
+import {Link} from '../common'
+import {useTheme} from '../../context'
 
-const Wrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`
-const Title = styled.div`
-    font-size: ${typeScale.bodySmall};
-    margin-top: 0.25rem;
+const active = css`
+  background: ${(props) => props.theme.colors.neutral[300]};
 `
 
-export const NavItem = ({ title, icon: Icon, color }) => {
+const Wrapper = styled(Link)`
+  display: grid;
+  place-items: center;
+  background: ${(props) => {
     return (
-        <Wrapper>
-            <Icon size="1.5rem" color={color} />
-            {/* <Title>{title}</Title> */}
-        </Wrapper>
+      props.active 
+      ? 
+      props.theme.colors.neutral[1200] 
+      : props.theme.colors.neutral[100] 
     )
+    
+  }};
+  :hover {
+    background: ${(props) => props.theme.colors.neutral[200]};
+    transition: 0.15s ease;
+  }
+`
+
+export const NavItem = ({ link, icon: Icon, active }) => {
+
+  const theme = useTheme()
+
+  return (
+    <Wrapper active={active} to={link}>
+      <Icon
+        size="1.5rem"
+        color={active ? theme.colors.neutral[100] : theme.colors.neutral[1600]}
+      />
+    </Wrapper>
+  )
 }

@@ -1,26 +1,27 @@
 import React from 'react'
 import styled from 'styled-components'
-import { navItems } from './navItems'
+import { useLocation } from 'react-router-dom'
 import { NavItem } from './NavItem'
-import { colors } from '../../theme'
+import { pages } from '../pages'
+
 
 const Wrapper = styled.div`
-    background: ${colors.blue};
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: 1fr;
-    padding: 1rem 0;
-    background: ${colors.neutral[300]};
-    box-shadow: 0rem +1rem 2rem ${colors.blue[100]};
-    border-radius: 1rem 1rem 0 0;
+  background: ${(props) => props.theme.colors.neutral[200]};
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  grid-gap: 1px;
+  border-top: 1px solid ${(props) => props.theme.colors.neutral[200]};
 `
 
-const NavItems = navItems.map(({ name, icon }, idx) => {
-    return (
-        <NavItem key={idx} title={name} icon={icon} color={colors.blue[100]} />
-    )
-})
+export const Nav = ({ ...rest }) => {
+  const { pathname } = useLocation()
 
-export const Nav = ({ className }) => {
-    return <Wrapper className={className}>{NavItems}</Wrapper>
+  const NavItems = pages.map(({ path, icon }, idx) => {
+    return (
+      <NavItem key={idx} link={path} icon={icon} active={pathname === path} />
+    )
+  })
+
+  return <Wrapper {...rest}>{NavItems}</Wrapper>
 }
