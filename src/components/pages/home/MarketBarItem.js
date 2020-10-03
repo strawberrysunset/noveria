@@ -1,20 +1,26 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import {Currency, Percentage, IndicatorColor} from '../../common'
+import {Price, Percentage, IndicatorColor} from '../../common'
 
-const Wrapper = styled.div`
+const Wrapper = styled.li`
   display: grid;
   grid-auto-flow: column;
-  grid-gap: 0.5rem;
+  grid-gap: 0.4rem;
   white-space: nowrap;
-  font-size: ${(props) => props.theme.typeScale.bodySmall};
+  font-size: ${(props) => props.theme.typeScale.caption};
+  /* flex-grow: 1; */
 `
 
-const Name = styled.ul`
+const Name = styled.p`
   color: ${(props) => props.theme.colors.neutral[1000]};
   text-transform: uppercase;
 `
-const Price = styled.li`
+
+const Icon = styled.img`
+  width: 1.25rem;
+`
+
+const PriceWrapper = styled.p`
   font-weight: 600;
 `
 
@@ -27,17 +33,26 @@ const Change = styled.p`
   font-weight: 300;
 `
 
+const PercentageWrapper = styled.div`
+
+`
+
 export const MarketBarItem = ({
   symbol,
-  current_price: price,
-  price_change_percentage_24h: change,
+  spotPrice,
+  image,
+  name,
   ...rest
 }) => {
   return (
     <Wrapper {...rest}>
       <Name>{symbol}</Name>
-      <Price><Currency>{price}</Currency></Price>
-      <IndicatorColor value={change}>(<Percentage>{change}</Percentage>)</IndicatorColor>
+      <PriceWrapper><Price>{spotPrice.value}</Price></PriceWrapper>
+      <PercentageWrapper>
+        <IndicatorColor value={spotPrice.change['24h'].percentage}>
+          <Percentage>{spotPrice.change['24h'].percentage}</Percentage>
+        </IndicatorColor>
+      </PercentageWrapper>
     </Wrapper>
   )
 }

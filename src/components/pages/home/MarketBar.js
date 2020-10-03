@@ -1,22 +1,19 @@
 import React from 'react'
-import styled from 'styled-components/macro'
-import { MarketBarItem } from './MarketBarItem'
-import { useAPI } from '../../../context'
-import { FaGlobeAfrica as Icon } from 'react-icons/fa'
-import { RiArrowRightSFill as Arrow } from 'react-icons/ri'
+import styled, {css} from 'styled-components/macro'
+import {MarketBarItem} from './MarketBarItem'
+import {FaGlobeAfrica as Icon} from 'react-icons/fa'
+import {RiArrowRightSFill as Arrow} from 'react-icons/ri'
+import {useCoinData} from '../../../hooks/api'
 
-const Wrapper = styled.li`
+const Wrapper = styled.div`
   font-size: ${(props) => props.theme.typeScale.bodySmall};
   display: flex;
   align-items: center;
   border-top: 1px solid ${(props) => props.theme.colors.neutral[400]};
-
-  @media (max-width: 54rem) {
-    display: none;
-  }
+  ${props => props.theme.isMobile && css`display: none;`}
 `
 
-const PriceWrapper = styled.div`
+const PriceWrapper = styled.ul`
   padding: 0.75rem 1rem;
   overflow: hidden;
   background: ${(props) => props.theme.colors.neutral[200]};
@@ -24,7 +21,7 @@ const PriceWrapper = styled.div`
   flex-wrap: wrap;
   height: 2.5rem;
   > * {
-    margin-left: 1.75rem;
+    margin-left: 1.25rem;
     margin-bottom: 2rem;
     :first-child {
       margin-left: 0;
@@ -55,7 +52,11 @@ const TitleIcon = styled(Icon)`
 
 export const MarketBar = ({ ...rest }) => {
 
-  const [{data}] = useAPI()
+  const {coinData, isLoading, isError, error} = useCoinData()
+  
+  if (isError) {
+    return <div>Error: {error.message}</div>
+  }
 
   return (
     <Wrapper {...rest}>
@@ -63,9 +64,11 @@ export const MarketBar = ({ ...rest }) => {
         <TitleIcon />
         <Title>Markets (24H)</Title>
       </TitleWrapper>
+
       <PriceWrapper>
-        {data.coinList.slice(0, 8).map((coin) => {
-          return <MarketBarItem {...coin} />
+        {isLoading ? <div>Loading...</div> : isError ? <div>Error: {error.message}</div> 
+        : coinData.slice(0, 10).map((asset) => {
+          return <MarketBarItem {...asset} />
         })}
       </PriceWrapper>
     </Wrapper>

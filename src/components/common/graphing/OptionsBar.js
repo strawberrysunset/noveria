@@ -16,7 +16,7 @@ const Option = styled.p`
   }};
   :hover {
     cursor: pointer;
-    color: ${(props) => props.theme.colors.neutral[1600]};
+    color: ${(props) => props.theme.colors.neutral[1200]};
   }
   transition: 0.1s ease;
 `

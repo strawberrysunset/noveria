@@ -7,6 +7,10 @@ const TableWrapper = styled.table`
   grid-template-columns: repeat(${(props) => props.colNum}, 1fr);
   grid-template-rows: auto;
 
+  thead {
+    position: static;
+  }
+
   thead,
   tbody,
   tr {
@@ -24,7 +28,7 @@ const TableWrapper = styled.table`
     padding: 1rem 0.5rem;
     overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis;
+    /* text-overflow: ellipsis; */
     background: ${(props) => props.theme.colors.neutral[100]};
 
     vertical-align: middle;
@@ -76,4 +80,5 @@ export const Table = ({ headerData, rowData, ...rest }) => {
       </tbody>
     </TableWrapper>
   )
+  
 }
