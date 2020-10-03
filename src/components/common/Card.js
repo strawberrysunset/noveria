@@ -9,6 +9,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
+  overflow-y: auto;
 `
 
 const Label = styled.div`
@@ -22,18 +23,23 @@ const LabelWrapper = styled.div`
   justify-content: start;
   grid-auto-flow: column;
   grid-gap: 0.5rem;
+  margin-right: 2.5rem;
 `
 
 const Header = styled.div`
   width: 100%;
-  padding: 1rem 1.5rem;
+  min-height: 3.5rem;
+  max-height: 3.5rem;
+  padding: 0 1.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   margin-top: -1px;
-  background: ${props => props.theme.colors.neutral[200]};
+  background: linear-gradient(90deg, ${props => props.theme.colors.neutral[400]}, 5%, ${props => props.theme.colors.neutral[200]});
+  /* background: ${props => props.theme.colors.neutral[200]}; */
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: static;
 `
 
 const ContentWrapper = styled.div`
