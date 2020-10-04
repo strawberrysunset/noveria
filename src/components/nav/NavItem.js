@@ -8,8 +8,10 @@ const active = css`
 `
 
 const Wrapper = styled(Link)`
-  display: grid;
+  display: flex;
+  flex-direction: column;
   place-items: center;
+  justify-content: center;
   background: ${(props) => {
     return (
       props.active 
@@ -17,7 +19,6 @@ const Wrapper = styled(Link)`
       props.theme.colors.neutral[1200] 
       : props.theme.colors.neutral[100] 
     )
-    
   }};
   :hover {
     background: ${(props) => props.theme.colors.neutral[200]};
@@ -25,16 +26,23 @@ const Wrapper = styled(Link)`
   }
 `
 
-export const NavItem = ({ link, icon: Icon, active }) => {
+const Text = styled.span`
+  text-transform: capitalize;
+  font-size:${(props) => props.theme.typeScale.caption};
+  margin-top: 0.5rem;
+`
+
+export const NavItem = ({ path, icon: Icon, active }) => {
 
   const theme = useTheme()
 
   return (
-    <Wrapper active={active} to={link}>
+    <Wrapper active={active} to={path}>
       <Icon
         size="1.5rem"
-        color={active ? theme.colors.neutral[100] : theme.colors.neutral[1600]}
+        color={active ? theme.colors.neutral[200] : theme.colors.neutral[1600]}
       />
+      <Text>{path.slice(1)}</Text>
     </Wrapper>
   )
 }

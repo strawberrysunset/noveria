@@ -1,72 +1,57 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 import { Card, Line, OptionsBar } from '../../common'
-import { usePortfolio, useUser } from '../../../context'
 import { MdInsertChart as Icon } from 'react-icons/md'
-import {getCoinHistory } from '../../../context/api/lib'
+import {usePortfolioHistory} from '../../../hooks/portfolio'
+import {useSettings, usePortfolio} from '../../../context'
 
-const Wrapper = styled(Card)`
-  position: relative;
-  width: 100%;
-  height: 200px;
-`
+const Wrapper = styled(Card)``
+
 const historyRangeValues = [
   {
     value: 1,
-    formatted: '1D'
+    displayValue: '1D'
   },
   {
     value: 7,
-    formatted: '7D'
+    displayValue: '7D'
   },
   {
     value: 30,
-    formatted: '30D'
+    displayValue: '30D'
   },
   {
     value: 'max',
-    formatted: 'MAX'
+    displayValue: 'MAX'
   },
 ]
 
 const data = [
-  { date: 1, price: 2 },
-  { date: 2, price: 3 },
-  { date: 3, price: 5 },
-  { date: 4, price: 4 },
-  { date: 5, price: 7 },
+  [ 1, 7 ],
+  [ 2, 1 ],
+  [ 3, 4 ],
+  [ 4, 1 ],
+  [ 5, 1 ]
 ]
 
 const HistoryGraph = styled(Line)``
 
-const HistoryRangeOptions = styled(OptionsBar)`
-  /* position: absolute;
-  top: 1.5rem;
-  right: 1.5rem; */
-`
+const HistoryRangeOptions = styled(OptionsBar)``
 
 export const History = ({ ...rest }) => {
 
-  const [{history}] = usePortfolio()
-  console.log(history)
-  // const [user, userDispatch] = useUser()
+  const {usePortfolioHistory} = usePortfolio()
+  const [days, setDays] = React.useState(historyRangeValues[0])
+  const {history, isLoading, isError, error} = usePortfolioHistory({days})
 
-  const [range, setRange] = React.useState(historyRangeValues[0])
-  const [data, setData] = React.useState([])
-
-  const historyRanges = historyRangeValues.map(({value, formatted}) => ({
-    value: formatted,
-    action : () => setRange(value)
-  }))
-
-  // React.useEffect(() => {
-  //
-   
-  // }, [range])
+  const historyRanges = historyRangeValues.map(({value, displayValue}) => ({
+    action : () => setDays(value),
+    value: displayValue,
+  }))  
 
   return (
-    <Wrapper icon={Icon} label="History" items={<HistoryRangeOptions options={historyRanges} />} {...rest}>
-      <HistoryGraph x="date" y="price" data={history}/>
+    <Wrapper icon={Icon} label="History" items={<HistoryRangeOptions options={historyRanges}/>} {...rest}>
+      <HistoryGraph x={0} y={1} data={isLoading ? history : data}/>
     </Wrapper>
   )
 }

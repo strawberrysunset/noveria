@@ -37,15 +37,15 @@ const Arrow = styled(MdChevronRight)`
   color: ${(props) => props.theme.colors.neutral[800]};
 `
 
-export const MenuItem = ({ title, subtitle, subList, ...rest }) => {
+export const MenuItem = ({ title, subtitle, subItems, ...rest }) => {
 
-  const [_, menuDispatch] = useMenu()
+  const {updateMenu} = useMenu()
 
   return (
-    <Wrapper onClick={() => menuDispatch({type: 'set_list', list: subList})} {...rest}>
+    <Wrapper onClick={() => updateMenu({type: 'set_items', items: subItems})} {...rest}>
       <Left>{title}</Left>
       <Right>{subtitle}</Right>
-      {subList && <Arrow/>}
+      {subItems && <Arrow/>}
     </Wrapper>
   )
 }

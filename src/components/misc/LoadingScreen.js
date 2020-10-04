@@ -4,6 +4,7 @@ import { NoveriaLogo } from '../../assets'
 import { LoadingBar } from './LoadingBar'
 import {useTheme, useAPI} from '../../context'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useIsFetching } from 'react-query'
 
 const Wrapper = styled(motion.div)`
   position: absolute;
@@ -23,11 +24,18 @@ const Wrapper = styled(motion.div)`
 
 export const LoadingScreen = ({ ...rest }) => {
 
-  const [{initialLoad}] = useAPI();
+  const isFetching = useIsFetching()
+  const [loaded, setLoaded] = React.useState(false)
 
+  React.useEffect(() => {
+    if(!isFetching){
+      setLoaded(true)
+    }
+  }, [isFetching])
+ 
   return (
     <AnimatePresence>
-      {initialLoad && (
+      {!loaded && isFetching && (
         <Wrapper
           {...rest}
           initial={{ opacity: 1 }}

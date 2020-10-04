@@ -1,18 +1,25 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 import { TiChartPie as Icon } from 'react-icons/ti'
-import { VictoryPie } from 'victory'
-import { Card } from '../../common'
+import { Card, Table } from '../../common'
+import {usePortfolio} from '../../../context'
 import {WeightBar} from './WeightBar'
+import {Pie} from '../../common'
 
 const Wrapper = styled(Card)`
-height: 100%;
-grid-area: breakdown;
+  height: 100%;
+  grid-area: breakdown;
+  
   /* display: grid;
     grid-auto-flow: column;
     grid-gap: 5px; */
   /* width: 100%; */
   /* grid-template-columns: repeat(3, 1fr); */
+`
+
+const ContentWrapper = styled.div`
+  padding: 1.5rem;
+  display: flex;
 `
 
 const Stats = styled.div`
@@ -24,13 +31,47 @@ const ChartContainer = styled.div`
   width: 10rem;
 `
 
+const AssetTable = styled(Table)`
+  grid-template-columns: 1fr 1fr;
+
+`
+const ChartWrapper = styled.div`
+  width: 200px;
+`
+const headerData = ['Asset', 'Value', 'Change 24h']
+
 export const Breakdown = ({ ...rest }) => {
+
+  const {assets, isLoading} = usePortfolio()
+
+  // sort assets by biggest change
+  // const rowData = assets.sort((a,b) => {
+  //   return a.spotPrice.change['24h'] - b.spotPrice.change['24h']
+  // })
+
+
+  const biggestGainer = isLoading ? [] : assets.reduce((biggest, asset) => {
+    return (asset.spotPrice.change['24h'] > biggest?.spotPrice?.change['24h']) ? asset : biggest
+  }, {})
+
+  // const largestValue = assets.reduce((biggest, asset) => {
+  //   return (asset.price.value > biggest.price.value) ? asset : biggest
+  // }, {})
+
   return (
     <Wrapper icon={Icon} label="Breakdown" {...rest}>
-      <WeightBar/>
-      <ChartContainer>
-        <VictoryPie tedata={[1, 2, 3]} />
-      </ChartContainer>
+      <ContentWrapper>
+        {/* <WeightBar/> */}
+        <div>Biggest Gainer: {biggestGainer?.name}</div>
+        <ChartWrapper>
+          <Pie data={[
+            { x: 1, y: 120 }, { x: 2, y: 150 }, { x: 3, y: 75 }
+          ]}/>
+        </ChartWrapper>
+        {/* <div>Largest Value: {largestValue?.name}</div> */}
+        
+        {/* <AssetTable headerData={headerData} rowData={rowData}/> */}
+      </ContentWrapper>
     </Wrapper>
   )
 }

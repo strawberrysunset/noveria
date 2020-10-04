@@ -1,9 +1,10 @@
 import React from 'react'
 import styled, {css} from 'styled-components/macro'
-import { Card, Currency, IndicatorColor } from '../../common'
-import { usePortfolio } from '../../../context'
-import { MdAccountBalanceWallet as Icon, MdArrowDropUp as Arrow } from 'react-icons/md'
-import { IoMdRefreshCircle } from 'react-icons/io'
+import {Card, Price, IndicatorColor } from '../../common'
+import {MdAccountBalanceWallet as Icon, MdArrowDropUp as Arrow, MdRefresh } from 'react-icons/md'
+import {motion} from 'framer-motion'
+import {useSettings, usePortfolio} from '../../../context'
+import {useQueryCache} from 'react-query'
 
 const Wrapper = styled.div`
   display: flex;
@@ -11,6 +12,7 @@ const Wrapper = styled.div`
   align-items: center;
   flex-direction: column;
   padding: 2rem 1.5rem;
+  height: 100%;
 `
 
 const Total = styled.p`
@@ -36,44 +38,64 @@ const IndicatorArrow = styled(Arrow)`
   width: 2rem;
   transform: ${props => (props.value >= 0) ? css`rotate(0deg)` : css`rotate(180deg)`};
 `
-const Color = styled(IndicatorColor)`
-  display: flex;
-  align-items: center;
-`
 
 const HeaderItemsWrapper = styled.div`
   display: grid;
   grid-auto-flow: column;
   grid-gap: 0.5rem;
   align-items: center;
-`
-
-const Refresh = styled.p`
   :hover {
-    color: ${props => props.theme.colors.green[100]}
+    color: ${props => props.theme.colors.green[100]};
+    cursor: pointer;
+    :first-child {
+      transform: rotate(45deg);
+      transition: 0.3s ease;
+    }
   }
 `
 
-const headerItems = (
-  <HeaderItemsWrapper>
-    <IoMdRefreshCircle size="1.25rem"/>
-    <Refresh>Refresh</Refresh>
-  </HeaderItemsWrapper>
-)
+const RefreshIcon = ({spin}) => {
+  return (
+    <>
+    {spin 
+    ?
+    <motion.div 
+      initial={{ rotate: '0deg' }}
+      animate={{ rotate: '360deg' }}
+      transition={{ duration: 0.5, repeat: Infinity, ease: 'linear' }}>
+        <MdRefresh size="1.25rem"/>
+    </motion.div>
+    : <MdRefresh size="1.25rem"/>
+    }
+    </>
+  )
+}
+
+const Refresh = styled.p`
+  margin-top: 0.25rem;
+`
 
 export const Balance = ({ ...rest }) => {
 
-  const [{total}, dispatch] = usePortfolio()
+  const {isFetching, refetchQueries} = useQueryCache()
+  const {total, totalBTC, isLoading} = usePortfolio()
+
+  const headerItems = (
+    <HeaderItemsWrapper onClick={refetchQueries}>
+      <RefreshIcon spin={isFetching} size="1.25rem"/>
+      <Refresh>Refresh</Refresh>
+    </HeaderItemsWrapper>
+  )
 
   return (
     <Card label="Balance" icon={Icon} items={headerItems} {...rest}>
       <Wrapper>
-        <Color value={-1.56}>
-          <IndicatorArrow value={-1.56}/>
-          <IndicatorValue>-1.56%</IndicatorValue>
-        </Color>
-        <Total><Currency>{total}</Currency></Total>
-        <AltTotal>({total} BTC)</AltTotal>
+        <IndicatorColor value={-2}>
+          <IndicatorArrow value={-1}/>
+          <IndicatorValue></IndicatorValue>
+        </IndicatorColor>
+        <Total><Price>{isLoading ? 0 : total}</Price></Total>
+        <AltTotal>(<Price currency="btc">{isLoading ? 0 : totalBTC}</Price>)</AltTotal>
       </Wrapper>
     </Card>
   )

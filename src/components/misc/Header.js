@@ -3,7 +3,7 @@ import styled from 'styled-components/macro'
 import {NoveriaLogo, DarkModeButton} from '../../assets'
 import {MenuButton} from '../menu'
 import {Button} from '../common'
-import {useNotification, useAPI, useUser} from '../../context'
+import {useNotification, useSettings} from '../../context'
 import {motion, useAnimation} from 'framer-motion'
 
 const Wrapper = styled.header`
@@ -18,6 +18,7 @@ const Wrapper = styled.header`
   @media (min-width: 48rem) {
     grid-auto-columns: 3.5rem 1fr 1fr 1fr;
   }
+  background: linear-gradient(90deg, ${props => props.theme.colors.neutral[200]}, 20%, ${props => props.theme.colors.neutral[300]});
 `
 
 const Message = styled(motion.div)`
@@ -41,9 +42,8 @@ const RefreshButton = styled(Button)``
 
 export const Header = ({ ...rest }) => {
 
-  const [{status}] = useNotification()
-  const [APIState, APIDispatch] = useAPI()
-  const [userState, userDispatch] = useUser()
+  const {notification} = useNotification()
+  const {updateSettings} = useSettings()
 
   const controls = useAnimation()
 
@@ -51,22 +51,20 @@ export const Header = ({ ...rest }) => {
     controls.start({
       opacity: [null, 100, 0],
       transition: {
-        duration: 3
+        duration: 8
       }
     })
-  }, [status])
+  }, [notification])
 
   return (
     <Wrapper {...rest}>
       <MenuButton />
       
-      <Message animate={controls}>{status.message}</Message>
-      <Logo onClick={() => {
-        APIDispatch({type: 'refresh'})
-      }}/>
+      <Message animate={controls}>{notification.message}</Message>
+      <Logo/>
       <DarkModeButton
         onClick={() => {
-          userDispatch({ type: 'toggle_theme' })
+          updateSettings({ type: 'toggle_theme' })
         }}
         css={`
           margin-right: 1rem;

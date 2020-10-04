@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import {useUser} from '../../../context'
+import {useSettings} from '../../../context'
 import {Link} from '../../common'
 import {FaTwitter, FaInstagram, FaFacebook, FaMailBulk} from 'react-icons/fa'
 import {useMenu} from '../../../context'

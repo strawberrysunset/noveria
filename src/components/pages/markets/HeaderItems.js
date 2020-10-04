@@ -51,7 +51,7 @@ export const HeaderItems = ({page, setPage}) => {
 
   const {isLoading, globalData} = useGlobalData()
 
-  return (
+  return React.useMemo(() => (
     <Wrapper>
       <Left>
         <Item>Assets: {isLoading ? 'Loading...' : globalData.activeCoins}</Item>
@@ -65,6 +65,6 @@ export const HeaderItems = ({page, setPage}) => {
         <Item css={`font-weight: bold;`}>{page}</Item>
         <NavButton enabled={page < 4} onClick={()=> setPage(page + 1)}>Next</NavButton>
       </Right>
-    </Wrapper>
-  )
+    </Wrapper> 
+  ), [globalData])
 }

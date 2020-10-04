@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { CoinTable } from './CoinTable'
-import { CoinManager } from './CoinManager'
+import { AssetTable } from './AssetTable'
+import { AssetManager } from './AssetManager'
 
 const Wrapper = styled.div`
   background: ${(props) => props.theme.colors.neutral[300]};
@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   @media (min-width: 48rem) {
     grid-template-columns: 1fr minmax(0, 2fr);
     grid-gap: 1px;
-    height: 100%;
+    /* height: 100%; */
     width: 100%;
   }
 `
@@ -19,8 +19,8 @@ const Wrapper = styled.div`
 export const Portfolio = () => {
   return (
     <Wrapper>
-      <CoinManager/>
-      <CoinTable/>
+      <AssetManager/>
+      <AssetTable/>
     </Wrapper>
   )
 }

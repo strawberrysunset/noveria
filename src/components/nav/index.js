@@ -12,6 +12,7 @@ const Wrapper = styled.div`
   grid-auto-columns: 1fr;
   grid-gap: 1px;
   border-top: 1px solid ${(props) => props.theme.colors.neutral[200]};
+  padding: 0.25rem 0;
 `
 
 export const Nav = ({ ...rest }) => {
@@ -19,7 +20,7 @@ export const Nav = ({ ...rest }) => {
 
   const NavItems = pages.map(({ path, icon }, idx) => {
     return (
-      <NavItem key={idx} link={path} icon={icon} active={pathname === path} />
+      <NavItem key={idx} path={path} icon={icon} active={pathname === path} />
     )
   })
 

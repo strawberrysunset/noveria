@@ -124,7 +124,7 @@ export const AssetTable = ({ ...rest }) => {
   })
   
 
-  const removeButton = (
+  const removeButton = () => (
     <RemoveAll onClick={() => updatePortfolio({ type: 'remove_all_assets' })}>
         Remove All
     </RemoveAll>

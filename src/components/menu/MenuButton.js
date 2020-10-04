@@ -6,7 +6,6 @@ import {
   MdClose as CloseIcon
 } from 'react-icons/md'
 import { useMenu, useTheme } from '../../context'
-import {motion} from 'framer-motion'
 
 const Wrapper = styled.a`
   display: flex;
@@ -23,20 +22,20 @@ const Wrapper = styled.a`
 
 export const MenuButton = ({...rest}) => {
 
-  const [menu, menuDispatch] = useMenu()
+  const {isOpen, itemsHistory, updateMenu} = useMenu()
 
   const clickHandler = () => {
-    if (menu.history.length > 1){
-      menuDispatch({type : 'go_back'})
+    if (itemsHistory.length > 1){
+      updateMenu({type : 'go_back'})
       return
     }
-    menuDispatch({type : 'toggle_menu'})
+    updateMenu({type : 'toggle_menu'})
   }
   
   return (
     <Wrapper onClick={clickHandler} {...rest}>
-      {menu.showing ? (
-        (menu.history.length > 1) ? <BackIcon size="1.75rem"/> : <CloseIcon size="2rem"/>
+      {isOpen ? (
+        (itemsHistory.length > 1) ? <BackIcon size="1.75rem"/> : <CloseIcon size="2rem"/>
       ) : (
         <HamburgerIcon size="2rem"/>
       )}

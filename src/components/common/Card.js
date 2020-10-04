@@ -46,7 +46,7 @@ const ContentWrapper = styled.div`
   flex-grow: 1;
 `
 
-export const Card = ({ icon: Icon, label, children, items, ...rest }) => {
+export const Card = ({ icon: Icon, label, children, items: Items, ...rest }) => {
   return (
     <Wrapper {...rest} >
       <Header>
@@ -54,7 +54,7 @@ export const Card = ({ icon: Icon, label, children, items, ...rest }) => {
           {Icon && <Icon size="1.25rem" />}
           <Label>{label}</Label>
         </LabelWrapper>
-        {items}
+        <Items/>
       </Header>
       <ContentWrapper>
         {children}

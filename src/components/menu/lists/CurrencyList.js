@@ -1,18 +1,32 @@
-import {useUser, useAPI, useMenu} from '../../../context'
+import {useSettings, useMenu } from '../../../context'
+import {useSupportedCurrencies} from '../../../hooks/api'
 
 export const CurrencyList = () => {
 
-    const [API] = useAPI()
-    const [user, userDispatch] = useUser()
-    const [menu, menuDispatch] = useMenu()
+    const {currency: selectedCurrency, updateSettings} = useSettings()
+    const {updateMenu} = useMenu()
+    const {isLoading, supportedCurrencies} = useSupportedCurrencies()
 
-    return API.data.supportedCurrencies.slice(0, 10).map(currency => {
+    if (isLoading) return []
+
+    const otherCurrencies = supportedCurrencies.filter(currency => {
+      return currency !== selectedCurrency
+    })
+
+    const a = {
+      onClick: () => {},
+      title: selectedCurrency.toUpperCase(),
+    }
+
+    const c = otherCurrencies.sort().map(currency => {
       return {
         onClick: () => {
-          userDispatch({type: 'set_currency', currency})
-          menuDispatch({type: 'go_back'})
+          updateSettings({type: 'set_currency', currency})
+          updateMenu({type: 'go_back'})
         },
         title: currency.toUpperCase(),
       }
     })
+
+    return [a, ...c]
 }
