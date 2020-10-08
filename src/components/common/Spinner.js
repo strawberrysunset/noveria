@@ -1,41 +1,51 @@
 import React from 'react'
-import styled from 'styled-components/macro'
-import {BiLoaderAlt} from 'react-icons/bi'
-import {motion} from 'framer-motion'
+import styled, {keyframes} from 'styled-components'
+import {useTheme} from '../../context'
+import {InfiniteSpin} from '../animators'
 
-const Icon = styled(BiLoaderAlt)`
-  height: 100%;
-  width: 100%;
+const Wrapper = styled.svg`
+  width: 2.5rem;
+  height: 2.5rem;
 `
 
-const Wrapper = styled(motion.div)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
+// const InfiniteSpin = keyframes`
+//   from {
+//     transform: rotate(220deg);
+//     }
+//     to {
+//       transform: rotate(580deg);
+//     }
 
-export const Spinner = ({children}) => {
 
-  const [times, setTimes] = React.useState(0)
-  
-  React.useEffect(() => {
-    setTimeout(() => {
-      setTimes((times % 3) + 1)
-    }, 300)
-  }, [times])
 
-  return (
-    <>
-    {
-      children || <p>{'.'.repeat(times)}</p>
-      // || 
-      // <Wrapper 
-      //   initial={{ rotate: '0deg' }}
-      //   animate={{ rotate: '360deg' }}
-      //   transition={{ duration: 0.3, repeat: Infinity, ease: 'linear' }}>
-      //   <Icon/>
-      // </Wrapper>
-    }
-    </>
-  )   
+export const Spinner = ({ circleColor, segmentColor, ...rest}) => {
+    const theme = useTheme()
+    return (
+      <InfiniteSpin duration={0.7} offset={170}>
+        <Wrapper viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" {...rest}>
+          <circle
+            stroke={circleColor || theme.colors.neutral[400]}
+            stroke-width="1"
+            fill="transparent"
+            cx="10"
+            cy="10"
+            r="9"
+          />
+          <circle
+            stroke={segmentColor || theme.colors.neutral[1200]}
+            stroke-width="1.4"
+            style={{
+              transformBox: "fill-box",
+              transformOrigin: "center" 
+            }}
+            fill="transparent"
+            cx="10"
+            cy="10"
+            r="9"
+            stroke-dasharray="30 70"
+            stroke-dashoffset="0"
+          />
+      </Wrapper>
+    </InfiniteSpin>
+    )
 }
