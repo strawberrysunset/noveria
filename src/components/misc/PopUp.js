@@ -37,8 +37,11 @@ const CloseButton = styled(CloseIcon)`
   width: 1.5rem;
 `
 
-export const PopUp = ({ handleClose, showing, children, ...rest }) => {
+export const PopUp = ({ handleClose, showing = true, content, ...rest }) => {
 
+
+
+  const {updateNotification} = useNotification()
   const animations = {
     wrapper: {
       animate: { opacity: [0, 1] },
@@ -50,19 +53,20 @@ export const PopUp = ({ handleClose, showing, children, ...rest }) => {
     },
   }
 
+  
+
   return (
     <AnimatePresence>
-      {showing && (
+      {content && (
         <Wrapper
-          onClick={handleClose}
           {...animations.wrapper}
           {...rest}
         >
           <Dialog {...animations.dialog}>
-            <button onClick={handleClose}>
+            <button onClick={() => updateNotification({type: 'hidePopUp'})}>
               <CloseButton />
             </button>
-            {children}
+            {content}
           </Dialog>
         </Wrapper>
       )}
