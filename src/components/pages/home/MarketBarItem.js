@@ -1,13 +1,13 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 import {Price, Percentage, IndicatorColor} from '../../common'
+import {useFormatPrice} from '../../../hooks/common'
 
 const Wrapper = styled.li`
   display: grid;
   grid-auto-flow: column;
   grid-gap: 0.4rem;
   white-space: nowrap;
-  font-size: ${(props) => props.theme.typeScale.caption};
   /* flex-grow: 1; */
 `
 
@@ -21,7 +21,7 @@ const Icon = styled.img`
 `
 
 const PriceWrapper = styled.p`
-  font-weight: 600;
+  /* font-weight: 600; */
 `
 
 const Change = styled.p`
@@ -30,7 +30,7 @@ const Change = styled.p`
       ? (props) => props.theme.colors.green[100]
       : (props) => props.theme.colors.red[100]
   }};
-  font-weight: 300;
+  /* font-weight: 300; */
 `
 
 const PercentageWrapper = styled.div`
@@ -44,15 +44,17 @@ export const MarketBarItem = ({
   name,
   ...rest
 }) => {
+
+  const  {formatPrice} = useFormatPrice()
   return (
     <Wrapper {...rest}>
       <Name>{symbol}</Name>
-      <PriceWrapper><Price>{spotPrice.value}</Price></PriceWrapper>
-      <PercentageWrapper>
+      <PriceWrapper>{formatPrice(spotPrice.value)}</PriceWrapper>
+      {/* <PercentageWrapper>
         <IndicatorColor value={spotPrice.change['24h'].percentage}>
           <Percentage>{spotPrice.change['24h'].percentage}</Percentage>
         </IndicatorColor>
-      </PercentageWrapper>
+      </PercentageWrapper> */}
     </Wrapper>
   )
 }
