@@ -11,8 +11,14 @@ export const createPortfolio = async ({assets: staleAssets, currency, exchangeRa
       ...asset, 
       ...assetData,
       price,
+      change: {
+        '24h' : {
+          value: assetData.spotPrice.change['24h'].value * asset.amount,
+          percentage: assetData.spotPrice.change['24h'].percentage
+        }
+      },
       // Ternary ensures BTC asset precision error from conversion.
-      priceBTC: asset.symbol === 'btc' ? asset.amount : (price / exchangeRates[currency].value)
+      priceBTC: (assetData.symbol == 'btc') ? asset.amount : (price / exchangeRates[currency].value)
     }
   })
 
@@ -22,11 +28,21 @@ export const createPortfolio = async ({assets: staleAssets, currency, exchangeRa
     return total
   }, [0, 0])
 
+  
+
   const weightedAssets = assets.map(asset => {
     return {
       ...asset,
       weight: asset.price / total
     }
   })
-  return {assets: weightedAssets, total, totalBTC}
+
+  const change  = {
+    '24h': {
+      value : weightedAssets.reduce((total, asset) => total += asset.change['24h'].value, 0),
+      percentage : weightedAssets.reduce((total, asset) => total += asset.change['24h'].percentage * asset.weight, 0)
+    }
+  } 
+
+  return {assets: weightedAssets, total, totalBTC, change}
 }
