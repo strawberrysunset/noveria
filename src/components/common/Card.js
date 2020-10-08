@@ -9,11 +9,11 @@ const Wrapper = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
-  overflow-y: auto;
+  /* overflow-y: auto; */
 `
 
 const Label = styled.div`
-  font-size: ${(props) => props.theme.typeScale.h5};
+  font-size: ${(props) => props.theme.typeScale.body};
   margin-bottom: -0.25rem;
 `
 
@@ -34,8 +34,8 @@ const Header = styled.div`
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   margin-top: -1px;
-  background: linear-gradient(90deg, ${props => props.theme.colors.neutral[400]}, 5%, ${props => props.theme.colors.neutral[200]});
-  /* background: ${props => props.theme.colors.neutral[200]}; */
+  /* background: linear-gradient(90deg, ${props => props.theme.colors.neutral[400]}, 5%, ${props => props.theme.colors.neutral[200]}); */
+  background: ${props => props.theme.colors.neutral[200]};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -46,7 +46,7 @@ const ContentWrapper = styled.div`
   flex-grow: 1;
 `
 
-export const Card = ({ icon: Icon, label, children, items: Items, ...rest }) => {
+export const Card = ({ icon: Icon, label, children, items, ...rest }) => {
   return (
     <Wrapper {...rest} >
       <Header>
@@ -54,7 +54,7 @@ export const Card = ({ icon: Icon, label, children, items: Items, ...rest }) => 
           {Icon && <Icon size="1.25rem" />}
           <Label>{label}</Label>
         </LabelWrapper>
-        <Items/>
+        {items}
       </Header>
       <ContentWrapper>
         {children}
