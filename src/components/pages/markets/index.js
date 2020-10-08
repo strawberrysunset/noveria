@@ -1,11 +1,12 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import {Table, Card, Price} from '../../common'
+import {Table, Card, CryptoLogo} from '../../common'
 import {FaGlobeAfrica as MarketsIcon} from 'react-icons/fa'
-import {AiOutlineReload as SpinnerIcon} from 'react-icons/ai'
 import {useCoinData} from '../../../hooks/api'
-import {HeaderItems} from './HeaderItems'
-import {InfiniteSpin} from '../../animators'
+import {CardHeaderItems} from './CardHeaderItems'
+import {Line} from '../../common'
+import {useTheme} from '../../../context'
+import {useFormatPrice} from '../../../hooks/common'
 
 const MarketsCard = styled(Card)`
   overflow-x: none;
@@ -14,26 +15,27 @@ const MarketsCard = styled(Card)`
 `
 
 const MarketsTable = styled(Table)`
+  overflow-x: hidden;
   max-height: 100%; 
-  /* grid-template-columns: repeat(auto-fill, minmax(min-content, 1fr)); */
-  grid-template-columns:  repeat(9, auto);
-  /* @media(min-width: 48rem){
-    grid-template-columns: repeat(auto-fill, minmax(min-content, 1fr));
-  } */
+  grid-template-columns:  0px 1fr repeat(1, auto) repeat(5, 0px);
+  @media(min-width: 32rem){
+    grid-template-columns:  auto 1fr repeat(2, auto) repeat(4, 0px) ;
+  }
+  @media(min-width: 48rem){
+    grid-template-columns:  auto 1fr repeat(3, auto) repeat(3, 0px) ;
+  }
+  @media(min-width: 54rem){
+    grid-template-columns:  auto 1fr repeat(4, auto) repeat(2, 0px) ;
+  }
+  @media(min-width: 68rem){
+    grid-template-columns:  auto 1fr repeat(5, auto) repeat(1, 0px) ;
+  }
+  @media(min-width: 74rem){
+    grid-template-columns:  auto 1fr repeat(7, auto);
+  }
   flex-grow: 1;
-  
 `
 
-const LogoWrapper = styled.div`
-  display: grid;
-  grid-auto-flow: column;
-  grid-gap: 0.75rem;
-  align-items: center;
-`
-const Icon = styled.img`
-  height: 1.5rem;
-  width: 1.5rem;
-`
 
 const Content = styled.div`
   display: flex;
@@ -41,46 +43,72 @@ const Content = styled.div`
   max-height: 100%;
 `
 
-const Rank = styled.p``
+const Rank = styled.p`
+  text-align: center;
+`
 
-const Logo = ({icon, children}) => {
-  return (
-    <LogoWrapper>
-      <Icon src={icon}/>
-      {children}
-    </LogoWrapper>
-  )
+
+const TableItem = ({right, children, ...rest}) => {
+  return <p css={right && 'text-align: right'} {...rest}>{children}</p>
 }
 
-export const Markets = ({...rest}) => {
+const HeaderItem = styled(TableItem)`
+  /* font-weight: 600; */
+  color: ${props => props.theme.colors.neutral[1000]};
+`
 
-  const [page, setPage] = React.useState(1)
-  const [perPage, setPerPage] = React.useState(50)
+const Sparkline = styled(Line)`
+  border: 1px solid ${props => props.theme.colors.neutral[1000]};
+  max-height: 1rem;
+  max-width: 4rem;
+`
+
+const headerData = [
+  <HeaderItem>Rank</HeaderItem>,
+  <HeaderItem>Asset</HeaderItem>,
+  <HeaderItem right>Price</HeaderItem>,
+  <HeaderItem right>7D</HeaderItem>,
+  <HeaderItem right>Mkt Cap</HeaderItem>,
+  <HeaderItem right>Volume (24H)</HeaderItem>,
+  <HeaderItem right>ATH</HeaderItem>,
+  <HeaderItem right>Supply</HeaderItem>,
+  <HeaderItem >Last 7 Days</HeaderItem>,
+]
+
+export const Markets = React.memo(({...rest}) => {
+
+  const [page, setPage] = React.useState(1) 
+  const perPage = 25;
   const {coinData} = useCoinData({page, perPage})
+  const theme = useTheme()
+  const {formatPrice} = useFormatPrice()
 
-  const headerData = ['Rank', 'Asset', 'Price', '1H', '24H', '7D', '24H Volume', 'Mkt Cap', 'Last 7 Days']
-
-  const rowData = coinData.map((asset, idx) => {
+  const rowData = React.useMemo(() => {
+    console.log('RAN')
+    return coinData.map((asset, idx) => {
     return [
-      <Rank>{idx + 1 + (perPage * (page - 1))}</Rank>,
-      <Logo icon={asset.image}>{asset.name}</Logo>,
-      <Price>{asset.spotPrice.value}</Price>,
-      <Price>{asset.supply}</Price>,
-      <Price>{asset.marketCap.value}</Price>,
-      <Price>{asset.spotPrice.value}</Price>,
-      <Price>{asset.spotPrice.value}</Price>,
-      <Price>{asset.spotPrice.valuee}</Price>,
-      <Price>{asset.spotPrice.value}</Price>
+      <Rank css={`text-align: center;`}>{idx + 1 + (perPage * (page - 1))}</Rank>,
+      <CryptoLogo icon={asset.image} name={asset.name} symbol={asset.symbol.toUpperCase()}/>,
+      <TableItem css="margin-left: auto" right>{formatPrice(asset.spotPrice.value)}</TableItem>,
+      <TableItem right>{asset.spotPrice.change['7d'].percentage.toFixed(2) + '%'}</TableItem>,
+      <TableItem right>{formatPrice(asset.marketCap.value)}</TableItem>,
+      <TableItem right>{formatPrice(asset.totalVolume)}</TableItem>,
+      <TableItem right>{formatPrice(asset.ath)}</TableItem>,
+      <TableItem right>{parseFloat(asset.supply.toFixed(0)).toLocaleString('en-US')}</TableItem>,
+      <Sparkline color={
+        (asset.spotPrice.change['7d'].percentage > 0) ? theme.colors.green[100] : theme.colors.red[100] 
+      } data={asset.sparkline['7d']}/>
     ]
   })
+}, [coinData, formatPrice, page, theme])
 
-  const HeaderItems = React.useMemo(() => () => <HeaderItems page={page} setPage={setPage}/>, [page, setPage])
+  const headerItems = <CardHeaderItems page={page} setPage={setPage}/>
 
   return (
-    <MarketsCard label="Markets" icon={MarketsIcon} items={HeaderItems} {...rest}>
+    <MarketsCard label="Markets" icon={MarketsIcon} items={headerItems} {...rest}>
       <Content>
         <MarketsTable rowData={rowData} headerData={headerData}/>
       </Content>
     </MarketsCard>
   )
-}
+})
