@@ -1,31 +1,25 @@
-import {useSettings} from '../../../context'
-import {ThemeList} from './ThemeList'
-import {CurrencyList} from './CurrencyList'
-import {ShareList} from './ShareList'
-import {SaveList} from './SaveList'
+import React from 'react'
+import {useMenu, useSettings} from '../../../context'
+import {useThemeList} from './ThemeList'
+import {useCurrencyList} from './CurrencyList'
+import {useShareList} from './ShareList'
+import {ListItem} from './ListItem'
+import {capitalize} from 'utilities'
+import {MdKeyboardArrowRight} from 'react-icons/md'
 
-export const BaseList = () => {
+
+export const useBaseList = () => {
 
   const {currency, theme} = useSettings()
+  const {updateMenu} = useMenu()
+
+  const setList = (list) => {
+    updateMenu({type: 'set_list', list})
+  }
   
   return [
-    {
-      title: "Currency",
-      subtitle: currency.toUpperCase(),
-      subItems: CurrencyList
-    },
-    {
-      title: "Theme",
-      subtitle: theme[0].toUpperCase() + theme.slice(1),
-      subItems: ThemeList
-    },
-    {
-      title: 'Save Settings',
-      subItems: SaveList
-    },
-    {
-      title: "Share",
-      subItems: ShareList
-    }
+    <ListItem left="Currency" right={currency.toUpperCase()} onClick={()=> setList(useCurrencyList)}/>,
+    <ListItem left="Theme" right={capitalize(theme)} onClick={()=> setList(useThemeList)}/>,
+    <ListItem left="Share" onClick={() => setList(useShareList)}/>
   ]
 }

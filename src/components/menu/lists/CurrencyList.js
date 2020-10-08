@@ -1,32 +1,22 @@
-import {useSettings, useMenu } from '../../../context'
+import React from 'react'
+import {useSettings, useMenu} from '../../../context'
 import {useSupportedCurrencies} from '../../../hooks/api'
+import {MdCheck} from 'react-icons/md'
+import {ListItem} from './ListItem'
 
-export const CurrencyList = () => {
+export const useCurrencyList = () => {
 
-    const {currency: selectedCurrency, updateSettings} = useSettings()
-    const {updateMenu} = useMenu()
-    const {isLoading, supportedCurrencies} = useSupportedCurrencies()
+  const {currency: currentCurrency, updateSettings} = useSettings()
+  const {supportedCurrencies} = useSupportedCurrencies()
 
-    if (isLoading) return []
-
-    const otherCurrencies = supportedCurrencies.filter(currency => {
-      return currency !== selectedCurrency
-    })
-
-    const a = {
-      onClick: () => {},
-      title: selectedCurrency.toUpperCase(),
+  return !supportedCurrencies ? [] : supportedCurrencies.reduce((list, currency) => {
+    console.log(typeof list)
+    if (currency === currentCurrency) {
+      list.unshift(<ListItem left={currentCurrency.toUpperCase()} right={<MdCheck/>}/>)
+    } else {
+      list.push(<ListItem left={currency.toUpperCase()} onClick={() => updateSettings({type: 'set_currency', currency})}/>)
     }
+    return list
+  }, [])
 
-    const c = otherCurrencies.sort().map(currency => {
-      return {
-        onClick: () => {
-          updateSettings({type: 'set_currency', currency})
-          updateMenu({type: 'go_back'})
-        },
-        title: currency.toUpperCase(),
-      }
-    })
-
-    return [a, ...c]
 }

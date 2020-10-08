@@ -1,35 +1,43 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import {useSettings} from '../../../context'
 import {Link} from '../../common'
-import {FaTwitter, FaInstagram, FaFacebook, FaMailBulk} from 'react-icons/fa'
-import {useMenu} from '../../../context'
+import {FaTwitter, FaReddit, FaFacebook, FaMailBulk} from 'react-icons/fa'
+import {ListItem} from './ListItem'
 
 const shareItems = [
   {
-    to: 'https://www.twitter.com',
-    option: <div>yo</div>
+    name: 'Twitter',
+    url: "https://twitter.com/intent/tweet?url=noveria.app&text=Check%20out%20Noveria,%20the%20browser%20based%20crypto%20portfolio%20tracker!&via=aidankeay",
+    icon: <FaTwitter size="1.125rem"/>
   },
   {
-    to: 'https://www.instragram.com',
-    option: <div>yo</div>
+    name: 'Reddit',
+    url: "https://reddit.com/submit?url=noveria.app&title=Check%20out%20Noveria,%20the%20browser%20based%20crypto%20portfolio%20tracker!",
+    icon: <FaReddit size="1.125rem"/>
   },
   {
-    to: 'https://www.facebook.com',
-    option: <div>yo</div>
-  },
-  {
-    to: 'mailto%3Aperson%40domain.com%3Fsubject%3DCheck%20out%20Noveria%26body%3DYou%20should%20try%20out%20Noveria%2C%20an%20accountless%20cryptocurrency%20portfolio%20tracker.',
-    option: <div>yo</div>
+    name: 'Facebook',
+    url: 'https://www.facebook.com/sharer.php?u=noveria.app',
+    icon: <FaFacebook size="1.125rem"/>
   }
 ]
 
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+`
 
-export const ShareList = () => {
-    return shareItems.map(item => {
-      return {
-        onClick: () => {},
-        title: item.option,
-      }
-    })
+export const useShareList = () => {
+    const Icon = ({icon, name}) => (
+      <Wrapper>
+        {icon}
+        <p css={`margin-top: 0.15rem;`}>{name}</p>
+      </Wrapper>
+    )
+    return shareItems.map(({url, icon, name}) => (
+      <Link external to={url}>
+        <ListItem left={<Icon icon={icon} name={name}/>}/>
+      </Link>
+    ))
 }
