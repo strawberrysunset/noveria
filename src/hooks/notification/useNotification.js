@@ -1,30 +1,14 @@
 import React from 'react'
+import {createPopUp} from './createPopUp'
 
 export const reducer = (state, action) => {
   switch (action.type) {
-    case 'set_status_showing' : {
-      return {...state, status: {
-        ...state.status,
-        showing: action.showing
-     } }
+    case 'set_message' : {
+      return {...state, message : action.message}
     }
-    case 'set_status_message' : {
-      return {...state, status: {
-        ...state.status,
-        message : action.message
-     } }
-    }
-    case 'set_popUp_showing' : {
-      return {...state, popUp: {
-        ...state.popUp,
-        showing : action.showing
-     } }
-    }
-    case 'set_popUp_content' : {
-      return {...state, popUp: {
-        ...state.popUp,
-        content : action.content
-     } }
+    case 'set_popUp' : {
+      const popUp = createPopUp({handleClose: () => {}, content: action.content})
+      return {...state, popUp}
     }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`)
@@ -35,7 +19,10 @@ export const reducer = (state, action) => {
 export const middleware = (state, dispatch, action) => {
   switch(action.type) {
     case 'showPopUp': {
-      return dispatch({ type: 'set_popUp_content', content: action.content })
+      return dispatch({ type: 'set_popUp', content: action.content })
+    }
+    case 'hidePopUp': {
+      return dispatch({ type: 'set_popUp', content: null })
     }
     default: {
       dispatch(action)
@@ -44,15 +31,10 @@ export const middleware = (state, dispatch, action) => {
 }
 
 export const useNotification = () => {
-  const [notification, updateNotifcation] = React.useReducer(reducer, {
-    popUp : {
-      showing: false,
-      content: undefined
-    },
-    status : {
-      showing: true,
-      message : 'Welcome to Noveria.'
-    }
+  const [notification, dispatch] = React.useReducer(reducer, {
+    popUp : null,
+    message : 'Welcome to Noveria.'
   })
+  const updateNotifcation = (action) => middleware(notification, dispatch, action)
   return {notification, updateNotifcation}
 }
