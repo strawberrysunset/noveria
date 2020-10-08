@@ -4,13 +4,12 @@ import styled from 'styled-components'
 const Wrapper = styled.div`
   display: grid;
   grid-auto-flow: column;
-  grid-gap: 1rem;
   max-width: min-content;
   align-items: center;
 `
 
 const Option = styled.p`
-  font-size: ${(props) => props.theme.typeScale.bodySmall};
+  padding: 0.25rem 0.5rem;
   color: ${(props) => {
     return props.selected ? props.theme.colors.neutral[1600] : props.theme.colors.neutral[800]
   }};
@@ -28,7 +27,7 @@ export const OptionsBar = ({ options, ...rest }) => {
   return (
     <Wrapper {...rest}>
       {options.map(({value, action}, idx) => (
-        <Option selected={selected === idx} onClick={() => {
+        <Option key={idx} selected={selected === idx} onClick={() => {
           setSelected(idx)
           action()
         }}>{value}</Option>
