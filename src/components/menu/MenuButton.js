@@ -22,10 +22,10 @@ const Wrapper = styled.a`
 
 export const MenuButton = ({...rest}) => {
 
-  const {isOpen, itemsHistory, updateMenu} = useMenu()
+  const {isOpen, listHistory, updateMenu} = useMenu()
 
   const clickHandler = () => {
-    if (itemsHistory.length > 1){
+    if (listHistory.length > 1){
       updateMenu({type : 'go_back'})
       return
     }
@@ -35,7 +35,7 @@ export const MenuButton = ({...rest}) => {
   return (
     <Wrapper onClick={clickHandler} {...rest}>
       {isOpen ? (
-        (itemsHistory.length > 1) ? <BackIcon size="1.75rem"/> : <CloseIcon size="2rem"/>
+        (listHistory.length > 1) ? <BackIcon size="1.75rem"/> : <CloseIcon size="2rem"/>
       ) : (
         <HamburgerIcon size="2rem"/>
       )}
