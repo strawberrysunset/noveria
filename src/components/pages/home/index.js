@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components/macro'
+import styled, {css} from 'styled-components/macro'
 import { Balance } from './Balance'
 import { History } from './History'
 import { Breakdown } from './Breakdown'
@@ -14,7 +14,6 @@ const Wrapper = styled.div`
   width: 100%;
   display: grid;
   grid-gap: 1px;
-  /* align-items: stretch; */
 
   grid-template-columns: 1fr;
   grid-template-areas:
@@ -23,13 +22,15 @@ const Wrapper = styled.div`
     'history'
     'breakdown';
 
+  ${props => !props.isMobile && css`overflow: hidden;`}
+
   @media (min-width: 48rem) {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto 3fr 5fr;
     grid-template-areas:
       'markets markets'
       'balance history'
-      'breakdown breakdown';
+      'balance breakdown';
   }
 
   background: ${(props) => props.theme.colors.neutral[300]};
@@ -41,15 +42,15 @@ const Wrapper = styled.div`
 // const Rebounder = styled(PulldownRebound)``
 export const Home = () => {
 
-  // const {notification} = useNotification()
+  const {popUp, updateNotifcation} = useNotification()
 
-  // React.useEffect(() => {
-  //   dispatch({type: 'showPopUp', content: <Greeting/>})
-  // }, [])
+  React.useEffect(() => {
+    updateNotifcation({type: 'showPopUp', content: <Greeting/>})
+  }, [])
 
   return (
     <Wrapper>
-      {/* </Rebounder> */}
+      {popUp}
       <MarketBar
         css={`
           grid-area: markets;
