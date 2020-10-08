@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import { IoMdCloudyNight as DarkModeIcon } from 'react-icons/io'
+import { MdBrightness2 as DarkModeIcon } from 'react-icons/md'
 
 const Icon = styled(DarkModeIcon)`
   width: 1.5rem;
@@ -12,5 +12,5 @@ const Icon = styled(DarkModeIcon)`
 `
 
 export const DarkModeButton = ({ ...rest }) => {
-  return <Icon {...rest} />
+  return <Icon title="Toggle dark mode." {...rest} />
 }
