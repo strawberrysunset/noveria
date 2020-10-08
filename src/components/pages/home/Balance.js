@@ -1,10 +1,11 @@
 import React from 'react'
 import styled, {css} from 'styled-components/macro'
-import {Card, Price, IndicatorColor } from '../../common'
+import {Card, Price, IndicatorColor, Doughnut, Spinner} from '../../common'
 import {MdAccountBalanceWallet as Icon, MdArrowDropUp as Arrow, MdRefresh } from 'react-icons/md'
 import {motion} from 'framer-motion'
 import {useSettings, usePortfolio} from '../../../context'
 import {useQueryCache} from 'react-query'
+import {useFormatPrice} from '../../../hooks/common'
 
 const Wrapper = styled.div`
   display: flex;
@@ -12,6 +13,7 @@ const Wrapper = styled.div`
   align-items: center;
   flex-direction: column;
   padding: 2rem 1.5rem;
+  padding-bottom: 5rem;
   height: 100%;
 `
 
@@ -32,11 +34,25 @@ const IndicatorValue = styled.p`
   font-size: ${(props) => props.theme.typeScale.body};
   margin-bottom: 0.25rem;
   font-weight: 600;
+  margin-left: -0.5rem;
+  margin-right: 1rem;
 `
 const IndicatorArrow = styled(Arrow)`
-  height: 2rem;
-  width: 2rem;
-  transform: ${props => (props.value >= 0) ? css`rotate(0deg)` : css`rotate(180deg)`};
+  height: 2.75rem;
+  width: 2.75rem;
+  ${props => {
+    if (props.value >= 0) {
+      return css`
+        transform: rotate(0deg);
+        margin-bottom: 0.5rem;
+      `
+    }
+    return css`
+      transform: rotate(180deg);
+      margin-bottom: 0.7rem;
+    ` 
+  }};
+
 `
 
 const HeaderItemsWrapper = styled.div`
@@ -75,14 +91,35 @@ const Refresh = styled.p`
   margin-top: 0.25rem;
 `
 
+const Color = styled(IndicatorColor)`
+  display: flex;
+  align-items: center;
+  margin-bottom: -1rem;
+`
+
+
+const Ring = styled(Doughnut)`
+  position: relative;
+`
+const Label = styled.div`
+  top: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+`
+
 export const Balance = ({ ...rest }) => {
 
-  const {isFetching, refetchQueries} = useQueryCache()
-  const {total, totalBTC, isLoading} = usePortfolio()
+  const {total, totalBTC, change, isLoading, refresh} = usePortfolio()
+  const {formatPrice} = useFormatPrice()
 
   const headerItems = (
-    <HeaderItemsWrapper onClick={refetchQueries}>
-      <RefreshIcon spin={isFetching} size="1.25rem"/>
+    <HeaderItemsWrapper onClick={refresh}>
+      <RefreshIcon size="1.25rem"/>
       <Refresh>Refresh</Refresh>
     </HeaderItemsWrapper>
   )
@@ -90,12 +127,19 @@ export const Balance = ({ ...rest }) => {
   return (
     <Card label="Balance" icon={Icon} items={headerItems} {...rest}>
       <Wrapper>
-        <IndicatorColor value={-2}>
-          <IndicatorArrow value={-1}/>
-          <IndicatorValue></IndicatorValue>
-        </IndicatorColor>
-        <Total><Price>{isLoading ? 0 : total}</Price></Total>
-        <AltTotal>(<Price currency="btc">{isLoading ? 0 : totalBTC}</Price>)</AltTotal>
+        {/* <Ring data={[ {x: 1, y: 120 }, { x: 2, y: 150 }, { x: 3, y: 75 }]}> */}
+          <Label>
+            {isLoading ? null : <Color value={change['24h'].percentage}>
+              <IndicatorArrow value={change['24h'].percentage}/>
+              <IndicatorValue>{change['24h'].percentage.toFixed(2) + '%'}</IndicatorValue>
+            </Color>
+            }
+            <Spinner/>
+            <Total>{isLoading ? 0 : formatPrice(total)}</Total>
+            <AltTotal>(<Price currency="btc">{isLoading ? 0 : totalBTC}</Price>)</AltTotal>
+          </Label>
+        {/* </Ring> */}
+        
       </Wrapper>
     </Card>
   )
