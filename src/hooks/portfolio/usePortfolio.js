@@ -1,10 +1,11 @@
 import React from 'react'
-import {useQuery} from 'react-query'
+import {useQuery, useQueryCache} from 'react-query'
 import {generateUniqueID} from 'utilities'
 import {useSettings} from '../../context'
 import {createPortfolio} from './createPortfolio'
 import {useExchangeRates, useSupportedCurrencies} from '../../hooks/api'
 import {getPortfolioHistory} from './getPortfolioHistory'
+import {useLocalStorageSync} from '../misc'
 
 export const reducer = (assets, action) => {
   switch (action.type) {
@@ -17,8 +18,8 @@ export const reducer = (assets, action) => {
     case 'remove_all_assets': {
       return []
     }
-    case 'set_portfolio' : {
-      return action.portfolio
+    case 'set_assets' : {
+      return action.assets
     }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`)
@@ -71,6 +72,11 @@ export const usePortfolio = () => {
   const {currency} = useSettings()
   const {supportedCurrencies} = useSupportedCurrencies() 
   const {exchangeRates} = useExchangeRates()
+  const queryCache = useQueryCache()
+
+  useLocalStorageSync(assets, 'noveria-portfolio', (localAssets) => {
+      updatePortfolio({type: 'set_assets', assets: localAssets})
+  }, [assets])
 
   const {data: portfolio, ...asyncInfo} = useQuery(['portfolio-data', supportedCurrencies, assets, currency], async () => {
     return createPortfolio({assets, currency, exchangeRates})
@@ -83,12 +89,16 @@ export const usePortfolio = () => {
     return {history, ...asyncInfo}
   }
 
+  const refresh = () => {
+    queryCache.refetchQueries(['portfolio-data', supportedCurrencies, assets, currency])
+  }
 
   return {
     ...(portfolio), 
     ...asyncInfo, 
     usePortfolioHistory, 
-    updatePortfolio
+    updatePortfolio,
+    refresh
   }
 }
 
