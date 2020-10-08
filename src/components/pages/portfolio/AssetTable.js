@@ -1,12 +1,15 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 import {Card, Table, Price, Percentage} from '../../common'
 import {MdPieChart as PieIcon} from 'react-icons/md'
 import {AssetTablePlaceholder} from './AssetTablePlaceholder'
 import {MdRemoveCircle} from 'react-icons/md'
 import {usePortfolio} from '../../../context'
+import {useFormatPrice} from '../../../hooks/common'
 
-const AssetTableCard = styled(Card)``
+const AssetTableCard = styled(Card)`
+  
+`
 
 const Content = styled.div`
   display: flex;
@@ -14,6 +17,8 @@ const Content = styled.div`
   flex-direction: column;
   height: 100%;
   width: 100%;
+  ${props => props.isMobile && css`padding-bottom: 2rem;`}
+  ${props => props.isMobile && css`overflow: auto;`}
 `
 
 const Remove = styled(MdRemoveCircle)`
@@ -38,6 +43,8 @@ const RemoveAll = styled.p`
 const AssetsTable = styled(Table)`
   grid-template-columns: min-content 1fr repeat(3, 0px) 1fr;
   width: 100%;
+  ${props => !props.isMobile && css`overflow: auto;`}
+  
 
   td:not(:first-child),
   th:not(:first-child) {
@@ -52,7 +59,7 @@ const AssetsTable = styled(Table)`
     grid-template-columns: repeat(4, 1fr) repeat(1, 0px) 1fr;
   }
   @media (min-width: 74rem) {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(6, auto);
   }
 `
 
@@ -94,37 +101,31 @@ const headerData = [
 
 export const AssetTable = ({ ...rest }) => {
 
-  const {assets, total, isLoading, isFetching, isError, error, updatePortfolio} = usePortfolio()
+  const {
+    assets, 
+    total, 
+    isLoading, 
+    isFetching, 
+    isError, 
+    error, 
+    updatePortfolio
+  } = usePortfolio()
+  const {formatPrice} = useFormatPrice()
+
+  // const [ass, setAss] = React.useState([])
+  // const [tota, setTota] = React.useState(0)
 
 
-  const [ass, setAss] = React.useState([])
-  const [tota, setTota] = React.useState(0)
-
-
-  React.useEffect(() => {
-    if (assets) setAss(assets)
-    if (total) setTota(total)
-  }, [isFetching])
+  // React.useEffect(() => {
+  //   if (assets) setAss(assets)
+  //   if (total) setTota(total)
+  // }, [isFetching])
 
   if (isError) {
     return <p>{error.message}</p>
   }
-
-  const rowData = ass.map(asset => {
-    return [
-      <Logo icon={asset.image}>{asset.name}</Logo>,
-      asset.amount,
-      <Price>{asset.price}</Price>,
-      <Price currency='btc'>{asset.priceBTC}</Price>,
-      <Percentage>{asset.price / tota * 100}</Percentage>,
-      <Remove
-        onClick={() => updatePortfolio({ type: 'remove_asset', id: asset.uniqueID })}
-      />,
-    ]
-  })
   
-
-  const removeButton = () => (
+  const removeButton = (
     <RemoveAll onClick={() => updatePortfolio({ type: 'remove_all_assets' })}>
         Remove All
     </RemoveAll>
@@ -133,10 +134,21 @@ export const AssetTable = ({ ...rest }) => {
   return (
     <AssetTableCard label="Portfolio" icon={PieIcon} items={removeButton} {...rest}>
       <Content>
-        {/* {assets.length === 0 
-          ? <Placeholder /> */}
-         <AssetsTable headerData={headerData} rowData={rowData} />
-        
+        {(isLoading ? [] : assets.length) === 0 
+          ? <Placeholder /> :
+         <AssetsTable headerData={headerData} rowData={isLoading ? [] : assets.map(asset => {
+            return [
+              <Logo icon={asset.image}><p>{asset.name}</p></Logo>,
+              asset.amount,
+              formatPrice(asset.price),
+              formatPrice(asset.priceBTC, 'btc'),
+              <Percentage>{asset.price / total * 100}</Percentage>,
+              <Remove
+                onClick={() => updatePortfolio({ type: 'remove_asset', id: asset.uniqueID })}
+              />,
+            ]
+          })} />
+        }
       </Content>
     </AssetTableCard>
   )
