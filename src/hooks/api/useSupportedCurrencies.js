@@ -3,7 +3,8 @@ import {getSupportedCurrencies} from '../../api'
 
 export const useSupportedCurrencies = () => {
   const {data, ...asyncInfo} = useQuery('supportedCurrencies', getSupportedCurrencies)
-  return {supportedCurrencies: data, ...asyncInfo}
+  const supportedCurrencies = data ? data.sort() : undefined
+  return {supportedCurrencies, ...asyncInfo}
 }
 
 export const prefetchSupportedCurrencies = () => {
