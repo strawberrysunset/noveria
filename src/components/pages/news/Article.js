@@ -51,7 +51,7 @@ const Subtitle = styled.div`
   white-space: nowrap;
   gap: 0.5rem;
   margin-bottom: 3rem;
-  font-size: ${props => props.theme.typeScale.caption};
+  font-size: ${props => props.theme.typeScale.bodySmall};
 `
 
 const BackArrow = styled(Arrow)`
@@ -70,6 +70,7 @@ const BackWrapper = styled(Link)`
   align-items: center;
   gap:1rem;
   margin-bottom: 3rem;
+  font-size: ${props => props.theme.typeScale.body};
   :hover {
     color: ${props => props.theme.colors.neutral[800]}
   }
@@ -95,6 +96,7 @@ const Attribution = styled.p`
   white-space: nowrap;
   display: flex;
   flex-wrap: wrap;
+  font-size: ${props => props.theme.typeScale.bodySmall};
 `
 
 export const Article = ({...rest}) => {
@@ -108,7 +110,7 @@ export const Article = ({...rest}) => {
         <Wrapper { ...rest}>
           <BackWrapper to='/news'>
             <BackArrow size="1.5rem"/>
-            <p css={`margin-top: 0.2em;`}>Go Back</p>
+            <p css={`margin-top: 0.2em;`}>Back to Articles</p>
           </BackWrapper>
           
           <Title>{article.title}</Title>
@@ -124,7 +126,7 @@ export const Article = ({...rest}) => {
             {article.text}
           </Text>
           <Attribution>
-            <p css={`margin-right: 0.5rem;`}>Article provided by CoinTelegraph</p> 
+            <p css={`margin-top: 0.15rem; margin-right: 0.5rem;`}>Article provided by CoinTelegraph</p> 
             <Link external to={article.url}> 
               <ArticleArrow/>
               (Full Article)

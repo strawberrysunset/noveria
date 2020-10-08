@@ -11,6 +11,8 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 2rem;
+  text-align: center;
 `
 const Title = styled.h1`
   margin: 2rem 0;
@@ -32,7 +34,7 @@ export const Error = () => {
   return (
     <Wrapper>
       <Icon/>
-      <Title>Uh oh. Looks like you've stumbled upon a non-existent url.</Title>
+      <Title>Uh oh. Looks like you've stumbled upon a non-existent page.</Title>
       <SubTitle to="/">Go Home</SubTitle>
     </Wrapper>
   )

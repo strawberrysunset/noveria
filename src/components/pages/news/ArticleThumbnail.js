@@ -18,6 +18,7 @@ const Title = styled.h1`
 
 const Author = styled.p`
   font-size: ${props => props.theme.typeScale.bodySmall};
+  margin-right: 0.5rem;
 `
 
 const Thumbnail = styled.img`
@@ -55,7 +56,7 @@ const Description = styled.p`
 
 const SubText = styled.div`
   display: flex;
-  gap: 0.5rem;
+  gap: 0.25rem;
 `
 
 const ReadArticle = styled.div`
@@ -103,9 +104,9 @@ export const ArticleThumbnail = ({idx, article, ...rest}) => {
             <Description>{article.text.substr(0, 100) + '...'}</Description>
             <SubText>
               <AuthorIcon size="1rem"/>
-              <Author>{article.author}</Author>
-              /
-              <DateIcon size="1rem"/>
+              <Author>{article.author}</Author> 
+              / 
+              <DateIcon css="margin-left: 0.5rem;" size="1rem"/>
               <Date>{article.date}</Date>
             </SubText>
           </Text>

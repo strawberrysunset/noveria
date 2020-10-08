@@ -5,11 +5,12 @@ import {ArticleThumbnail} from './ArticleThumbnail'
 import {BiNews as NewsIcon} from 'react-icons/bi'
 import {Switch, Route} from 'react-router-dom' 
 import {Article} from './Article'
+import {Spinner} from '../../common'
 
 const Wrapper = styled.div`
   background: ${props => props.theme.colors.neutral[300]};
   width: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
 `
 
 const ThumbnailsWrapper = styled.div`
@@ -28,13 +29,15 @@ export const News = ({ ...rest}) => {
     return <ArticleThumbnail idx={idx} key={idx} article={article}/>
   })
 
+  
+
   return (
       <Wrapper label="News" icon={NewsIcon} {...rest}>
         <Switch>
           <Route path={`/news/:articleID`} component={Article}/>
-          <ThumbnailsWrapper>
+          {isLoading ? <Spinner css={'margin: auto;'}/> : <ThumbnailsWrapper>
             {thumbnails}
-          </ThumbnailsWrapper>  
+          </ThumbnailsWrapper>}
         </Switch>
       </Wrapper>
   )
