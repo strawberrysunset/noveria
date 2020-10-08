@@ -15,7 +15,7 @@ export {Home, Portfolio, Markets}
 
 export const pages = [
   {
-    path: '/',
+    path: '/home',
     icon: HomeIcon,
     component: Home,
   },
