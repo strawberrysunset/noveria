@@ -4,16 +4,10 @@ import coinGeckoImage from './CoinGecko-WhiteText.png'
 import {Link} from '../components/common'
 
 const Logo = styled.img`
-  height: 2.5rem;
+  height: 2.25rem;
 `
 
 export const CoinGeckoLogo = ({ ...rest }) => {
-
-  // Preload the image.
-  React.useEffect(() => {
-    const img = new Image();
-    img.src = coinGeckoImage;
-  }, [])
 
   return (
     <Link external to="https://www.coingecko.com">
