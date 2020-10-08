@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, {createGlobalStyle} from 'styled-components/macro'
+import styled, {css, createGlobalStyle} from 'styled-components/macro'
 import {reset} from 'utilities'
 import {Nav} from './nav'
 import {Header, LoadingScreen} from './misc'
@@ -20,12 +20,15 @@ const GlobalStyling = createGlobalStyle`
   }
   html {
     font-family: 'Overpass', sans-serif;
+    
     user-select: none;
     color : ${(props) => props.theme.colors.neutral[1600]};
     list-style: none;
     text-decoration:none; 
     /* overflow-y: auto;  */
-    
+  }
+  body {
+    font-size: ${(props) => props.theme.typeScale.body};
   }
   input, button { 
       border:none;
@@ -48,10 +51,13 @@ const GlobalStyling = createGlobalStyle`
       color: ${props => props.theme.colors.neutral[800]}
     }
   }
+  p {
+    margin-bottom: -0.2rem;
+  }
 `
 const SiteWrapper = styled.div`
   background: ${(props) => props.theme.colors.neutral[100]};
-  color: ${(props) => props.theme.colors.neutral[1400]};
+  color: ${(props) => props.theme.colors.neutral[1600]};
   height: 100vh;
   max-height: 100vh;
 
@@ -85,7 +91,7 @@ const NavSticky = styled(Nav)`
   left: 0;
   right: 0;
   width: 100%;
-  height: 3.5rem;
+  height: 3rem;
   border-top: 1px solid ${(props) => props.theme.colors.neutral[200]};
   @media (min-width: 48rem) {
     grid-auto-flow: row;
@@ -100,13 +106,13 @@ const NavSticky = styled(Nav)`
 
 const StyledSwitch = styled(Switch)`
   flex-grow: 1;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 `
 
 export const App = () => {
 
   React.useEffect(() => {
-    queryCache.prefetchQuery('supportedCurrencies', getSupportedCurrencies)
     queryCache.prefetchQuery('newsFeed', getNewsFeed)
   }, [])
 
@@ -122,7 +128,7 @@ export const App = () => {
           <NavSticky css={`z-index: 2;`}/>
           <StyledSwitch>
             {pages.map((page, idx) => (
-              <Route exact={page.path === '/'} key={idx} path={page.path} component={page.component} />
+              <Route exact={page.path === '/home'} key={idx} path={page.path} component={page.component} />
             ))}
             <Route component={Error}></Route>
           </StyledSwitch>
