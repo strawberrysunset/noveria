@@ -2,7 +2,7 @@ import {jsonFetch} from 'utilities'
 import {getCoinColor} from './getCoinColor'
 
 export const getCoinData = async ({coinIDs = '', currency ='btc', page = 1, perPage = 250} = {}) => {
-  const data = await jsonFetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&ids=${coinIDs}&order=market_cap_desc&per_page=${perPage}&page=${page}&sparkline=true`)
+  const data = await jsonFetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&ids=${coinIDs}&order=market_cap_desc&per_page=${perPage}&page=${page}&sparkline=true&price_change_percentage=7d`)
   // const colors = await getCoinColor(coinIDs).catch(() => '#ccc')
   return data.map(coin => {
     return {
@@ -17,12 +17,19 @@ export const getCoinData = async ({coinIDs = '', currency ='btc', page = 1, perP
       spotPrice: {
         value: coin.current_price,
         change: {
+          '1h' : {
+            percentage: coin.price_change_percentage_1h_in_currency,
+          },
           '24h' : {
             value: coin.price_change_24h,
             percentage: coin.price_change_percentage_24h,
+          },
+          '7d' : {
+            percentage: coin.price_change_percentage_7d_in_currency
           }
         }
       },
+      ath: coin.ath,
       supply: coin.circulating_supply,
       marketCap: {
         value: coin.market_cap,
@@ -34,7 +41,9 @@ export const getCoinData = async ({coinIDs = '', currency ='btc', page = 1, perP
         }
       },
       sparkline: {
-        '7d': coin.sparkline_in_7d.price
+        '7d': coin.sparkline_in_7d.price.reduce((total, data, idx) => {
+          return (idx % 2) ? [...total, data] : total
+        }, [])
       },
       totalVolume: coin.total_volume,
       color: '#114287'
