@@ -4,31 +4,45 @@ import {
   VictoryLine,
   VictoryTooltip,
   VictoryVoronoiContainer,
+  VictoryContainer,
+  VictoryGroup,
+  VictoryChart
 } from "victory";
 import { Tooltip } from "./Tooltip";
-import {ResponsiveContainer} from './ResponsiveContainer'
+// import {ResponsiveContainer} from './ResponsiveContainer'
+import {useResize} from '../../../utils'
 
-export const Line = (props) => {
+export const Line = ({lineProps, showLabels = false, color, ...rest}) => {
 
   const theme = useTheme()
+  const componentRef = React.useRef();
+  const {width, height} = useResize(componentRef)
+
+  const labelProps = showLabels ? {
+    labels: () => "",
+    labelComponent : <VictoryTooltip flyoutComponent={<Tooltip />}/>
+  } : []
 
   return (
-    <ResponsiveContainer
+    <VictoryGroup
       padding={0}
+      ref={componentRef}
       domainPadding={{ x: 0, y: 0 }}
-      containerComponent={<VictoryVoronoiContainer />}
+      containerComponent={showLabels ? <VictoryVoronoiContainer/> : <VictoryGroup/>}
+      {...rest}
     >
       <VictoryLine
         style={{
           data: {
-            stroke: theme.colors.neutral[1200],
-            strokeWidth: '1px',
+            stroke: color || theme.colors.neutral[800],
+            strokeWidth: '2px', 
           }
         }}
-        labels={() => ""}
-        labelComponent={<VictoryTooltip flyoutComponent={<Tooltip />} />}
-        {...props}
+        width={width}
+        height={height}
+        {...labelProps}
+        {...lineProps}
       />
-    </ResponsiveContainer>
-  );
+    </VictoryGroup>
+  )
 }   
