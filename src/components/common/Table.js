@@ -6,6 +6,7 @@ const TableWrapper = styled.table`
   border-collapse: collapse;
   grid-template-columns: repeat(${(props) => props.colNum}, 1fr);
   grid-template-rows: auto;
+  text-align: left;
 
   thead {
     position: static;
@@ -24,8 +25,7 @@ const TableWrapper = styled.table`
 
   th,
   td {
-    text-align: left;
-    padding: 1rem 0.5rem;
+    padding: 1rem 1rem;
     overflow: hidden;
     white-space: nowrap;
     /* text-overflow: ellipsis; */
@@ -34,7 +34,10 @@ const TableWrapper = styled.table`
     vertical-align: middle;
     display: flex;
     align-items: center;
-    
+    justify-content: flex-start;
+    > * {
+      flex-grow: 1;
+    }
   }
 
   th:first-child,
@@ -45,6 +48,7 @@ const TableWrapper = styled.table`
 
   th {
     position: sticky;
+    /* z-index: 2; */
     top: 0;
     border-bottom: 1px solid ${(props) => props.theme.colors.neutral[300]};
     background: ${(props) => props.theme.colors.neutral[100]};
