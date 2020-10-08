@@ -38,6 +38,10 @@ const AssetTable = styled(Table)`
 const ChartWrapper = styled.div`
   width: 200px;
 `
+
+const Weights = styled(WeightBar)`
+  width: 50%;
+`
 const headerData = ['Asset', 'Value', 'Change 24h']
 
 export const Breakdown = ({ ...rest }) => {
@@ -61,13 +65,8 @@ export const Breakdown = ({ ...rest }) => {
   return (
     <Wrapper icon={Icon} label="Breakdown" {...rest}>
       <ContentWrapper>
-        {/* <WeightBar/> */}
+        <Weights/>
         <div>Biggest Gainer: {biggestGainer?.name}</div>
-        <ChartWrapper>
-          <Pie data={[
-            { x: 1, y: 120 }, { x: 2, y: 150 }, { x: 3, y: 75 }
-          ]}/>
-        </ChartWrapper>
         {/* <div>Largest Value: {largestValue?.name}</div> */}
         
         {/* <AssetTable headerData={headerData} rowData={rowData}/> */}
