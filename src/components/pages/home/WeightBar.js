@@ -8,6 +8,7 @@ const Wrapper = styled.div`
   height: 1rem;
   display: flex;
   align-items: stretch;
+  border: 1px solid ${props => props.theme.colors.neutral[300]};
   background: ${props => props.theme.colors.neutral[300]};
 `
 
@@ -18,11 +19,11 @@ const Item = styled.div`
 
 export const WeightBar = ({...rest}) => {
 
-  const {assets} = usePortfolio()
+  const {assets, isLoading} = usePortfolio()
 
   return (
     <Wrapper {...rest}>
-      {assets.map(asset => {
+      {isLoading ? [] : assets.map(asset => {
         return <Item color={asset.color} weight={asset.weight} />
       })}
     </Wrapper>
