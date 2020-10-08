@@ -49,7 +49,7 @@ export const AssetManager = ({ ...rest }) => {
     }
   })
 
-  const listOptions = coinData.map((coin, idx) => {
+  const listOptions = coinData.sort((a, b) => a.name > b.name).map((coin, idx) => {
     return (
       <option key={idx} value={coin.id}>
         {coin.name}
@@ -68,6 +68,7 @@ export const AssetManager = ({ ...rest }) => {
             onChange={handleChange}
             disabled={isLoading}
             label="Asset" // For component
+            value="bitcoin"
           >
             {isLoading ? <option>Loading...</option> : listOptions}
           </Select>
@@ -80,7 +81,7 @@ export const AssetManager = ({ ...rest }) => {
             onChange={handleChange}
             disabled={isLoading}
           />
-          <Button type="submit" disabled={!values.amount || isLoading || isSubmitting}>{isLoading ? 'Creating asset...' : '+ Add asset'}</Button>
+          <Button type="submit" disabled={!values.amount || isLoading || isSubmitting}>{'+ Add asset'}</Button>
           <Error>{error}</Error>
         </Inputs>
       </Wrapper>
