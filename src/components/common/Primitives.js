@@ -31,6 +31,7 @@ export const ButtonWrapper = styled.button`
 
 const Label = styled.p`
   width: 100%;
+  color: ${(props) => props.theme.colors.neutral[1200]};
   font-size: ${(props) => props.theme.typeScale.bodySmall};
 `
 
