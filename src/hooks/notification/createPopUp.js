@@ -1,9 +1,6 @@
-import { PopUp } from '../../components/common'
+import { PopUp } from '../../components/misc'
+import React from 'react'
 
-export function createPopUp(handleClose, content) {
-  return () => (
-    <PopUp handleClose={handleClose} showing={showing}>
-      {content}
-    </PopUp>
-  )
+export const createPopUp = ({handleClose, content}) => {
+  return <PopUp content={content} handleClose={handleClose}/>
 }
