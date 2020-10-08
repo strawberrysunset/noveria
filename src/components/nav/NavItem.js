@@ -3,10 +3,6 @@ import styled, {css} from 'styled-components/macro'
 import {Link} from '../common'
 import {useTheme} from '../../context'
 
-const active = css`
-  background: ${(props) => props.theme.colors.neutral[300]};
-`
-
 const Wrapper = styled(Link)`
   display: flex;
   flex-direction: column;
@@ -14,14 +10,14 @@ const Wrapper = styled(Link)`
   justify-content: center;
   background: ${(props) => {
     return (
-      props.active 
+      props.active === 'yes'
       ? 
       props.theme.colors.neutral[1200] 
-      : props.theme.colors.neutral[100] 
+      : props.theme.colors.neutral[500] 
     )
   }};
   :hover {
-    background: ${(props) => props.theme.colors.neutral[200]};
+    background: ${(props) => props.theme.colors.neutral[400]};
     transition: 0.15s ease;
   }
 `
@@ -37,12 +33,13 @@ export const NavItem = ({ path, icon: Icon, active }) => {
   const theme = useTheme()
 
   return (
-    <Wrapper active={active} to={path}>
+    <Wrapper active={active ? 'yes':undefined} to={path}>
       <Icon
-        size="1.5rem"
+        title={`Go to ${path.slice(1)} page.`}
+        size="1.333rem"
         color={active ? theme.colors.neutral[200] : theme.colors.neutral[1600]}
       />
-      <Text>{path.slice(1)}</Text>
+      {/* <Text>{path.slice(1)}</Text> */}
     </Wrapper>
   )
 }
