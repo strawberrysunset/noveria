@@ -1,4 +1,5 @@
 import React from 'react'
+import {useLocalStorageReducer} from '../../hooks/misc'
 
 export const reducer  = (settings, action) => {
   switch (action.type) {
@@ -8,8 +9,8 @@ export const reducer  = (settings, action) => {
     case 'set_theme' : {
       return {...settings, theme: action.theme}
     }
-    case 'set_save' : {
-      return {...settings, save: action.status}
+    case 'set_settings' : {
+      return action.settings
     }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`)
@@ -34,17 +35,16 @@ export const middleware = (updateSettings, settings, action) => {
 
 export const useSettings = () => {
 
-  const [settings, dispatch] = React.useReducer(reducer, {
+  const [settings, dispatch] = useLocalStorageReducer('noveria-settings', reducer, {
     theme: 'dark',
     currency: 'usd',
-    save: true
   })
 
   const updateSettings = (action) => middleware(dispatch, settings, action)
 
-  // useLocalStorageSync('noveria-settings', (localState) => {
+  // useLocalStorageSync(settings, 'noveria-settings', (localState) => {
   //   updateSettings({type: 'set_settings', settings: localState})
-  // })
+  // }, [settings])
 
   return {...settings, updateSettings}
 }
