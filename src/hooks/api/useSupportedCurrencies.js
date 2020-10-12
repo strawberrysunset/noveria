@@ -1,12 +1,11 @@
-import {useQuery, queryCache} from 'react-query'
+import {useQuery} from 'react-query'
 import {getSupportedCurrencies} from '../../api'
 
 export const useSupportedCurrencies = () => {
-  const {data, ...asyncInfo} = useQuery('supportedCurrencies', getSupportedCurrencies)
-  const supportedCurrencies = data ? data.sort() : undefined
-  return {supportedCurrencies, ...asyncInfo}
+  const {data, ...asyncInfo} = useQuery('supportedCurrencies', getSupportedCurrencies, {forceFetchOnMount: true, initialData: [], keepPreviousData: true})
+  return {supportedCurrencies: data, ...asyncInfo}
 }
 
-export const prefetchSupportedCurrencies = () => {
-  queryCache.prefetchQuery('supportedCurrencies', getSupportedCurrencies)
-}
+// export const prefetchSupportedCurrencies = () => {
+//   queryCache.prefetchQuery('supportedCurrencies', getSupportedCurrencies)
+// }
