@@ -6,13 +6,13 @@ import {useParams} from 'react-router-dom'
 import {useNewsFeed} from '../../../hooks/api'
 
 const Wrapper = styled.div`
-  padding: 3rem;
+  padding: 5rem;
   height: 100%;
+  width: 100%;
   overflow-y: auto;
-  @media(max-width: 48rem) {
-    padding: 2.5rem 1.5rem;
-  }
+  ${props => props.theme.isMobile && css`padding: 2rem;`}
   background: ${props => props.theme.colors.neutral[100]};
+  /* scroll-padding: 2em; */
 `
 
 const Title = styled.h1`
@@ -21,6 +21,7 @@ const Title = styled.h1`
   margin-bottom: 0.5em;
   line-height: 1.2;
   max-width: 40rem;
+  ${props => props.theme.isMobile && css`font-size: ${props => props.theme.typeScale.h3};`}
 `
 
 const Author = styled.p`
@@ -81,9 +82,9 @@ const BackWrapper = styled(Link)`
 
 const Text = styled.div`
   column-count: 2;
-  column-gap: 3rem;
-  line-height: 1.6;
-  max-width: 50rem;
+  column-gap: 4rem;
+  line-height: 1.7;
+  max-width: 65rem;
   @media(max-width: 48rem) {
     column-count: 1;
   }
@@ -92,11 +93,11 @@ const Text = styled.div`
 
 const Attribution = styled.p`
   color: ${props => props.theme.colors.neutral[800]};
-  margin-bottom: 4rem;
   white-space: nowrap;
   display: flex;
   flex-wrap: wrap;
   font-size: ${props => props.theme.typeScale.bodySmall};
+  margin-bottom: 4rem;
 `
 
 export const Article = ({...rest}) => {
@@ -115,10 +116,10 @@ export const Article = ({...rest}) => {
           
           <Title>{article.title}</Title>
           <Subtitle>
-            <AuthorIcon size="1rem"/>
+            <AuthorIcon css="margin-right: -0.25rem;" size="0.9rem"/>
             <Author>{article.author}</Author>
-            /
-            <DateIcon size="1rem"/>
+            <DateIcon css="margin-left: 0.5rem; margin-right: -0.25rem;"
+            size="0.9rem"/>
             <Date>{article.date}</Date>
             
           </Subtitle>

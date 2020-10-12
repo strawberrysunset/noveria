@@ -1,14 +1,17 @@
 import React from 'react'
 import styled, {css} from 'styled-components'
-import {Card, Table, Price, Percentage} from '../../common'
+import {Card, Table, IndicatorColor, CryptoLogo} from '../../common'
 import {MdPieChart as PieIcon} from 'react-icons/md'
 import {AssetTablePlaceholder} from './AssetTablePlaceholder'
 import {MdRemoveCircle} from 'react-icons/md'
 import {usePortfolio} from '../../../context'
 import {useFormatPrice} from '../../../hooks/common'
+import {useIsMobile} from 'utilities'
 
 const AssetTableCard = styled(Card)`
-  
+  overflow-x: none;
+  max-height: 100%;
+  overflow-y: auto;
 `
 
 const Content = styled.div`
@@ -16,9 +19,8 @@ const Content = styled.div`
   align-items: start;
   flex-direction: column;
   height: 100%;
-  width: 100%;
-  ${props => props.isMobile && css`padding-bottom: 2rem;`}
-  ${props => props.isMobile && css`overflow: auto;`}
+  min-width: 100%;
+  ${props => props.theme.isMobile && css`overflow: auto;`}
 `
 
 const Remove = styled(MdRemoveCircle)`
@@ -41,115 +43,155 @@ const RemoveAll = styled.p`
 `
 
 const AssetsTable = styled(Table)`
-  grid-template-columns: min-content 1fr repeat(3, 0px) 1fr;
-  width: 100%;
-  ${props => !props.isMobile && css`overflow: auto;`}
   
+  width: 100%;
+  ${props => !props.theme.isMobile && css`overflow-y: auto;`}
+  
+  grid-template-columns: auto 1fr repeat(6, auto);
 
-  td:not(:first-child),
-  th:not(:first-child) {
-    text-align: left;
-    justify-content: center;
+  @media (max-width: 102rem) {
+    grid-template-columns: auto 1fr repeat(5, auto);
+    td:nth-child(8n - 1), th:nth-child(8n-1) {
+      display: none;
+    }
   }
+  @media (max-width: 91rem) {
+    grid-template-columns: auto 1fr repeat(4, auto);
+    td:nth-child(8n - 2), th:nth-child(8n-2) {
+      display: none;
+    }
+  }
+  @media (max-width: 77rem) {
+    grid-template-columns: auto 1fr repeat(3, auto);
+    td:nth-child(8n - 3), th:nth-child(8n-3) {
+      display: none;
+    }
+  }
+  
+  ${props => {
+      if (!props.theme.isMobile){
+        return css`
+          @media (max-width: 70rem) {
+          grid-template-columns: auto 1fr repeat(2, auto);
+          td:nth-child(8n - 4), th:nth-child(8n-4) {
+            display: none;
+          }
+          }
+          @media(max-width: 55rem){
+            grid-template-columns: auto 1fr auto;
+            td:nth-child(8n - 5), th:nth-child(8n-5) {
+              display: none;
+            }
+          }
+        `
+      }
 
-  @media (min-width: 40rem) {
-    grid-template-columns: repeat(3, auto) repeat(2, 0px) auto;
-  }
-  @media (min-width: 60rem) {
-    grid-template-columns: repeat(4, 1fr) repeat(1, 0px) 1fr;
-  }
-  @media (min-width: 74rem) {
-    grid-template-columns: repeat(6, auto);
+      if (props.theme.isMobile){
+        return css`
+          @media (max-width: 41rem) {
+          grid-template-columns: auto 1fr repeat(2, auto);
+          td:nth-child(8n - 4), th:nth-child(8n-4) {
+            display: none;
+          }
+          }
+          @media(max-width: 30rem){
+            grid-template-columns: auto 1fr auto;
+            td:nth-child(8n - 5), th:nth-child(8n-5) {
+              display: none;
+            }
+          }
+        `
+      }
+    }
   }
 `
 
-
-const LogoAssetTableCard = styled.div`
-  display: grid;
-  grid-auto-flow: column;
-  grid-gap: 0.75rem;
-  align-items: center;
-`
-const Icon = styled.img`
-  height: 1.5rem;
-  width: 1.5rem;
-`
-
-const Logo = ({icon, children}) => {
-  return (
-    <LogoAssetTableCard>
-      <Icon src={icon}/>
-      {children}
-    </LogoAssetTableCard>
-  )
+const TableItem = ({right, children, ...rest}) => {
+  return <div css={right && 'text-align: right'} {...rest}>{children}</div>
 }
+
+const HeaderItem = styled(TableItem)`
+  color: ${props => props.theme.colors.neutral[1000]};
+`
 
 const Placeholder = styled(AssetTablePlaceholder)`
   flex-grow: 1;
   margin-bottom: 2rem;
 `
 
-
 const headerData = [
-  'Asset',
-  'Amount',
-  'Value (Fiat)',
-  'Value (BTC)',
-  'Weight',
-  'Remove',
+  <HeaderItem>Asset</HeaderItem>,
+  <HeaderItem>Amount</HeaderItem>,
+  <HeaderItem right>Asset Value (Fiat)</HeaderItem>,
+  <HeaderItem right>Asset Value (BTC)</HeaderItem>,
+  <HeaderItem right>Spot Price</HeaderItem>,
+  <HeaderItem right>Change (24H)</HeaderItem>,
+  <HeaderItem right>Portfolio Weight</HeaderItem>,
+  <HeaderItem right>Remove</HeaderItem>
 ]
 
 export const AssetTable = ({ ...rest }) => {
 
-  const {
-    assets, 
-    total, 
-    isLoading, 
-    isFetching, 
-    isError, 
-    error, 
-    updatePortfolio
-  } = usePortfolio()
   const {formatPrice} = useFormatPrice()
-
-  // const [ass, setAss] = React.useState([])
-  // const [tota, setTota] = React.useState(0)
-
-
-  // React.useEffect(() => {
-  //   if (assets) setAss(assets)
-  //   if (total) setTota(total)
-  // }, [isFetching])
-
-  if (isError) {
-    return <p>{error.message}</p>
-  }
+  const isMobile = useIsMobile(768)
+  const portfolio = usePortfolio()
+  const handleRemoveAll = () => portfolio.updatePortfolio({ type: 'remove_all_assets' });
   
-  const removeButton = (
-    <RemoveAll onClick={() => updatePortfolio({ type: 'remove_all_assets' })}>
-        Remove All
-    </RemoveAll>
-  )
+  const cardItems = <RemoveAll onClick={handleRemoveAll}>Remove All</RemoveAll>
+  const tableContent = React.useMemo(getTableContent, [portfolio.assets, isMobile])
 
   return (
-    <AssetTableCard label="Portfolio" icon={PieIcon} items={removeButton} {...rest}>
+    <AssetTableCard label="Portfolio" icon={PieIcon} items={cardItems} {...rest}>
       <Content>
-        {(isLoading ? [] : assets.length) === 0 
-          ? <Placeholder /> :
-         <AssetsTable headerData={headerData} rowData={isLoading ? [] : assets.map(asset => {
-            return [
-              <Logo icon={asset.image}><p>{asset.name}</p></Logo>,
-              asset.amount,
-              formatPrice(asset.price),
-              formatPrice(asset.priceBTC, 'btc'),
-              <Percentage>{asset.price / total * 100}</Percentage>,
-              <Remove
-                onClick={() => updatePortfolio({ type: 'remove_asset', id: asset.uniqueID })}
-              />,
-            ]
-          })} />
-        }
+        {tableContent}
       </Content>
     </AssetTableCard>
   )
+
+  function getTableContent () {
+
+    if (portfolio.assets.length === 0){
+      return <Placeholder />
+    }
+    if (portfolio.isError) {
+      return <p>{portfolio.error.message}</p>
+    }
+
+    const rowData = portfolio.assets.map((asset) => {
+
+      const formattedPrice =formatPrice(asset.price);
+      const formattedPriceBTC = formatPrice(asset.priceBTC, 'btc')
+      const formattedSpotPrice = formatPrice(asset.spotPrice.value)
+      const formattedSpotPriceChange24H = asset.spotPrice.change['24h'].percentage.toFixed(2) + '%'
+      const formattedWeight = (asset.weight * 100).toFixed(2) + '%'
+      
+      const handleRemove = () => portfolio.updatePortfolio({ type: 'remove_asset', uniqueID: asset.uniqueID })
+      const bigLogo = <CryptoLogo css="margin-right: 1rem" icon={asset.image} name={asset.name} symbol={asset.symbol.toUpperCase()}/>;
+      const smallLogo = <CryptoLogo icon={asset.image} name={asset.symbol.toUpperCase()} symbol={''}/>
+      const logo = isMobile ? smallLogo : bigLogo
+     
+      return [
+        <TableItem>{logo}</TableItem>,
+        <TableItem css="margin-right: auto">{asset.amount}</TableItem>,
+        <TableItem css="margin-left: auto" right>{formattedPrice}</TableItem>,
+        <TableItem right>{formattedPriceBTC}</TableItem>,
+        <TableItem right>{formattedSpotPrice}</TableItem>,
+        <TableItem right>
+          <IndicatorColor value={asset.spotPrice.change['24h'].percentage}>
+            {formattedSpotPriceChange24H}
+          </IndicatorColor>
+        </TableItem>,
+        <TableItem right>{formattedWeight}</TableItem>,
+        <TableItem css="text-align: center">
+          <Remove onClick={handleRemove}/>
+        </TableItem>,
+      ]
+    })
+
+    return (
+      <AssetsTable headerData={headerData} rowData={rowData} />
+    )
+
+  }
+
 }

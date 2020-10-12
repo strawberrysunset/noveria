@@ -9,7 +9,5 @@ const Wrapper = styled.div`
   }};
 `
 export const IndicatorColor = ({ value, children, ...rest}) => {
-    return (
-      <Wrapper isPositive={value >= 0} {...rest}>{children}</Wrapper>
-    )
+    return <Wrapper isPositive={value >= 0} {...rest}>{children}</Wrapper>
 }

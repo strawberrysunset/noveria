@@ -9,7 +9,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
-  /* overflow-y: auto; */
 `
 
 const Label = styled.div`
@@ -33,22 +32,16 @@ const Header = styled.div`
   padding: 0 1.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  margin-top: -1px;
   /* background: linear-gradient(90deg, ${props => props.theme.colors.neutral[400]}, 5%, ${props => props.theme.colors.neutral[200]}); */
   background: ${props => props.theme.colors.neutral[200]};
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: static;
-`
-
-const ContentWrapper = styled.div`
-  flex-grow: 1;
 `
 
 export const Card = ({ icon: Icon, label, children, items, ...rest }) => {
   return (
-    <Wrapper {...rest} >
+    <Wrapper {...rest}>
       <Header>
         <LabelWrapper>
           {Icon && <Icon size="1.25rem" />}
@@ -56,9 +49,7 @@ export const Card = ({ icon: Icon, label, children, items, ...rest }) => {
         </LabelWrapper>
         {items}
       </Header>
-      <ContentWrapper>
-        {children}
-      </ContentWrapper>
+      {children}
     </Wrapper>
   )
 }

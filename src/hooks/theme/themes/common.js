@@ -5,7 +5,7 @@ export const common = {
   typeScale : {
     h1: '3rem',
     h2: '2.5rem',
-    h3: '1.6rem',
+    h3: '2rem',
     h4: '1.25rem',
     h5: '1.125rem',
     body: '0.9375rem',

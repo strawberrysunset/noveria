@@ -6,7 +6,7 @@ import { Breakdown } from './Breakdown'
 import { PulldownRebound } from '../../animators'
 import { MarketBar } from './MarketBar'
 import {useNotification} from '../../../hooks/notification'
-import {Greeting} from './Greeting'
+import {PopUp} from '../../misc'
 
 
 const Wrapper = styled.div`
@@ -14,43 +14,30 @@ const Wrapper = styled.div`
   width: 100%;
   display: grid;
   grid-gap: 1px;
-
   grid-template-columns: 1fr;
   grid-template-areas:
-    'markets'
     'balance'
     'history'
     'breakdown';
 
-  ${props => !props.isMobile && css`overflow: hidden;`}
+  ${props => !props.theme.isMobile && css`overflow: hidden; overflow-y: auto;`}
 
   @media (min-width: 48rem) {
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 3fr 5fr;
+    grid-template-rows: auto 3fr 3fr;
     grid-template-areas:
       'markets markets'
       'balance history'
       'balance breakdown';
   }
-
+  overflow-y: auto;
   background: ${(props) => props.theme.colors.neutral[300]};
-  > * {
-    background: ${(props) => props.theme.colors.neutral[100]};
-  }
 `
 
-// const Rebounder = styled(PulldownRebound)``
 export const Home = () => {
-
-  const {popUp, updateNotifcation} = useNotification()
-
-  React.useEffect(() => {
-    updateNotifcation({type: 'showPopUp', content: <Greeting/>})
-  }, [])
 
   return (
     <Wrapper>
-      {popUp}
       <MarketBar
         css={`
           grid-area: markets;

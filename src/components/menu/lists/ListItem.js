@@ -15,19 +15,20 @@ const Wrapper = styled.li`
   }
   padding: 1.125rem 2rem;
   padding-right: 2.25rem;
-  /* background-color: ${props => props.theme.colors.neutral[200]}; */
+  max-width: 20rem;
 `
-const Left = styled.p``
+const Left = styled.div``
 
-const Right = styled.p`
+const Right = styled.div`
   color: ${props => props.theme.colors.neutral[800]};
 `
 
-export const ListItem = ({ left, right, ...rest}) => {
+export const ListItem = ({ left, right, children, ...rest }) => {
   return (
     <Wrapper { ...rest}>
       <Left>{left}</Left>
       <Right>{right}</Right>
+      {children}
     </Wrapper>
   )
 }

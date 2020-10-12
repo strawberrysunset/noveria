@@ -16,9 +16,13 @@ const Title = styled.h1`
   line-height: 1.3;
 `
 
+
 const Author = styled.p`
-  font-size: ${props => props.theme.typeScale.bodySmall};
-  margin-right: 0.5rem;
+ 
+`
+
+const Date = styled.p`
+
 `
 
 const Thumbnail = styled.img`
@@ -30,10 +34,6 @@ const Thumbnail = styled.img`
 `
 
 const Url = styled(Link)`
-  font-size: ${props => props.theme.typeScale.bodySmall};
-`
-
-const Date = styled.p`
   font-size: ${props => props.theme.typeScale.bodySmall};
 `
 
@@ -103,10 +103,10 @@ export const ArticleThumbnail = ({idx, article, ...rest}) => {
             <Title>{article.title}</Title>
             <Description>{article.text.substr(0, 100) + '...'}</Description>
             <SubText>
-              <AuthorIcon size="1rem"/>
-              <Author>{article.author}</Author> 
-              / 
-              <DateIcon css="margin-left: 0.5rem;" size="1rem"/>
+              <AuthorIcon size="0.9rem"/>
+              <Author>{article.author}</Author>
+              <DateIcon css="margin-left: 0.5rem; margin-right: 0rem;"
+              size="0.9rem"/>
               <Date>{article.date}</Date>
             </SubText>
           </Text>

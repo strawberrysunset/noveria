@@ -20,6 +20,10 @@ const Wrapper = styled(Card)`
 const ContentWrapper = styled.div`
   padding: 1.5rem;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
 `
 
 const Stats = styled.div`
@@ -44,9 +48,11 @@ const Weights = styled(WeightBar)`
 `
 const headerData = ['Asset', 'Value', 'Change 24h']
 
+const Text = styled.p``
+
 export const Breakdown = ({ ...rest }) => {
 
-  const {assets, isLoading} = usePortfolio()
+  const {isEmpty, assets, isLoading} = usePortfolio()
 
   // sort assets by biggest change
   // const rowData = assets.sort((a,b) => {
@@ -65,11 +71,18 @@ export const Breakdown = ({ ...rest }) => {
   return (
     <Wrapper icon={Icon} label="Breakdown" {...rest}>
       <ContentWrapper>
-        <Weights/>
-        <div>Biggest Gainer: {biggestGainer?.name}</div>
-        {/* <div>Largest Value: {largestValue?.name}</div> */}
+        {isEmpty 
+        ? 
+        <Text>Add assets to your portfolio to see a breakdown.</Text> 
+        : 
+        <>
+          <Weights/>
+          <div>Biggest Gainer: {biggestGainer?.name}</div>
+        </>
+        /* <div>Largest Value: {largestValue?.name}</div> */
         
-        {/* <AssetTable headerData={headerData} rowData={rowData}/> */}
+        /* <AssetTable headerData={headerData} rowData={rowData}/> */
+        }
       </ContentWrapper>
     </Wrapper>
   )

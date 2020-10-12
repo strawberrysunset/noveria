@@ -1,51 +1,49 @@
 import React from 'react'
-import styled, {keyframes} from 'styled-components'
+import styled from 'styled-components'
 import {useTheme} from '../../context'
 import {InfiniteSpin} from '../animators'
 
-const Wrapper = styled.svg`
-  width: 2.5rem;
-  height: 2.5rem;
+const SVG = styled.svg`
+  width: 3rem;
+  height: 3rem;
+  transform-box: fill-box;
+  transform-origin: center;
 `
 
-// const InfiniteSpin = keyframes`
-//   from {
-//     transform: rotate(220deg);
-//     }
-//     to {
-//       transform: rotate(580deg);
-//     }
+const Ring = styled.circle``
 
-
+const Segment = styled.circle``
 
 export const Spinner = ({ circleColor, segmentColor, ...rest}) => {
     const theme = useTheme()
     return (
-      <InfiniteSpin duration={0.7} offset={170}>
-        <Wrapper viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" {...rest}>
-          <circle
-            stroke={circleColor || theme.colors.neutral[400]}
-            stroke-width="1"
-            fill="transparent"
-            cx="10"
-            cy="10"
-            r="9"
-          />
-          <circle
-            stroke={segmentColor || theme.colors.neutral[1200]}
-            stroke-width="1.4"
-            style={{
-              transformBox: "fill-box",
-              transformOrigin: "center" 
-            }}
-            fill="transparent"
-            cx="10"
-            cy="10"
-            r="9"
-            stroke-dasharray="30 70"
-            stroke-dashoffset="0"
-          />
-      </Wrapper>
+      <InfiniteSpin duration={0.7} offset={170} >
+          <SVG viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" {...rest}>
+          <defs>
+            <filter id="shadow">
+              <feDropShadow dx="0.2" dy="0.4" stdDeviation="0.2"/>
+            </filter>
+          </defs>
+          <Ring
+              stroke={circleColor || theme.colors.neutral[600]}
+              strokeWidth="5%"
+              fill="transparent"
+              cx="10"
+              cy="10"
+              r="9"
+            />
+            <Segment
+              stroke={segmentColor || theme.colors.neutral[1200]}
+              strokeWidth="8%"
+              fill="transparent"
+              cx="10"
+              cy="10"
+              r="9"
+              strokeDasharray="40 70"
+              strokeDashoffset="0"
+            />
+      </SVG>
     </InfiniteSpin>
     )
 }
+

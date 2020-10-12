@@ -1,25 +1,19 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 
-const TableWrapper = styled.table`
+const StyledTable = styled.table`
   display: grid;
   border-collapse: collapse;
   grid-template-columns: repeat(${(props) => props.colNum}, 1fr);
   grid-template-rows: auto;
   text-align: left;
-
-  thead {
-    position: static;
-  }
+  overflow-y: auto;
 
   thead,
   tbody,
   tr {
-    display: contents; /* Means they are invisible to parent grid. */
+    display: contents; /* Content is ignored by parent grid. */
     width: 100%;
-  }
-
-  tbody {
     overflow-y: auto;
   }
 
@@ -28,7 +22,6 @@ const TableWrapper = styled.table`
     padding: 1rem 1rem;
     overflow: hidden;
     white-space: nowrap;
-    /* text-overflow: ellipsis; */
     background: ${(props) => props.theme.colors.neutral[100]};
 
     vertical-align: middle;
@@ -38,6 +31,7 @@ const TableWrapper = styled.table`
     > * {
       flex-grow: 1;
     }
+    min-height: min-content;
   }
 
   th:first-child,
@@ -48,40 +42,44 @@ const TableWrapper = styled.table`
 
   th {
     position: sticky;
-    /* z-index: 2; */
     top: 0;
     border-bottom: 1px solid ${(props) => props.theme.colors.neutral[300]};
     background: ${(props) => props.theme.colors.neutral[100]};
     font-weight: 500;
-    /* box-shadow: 1rem 1rem 3rem ${(props) => props.theme.colors.neutral[100]}; */
   }
+
   td {
     border-bottom: 1px solid rgba(255, 255, 255, 0.04);
   }
+
   tr:nth-child(even) td {
-    background: rgba(255, 255, 255, 0.04);
+    background: ${(props) => props.theme.colors.neutral[700]};
   }
 `
 
+const TableWrapper = styled.div`
+  overflow-y: auto;
+  width: 100%;
+  height: 100%;
+`
+
 export const Table = ({ headerData, rowData, ...rest }) => {
+
+  const headerMarkup = headerData.map((item, idx) => <th key={idx}>{item}</th>)
+  const rowMarkup = rowData.map((row, idx) => (
+    <tr key={idx}>
+      {row.map((item, idx) => (
+        <td key={idx}>{item}</td>
+      ))}
+    </tr>
+  ))
+
   return (
-    <TableWrapper colNum={headerData.length} {...rest}>
-      <thead>
-        <tr>
-          {headerData.map((item, idx) => (
-            <th key={idx}>{item}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {rowData.map((row, idx) => (
-          <tr key={idx}>
-            {row.map((item, idx) => (
-              <td key={idx}>{item}</td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
+    <TableWrapper>
+      <StyledTable colNum={headerData.length} {...rest}>
+        <thead><tr>{headerMarkup}</tr></thead>
+        <tbody>{rowMarkup}</tbody>
+      </StyledTable>
     </TableWrapper>
   )
   
