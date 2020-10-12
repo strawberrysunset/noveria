@@ -13,24 +13,24 @@ const Wrapper = styled.div`
   height: 100%;
   width: 100%;
   display: grid;
-  grid-gap: 1px;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 3fr 3fr;
   grid-template-areas:
-    'balance'
-    'history'
-    'breakdown';
-
-  ${props => !props.theme.isMobile && css`overflow: hidden; overflow-y: auto;`}
-
-  @media (min-width: 48rem) {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 3fr 3fr;
-    grid-template-areas:
       'markets markets'
       'balance history'
       'balance breakdown';
-  }
-  overflow-y: auto;
+
+  ${props => props.theme.isMobile && css`
+    overflow: hidden; 
+    overflow-y: auto;
+    grid-gap: 1px;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'balance'
+      'history'
+      'breakdown';
+  `}
+  
   background: ${(props) => props.theme.colors.neutral[300]};
 `
 

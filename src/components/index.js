@@ -62,6 +62,7 @@ const SiteWrapper = styled.div`
   color: ${(props) => props.theme.colors.neutral[1600]};
   height: 100vh;
   max-height: 100vh;
+  min-width: 20rem;
 
   position: relative;
   display: flex;

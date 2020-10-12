@@ -7,16 +7,16 @@ import { usePortfolio } from '../../hooks/portfolio'
 
 
 const Wrapper = styled.div`
-  background: ${(props) => props.theme.colors.neutral[1200]};
+  background: ${(props) => props.theme.colors.neutral[800]};
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: 1fr;
   grid-gap: 1px;
   ${props => props.theme.isMobile && css`
-    border-top: 1px solid ${props.theme.colors.neutral[300]};
+    border-top: 1px solid white;
     border-right: none;
   `}
-  border-right: 1px solid ${(props) => props.theme.colors.neutral[300]};
+  /* border-right: 1px solid ${(props) => props.theme.colors.neutral[300]}; */
 `
 
 export const Nav = ({ ...rest }) => {
