@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components/macro'
 import { Card, Line, OptionsBar, Spinner } from '../../common'
 import { MdInsertChart as Icon } from 'react-icons/md'
@@ -10,6 +10,7 @@ const Wrapper = styled(Card)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  
 `
 
 const historyRangeValues = [
@@ -39,6 +40,9 @@ const data = [
   [ 5, 1 ]
 ]
 
+const Text = styled.p`
+  color: ${props => props.theme.colors.neutral[1200]};
+`
 const Error = styled.p`
   margin: auto;
   color: ${props => props.theme.colors.red[100]};
@@ -55,18 +59,21 @@ const ContentWrapper = styled.div`
   justify-content: center;
   height: 100%;
   width: 100%;
+  padding: 4rem 2rem;
 `
 
 const HistoryRangeOptions = styled(OptionsBar)``
 
 export const History = React.memo(({ ...rest }) => {
 
-  const {usePortfolioHistory} = usePortfolio()
-  const [days, setDays] = React.useState(historyRangeValues[0].value)
-  const {history, isLoading, isError, error} = usePortfolioHistory({days})
+  const {isEmpty, history, isLoading, isError, setHistoryDays} = usePortfolio()
+
+  React.useEffect(() => {
+    setHistoryDays(historyRangeValues[0].value)
+  }, [])
 
   const historyRanges = historyRangeValues.map(({value, displayValue}) => ({
-    action : () => setDays(value),
+    action : () => setHistoryDays(value),
     value: displayValue,
   }))  
 
@@ -76,14 +83,24 @@ export const History = React.memo(({ ...rest }) => {
     data: history || data
   }
 
-  console.log({history})
+  const getState = () => {
+    if (isEmpty) {
+      return <Text>Add assets to your portfolio to see its history.</Text>
+    }
+    if (isLoading) {
+      return <Spinner height="1.5rem"/>
+    }
+    if (isError) {
+      return <Error>Unable to fetch history.</Error>
+    }
+    
+    return <HistoryGraph lineProps={lineProps}/>
+  }
 
   return (
     <Wrapper icon={Icon} label="History" items={<HistoryRangeOptions options={historyRanges}/>} {...rest}>
       <ContentWrapper>
-        {isLoading && <Spinner height="1.5rem"/>}
-        {!isLoading && !isError && <HistoryGraph lineProps={lineProps}/>}
-        {isError && <Error>Unable to fetch history.</Error>}
+        {getState()}
       </ContentWrapper>
     </Wrapper>
   )
