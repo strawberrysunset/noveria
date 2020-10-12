@@ -5,7 +5,7 @@ import {
   MdArrowBack as BackIcon,
   MdClose as CloseIcon
 } from 'react-icons/md'
-import { useMenu, useTheme } from '../../context'
+import { useMenu } from '../../context'
 
 const Wrapper = styled.a`
   display: flex;
@@ -22,23 +22,29 @@ const Wrapper = styled.a`
 
 export const MenuButton = ({...rest}) => {
 
-  const {isOpen, listHistory, updateMenu} = useMenu()
+  const menu = useMenu()
+  const menuIcon = getMenuIcon()
 
-  const clickHandler = () => {
-    if (listHistory.length > 1){
-      updateMenu({type : 'go_back'})
-      return
-    }
-    updateMenu({type : 'toggle_menu'})
-  }
-  
   return (
     <Wrapper onClick={clickHandler} {...rest}>
-      {isOpen ? (
-        (listHistory.length > 1) ? <BackIcon size="1.75rem"/> : <CloseIcon size="2rem"/>
-      ) : (
-        <HamburgerIcon size="2rem"/>
-      )}
+      {menuIcon}
     </Wrapper>
   )
+
+  function clickHandler () {
+    if (menu.listNameHistory.length > 1){
+      return menu.updateMenu({type : 'go_back'})
+    }
+    menu.updateMenu({type : 'toggle_menu'})
+  }
+
+  function getMenuIcon(){
+    if (menu.isOpen) {
+      if (menu.listNameHistory.length === 1) {
+        return <CloseIcon size="2rem"/>
+      }
+      return <BackIcon size="1.75rem"/>
+    }
+    return <HamburgerIcon size="2rem"/>
+  }
 }
