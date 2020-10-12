@@ -51,6 +51,9 @@ export const useDefaultList = ({updateMenu}) => {
   }
 
   function handlePortfolioExportClick ()  {
+    if (portfolio.isEmpty){
+      return updateNotification({type: 'set_message', message: `Unable to export. Portfolio is empty.`})
+    }
     saveData(JSON.stringify(portfolio.rawAssets), `Noveria_Portfolio_${new Date().toLocaleDateString()}.txt`)
     updateNotification({type: 'set_message', message: `Portfolio successfully exported.`})
   }
