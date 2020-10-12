@@ -34,43 +34,44 @@ const Message = styled(motion.div)`
 `
 
 const Logo = styled(NoveriaLogo)`
-  :hover {
-    cursor: pointer;
-  }
+
 `
 const RefreshButton = styled(Button)``
 
+const DarkMode = styled(DarkModeButton)`
+  margin-right: 1rem;
+  justify-self: end;
+`
+
 export const Header = ({ ...rest }) => {
 
-  const {notification} = useNotification()
-  const {updateSettings} = useSettings()
-
+  const notification = useNotification()
+  const settings = useSettings()
   const controls = useAnimation()
 
   React.useEffect(() => {
     controls.start({
-      opacity: [null, 100, 0],
+      opacity: [null, 100],
       transition: {
-        duration: 8
+        duration: 4
       }
     })
   }, [notification])
 
+  React.useEffect(() => {
+    notification.updateNotification({type:'set_message', message: 'Welcome to Noveria.'})
+  }, [])
+
   return (
     <Wrapper {...rest}>
       <MenuButton />
-      
       <Message animate={controls}>{notification.message}</Message>
       <Logo/>
-      <DarkModeButton
-        onClick={() => {
-          updateSettings({ type: 'toggle_theme' })
-        }}
-        css={`
-          margin-right: 1rem;
-          justify-self: end;
-        `}
-      />
+      <DarkMode onClick={darkModeClickHandler}/>
     </Wrapper>
   )
+
+  function darkModeClickHandler () {
+    settings.updateSettings({ type: 'toggle_theme' })
+  }
 }
