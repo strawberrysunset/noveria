@@ -60,9 +60,8 @@ const GlobalStyling = createGlobalStyle`
 const SiteWrapper = styled.div`
   background: ${(props) => props.theme.colors.neutral[100]};
   color: ${(props) => props.theme.colors.neutral[1600]};
-  height: 100vh;
+  height:  100vh;
   max-height: 100vh;
-
   position: relative;
   display: flex;
   flex-direction: column;
@@ -80,7 +79,8 @@ const Main = styled.main`
   flex-grow: 1;
   ${props => props.theme.isMobile && css`
     flex-direction: column-reverse;
-    margin-bottom: 0rem;
+    margin-bottom: 3rem;
+    height: calc(${window.innerHeight}px - 3.5rem);
   `}
 `
 
@@ -91,18 +91,24 @@ const NavSticky = styled(Nav)`
   width: 4rem;
   border-top: 1px solid ${(props) => props.theme.colors.neutral[200]};
   ${props => props.theme.isMobile && css`
-    grid-auto-flow: column;
+    width: 100%;
+    min-height: 3rem;
+    max-height: 3rem;
     border-top: 0;
     border-right: 1px solid ${(props) => props.theme.colors.neutral[200]};;
-    position: relative;
-    min-height: 3.5rem;
-    max-height: 3.5rem;
-    width: 100%;
+    
+    position: fixed;
+    z-index: 5;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    grid-auto-flow: column;
   `}
 `
 
 const StyledSwitch = styled(Switch)`
   flex-grow: 1;
+  ${props => props.theme.isMobile && css`margin-bottom: 3.5rem;`}
 `
 
 export const App = () => {
