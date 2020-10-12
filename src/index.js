@@ -7,10 +7,11 @@ import {
   MenuProvider,
   NotificationProvider
 } from './context'
-import {QueryCache, ReactQueryCacheProvider} from 'react-query'
+import {QueryCache, ReactQueryCacheProvider, ReactQueryConfigProvider} from 'react-query'
 import { BrowserRouter } from 'react-router-dom'
 import {App} from './components'
 import {IconContext} from 'react-icons'
+import {reactQueryConfig} from './config'
 
 const queryCache = new QueryCache()
 
@@ -19,17 +20,19 @@ ReactDOM.render(
     <BrowserRouter>
       <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
         <ReactQueryCacheProvider cache={queryCache}>
-          <SettingsProvider>
-            <NotificationProvider>
-              <PortfolioProvider>
-                <MenuProvider>
-                  <ThemeProvider>
-                    <App/>
-                  </ThemeProvider>
-                </MenuProvider>
-              </PortfolioProvider>
-            </NotificationProvider>
-          </SettingsProvider>
+          <ReactQueryConfigProvider config={reactQueryConfig}>
+            <SettingsProvider>
+              <NotificationProvider>
+                <PortfolioProvider>
+                  <MenuProvider>
+                    <ThemeProvider>
+                      <App/>
+                    </ThemeProvider>
+                  </MenuProvider>
+                </PortfolioProvider>
+              </NotificationProvider>
+            </SettingsProvider>
+          </ReactQueryConfigProvider>
         </ReactQueryCacheProvider>
       </IconContext.Provider>
     </BrowserRouter>
