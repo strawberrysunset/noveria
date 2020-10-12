@@ -10,15 +10,13 @@ export const getNewsFeed = async () => {
   const news = data['news'].map(article => {
     return {
       title: article.title,
-      author: article.author,
+      author: article.author || 'CoinTelegraph',
       thumbnail: article.thumb,
       date: article.published_at.date.split(' ')[0],
       text: getText(article.fulltext),
       url: article.url
     }
   })
-
-  console.log({news})
 
   return news
    
