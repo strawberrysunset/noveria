@@ -3,7 +3,7 @@ ___
 
 ## Features
 - No account or sign-up required.
-- Supports over 2000 cryptocurrencies and tokens.
+- Support for over 2000 cryptocurrencies and tokens.
 - Display prices in over 30 fiat currencies (e.g. USD, EUR, GBP, CAD, BTC...)
 - Cutomizable color theming to suit your taste.
 - Light/dark modes for all color themes.
