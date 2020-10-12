@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled, {keyframes} from 'styled-components/macro'
 import { MdCreate as Icon } from 'react-icons/md'
 import { AiOutlineReload as StatusIcon } from 'react-icons/ai'
-import { Card, Button, Input, Select } from '../../common'
+import { Card, Button, Input, Select, Spinner } from '../../common'
 import { motion} from 'framer-motion'
 import {useCoinData} from '../../../hooks/api'
 import {useForm} from '../../../hooks/common'
@@ -36,10 +36,10 @@ const rotate = keyframes`
 
 export const AssetManager = ({ ...rest }) => {
 
-  const {coinData, isLoading, isFetching} = useCoinData()
-
+  const {coinData, isLoading} = useCoinData()
   const {updatePortfolio} = usePortfolio()
-  const {values, error, handleChange, submit, isSubmitting } = useForm({
+  
+  const {values, error, handleChange, submit, isSubmitting} = useForm({
     initialValues : {
       id: 'bitcoin', 
       amount: undefined,
@@ -48,6 +48,7 @@ export const AssetManager = ({ ...rest }) => {
       await updatePortfolio({type: 'create_asset', id, amount})
     }
   })
+
 
   const listOptions = coinData.sort((a, b) => a.name > b.name).map((coin, idx) => {
     return (
@@ -68,7 +69,7 @@ export const AssetManager = ({ ...rest }) => {
             onChange={handleChange}
             disabled={isLoading}
             label="Asset" // For component
-            value="bitcoin"
+            value={values.id}
           >
             {isLoading ? <option>Loading...</option> : listOptions}
           </Select>
@@ -81,7 +82,7 @@ export const AssetManager = ({ ...rest }) => {
             onChange={handleChange}
             disabled={isLoading}
           />
-          <Button type="submit" disabled={!values.amount || isLoading || isSubmitting}>{'+ Add asset'}</Button>
+          <Button type="submit" disabled={!values.amount || isLoading || isSubmitting}>{isSubmitting ? 'Creating Asset...' : '+ Add asset'}</Button>
           <Error>{error}</Error>
         </Inputs>
       </Wrapper>
