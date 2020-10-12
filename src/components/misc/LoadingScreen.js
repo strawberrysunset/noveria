@@ -1,10 +1,8 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 import { NoveriaLogo } from '../../assets'
-import { LoadingBar } from './LoadingBar'
-import {useTheme, useAPI} from '../../context'
 import { motion, AnimatePresence } from 'framer-motion'
-import { queryCache, useIsFetching } from 'react-query'
+import { useQueryCache, useIsFetching } from 'react-query'
 import {Spinner} from '../common'
 
 const Wrapper = styled(motion.div)`
@@ -24,26 +22,28 @@ const Wrapper = styled(motion.div)`
 `
 
 const LogoWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
   position: relative;
-  padding: 3rem;
+  display: grid;
+  place-items: center;
+  width: 4.5rem;
+  height: 4.5rem;
 `
 
 const Logo = styled(NoveriaLogo)`
-  
+  margin-bottom: 0.3rem;
 `
 
-const Spin =  styled(Spinner)`
+const Spin = styled.div`
   position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
   left: 0;
-  width: 3rem;
-  height: 3rem;
-  z-index: 10000;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999999;
+  display: grid;
+  place-items: center;
 `
 
 const Text = styled.p`
@@ -69,12 +69,17 @@ export const LoadingScreen = ({ ...rest }) => {
 
   const isFetching = useIsFetching()
   const [loaded, setLoaded] = React.useState(false)
+  const queryCache = useQueryCache()
 
   React.useEffect(() => {
     if(!isFetching){
       setLoaded(true)
     }
   }, [isFetching])
+
+  React.useEffect(() => {
+    console.log(queryCache.isFetching)
+  }, [queryCache.isFetching])
  
   return (
     <AnimatePresence>
@@ -86,8 +91,12 @@ export const LoadingScreen = ({ ...rest }) => {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
         > 
-          {/* <Logo/> */}
-          <Spinner/>
+          <LogoWrapper>
+            <Logo/>
+            <Spin>
+              <Spinner css="width: 4.5rem; height: 4.5rem;"/>
+            </Spin>
+          </LogoWrapper>
           <Text>loading</Text>
           <Version>Noveria v.1</Version>
         </Wrapper>
