@@ -8,6 +8,7 @@ ___
 
 ## Features
 - No account or sign-up required.
+- Private: Your portfolio is only stored locally in your browser.
 - Support for over 5000 cryptocurrencies and tokens.
 - Display prices in over 30 fiat currencies (e.g. USD, EUR, GBP, CAD, BTC...)
 - Cutomizable color theming to suit your taste.
