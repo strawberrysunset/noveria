@@ -120,6 +120,7 @@ export const App = () => {
 
   React.useEffect(() => {
     queryCache.prefetchQuery('newsFeed', getNewsFeed)
+    queryCache.prefetchQuery('supportedCurrencies', getSupportedCurrencies)
   }, [])
 
   React.useEffect(() => {
