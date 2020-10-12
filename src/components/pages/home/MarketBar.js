@@ -1,78 +1,50 @@
 import React from 'react'
 import styled, {css} from 'styled-components/macro'
+import {FaGlobeAfrica as GlobalIcon, FaFistRaised as DominanceIcon, FaDollarSign as PriceIcon } from 'react-icons/fa'
+import {useCoinData, useGlobalData} from '../../../hooks/api'
+import {MarketSection} from './MarketSection'
 import {MarketBarItem} from './MarketBarItem'
-import {FaGlobeAfrica as Icon} from 'react-icons/fa'
-import {RiArrowRightSFill as Arrow} from 'react-icons/ri'
-import {useCoinData} from '../../../hooks/api'
-import {useResize} from '../../../utils'
+import {useFormatPrice} from '../../../hooks/common'
+import {formatPercentage} from 'utilities'
 
 const Wrapper = styled.div`
-  /* font-size: ${(props) => props.theme.typeScale.bodySmall}; */
   display: flex;
   align-items: stretch;
   border-top: 1px solid ${(props) => props.theme.colors.neutral[400]};
   ${props => props.theme.isMobile && css`display: none;`}
-`
-
-const PriceWrapper = styled.ul`
-  padding: 0.5rem 1rem;
-  overflow: hidden;
-  background: ${(props) => props.theme.colors.neutral[200]};
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  max-height: 2.25rem;
-  > * {
-    margin-left: 1.25rem;
-    margin-bottom: 2rem;
-    :first-child {
-      margin-left: 0;
-    }
-  }
-`
-
-const TitleWrapper = styled.div`
-  display: grid;
-  grid-auto-flow: column;
-  grid-gap: 0.5rem;
-  background: ${(props) => props.theme.colors.neutral[300]};
-  border-right: 1px solid ${(props) => props.theme.colors.neutral[300]};
-  padding: 0rem 1rem;
-  white-space: nowrap;
-  align-items: center;
-`
-
-const Title = styled.p`
- 
-  margin-bottom: -0.2rem;
-`
-const TitleIcon = styled(Icon)`
- 
-  height: 1rem;
-  width: 1rem;
+  height: 2.5rem;
+  flex-wrap: nowrap;
+  max-width: 100%;
 `
 
 export const MarketBar = ({ ...rest }) => {
 
-  const {coinData, isLoading, isError, error} = useCoinData()
+  const {coinData, isLoading: coinDataIsLoading} = useCoinData()
+  const {formatPrice} = useFormatPrice()
+  const {globalData, isLoading: globalDataIsLoading} = useGlobalData()
 
-  if (isError) {
-    return <div>Error: {error.message}</div>
-  }
+  if (coinDataIsLoading || globalDataIsLoading) return null
+
+  const spotPrices = coinData.slice(0, 6).map((asset, idx) => {
+    return <MarketBarItem key={idx} left={asset.symbol.toUpperCase()} right={formatPrice(asset.spotPrice.value)}/>
+  })
+
+  const globalStats = (
+    <>
+      <MarketBarItem left="MarketCap" right={formatPrice(globalData.marketCap)}/>
+      <MarketBarItem left="Coins" right={globalData.activeCoins}/>
+    </>
+  )
+
+  const dominanceStats = Object.keys(globalData.dominance).slice(0, 3).map((coin, idx) => {
+    return <MarketBarItem key={idx} left={coin.toUpperCase()} right={formatPercentage(globalData.dominance[coin])}/>
+  })
 
   return (
     <Wrapper {...rest}>
-      <TitleWrapper>
-        <TitleIcon />
-        <Title>Markets (24H)</Title>
-      </TitleWrapper>
-
-      <PriceWrapper>
-        {isLoading ? <div>Loading...</div> : isError ? <div>Error: {error.message}</div> 
-        : coinData.slice(0, 10).map((asset, idx) => {
-          return <MarketBarItem  key={idx} {...asset} />
-        })}
-      </PriceWrapper>
+      <MarketSection title="Spot Prices" icon={PriceIcon}>{spotPrices}</MarketSection>
+      <MarketSection title="GlobalStats" icon={GlobalIcon}>{globalStats}</MarketSection>
+      <MarketSection title="Dominance" icon={DominanceIcon}>{dominanceStats}</MarketSection>
     </Wrapper>
   )
 }
