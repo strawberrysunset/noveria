@@ -10,7 +10,7 @@ export const useFormatPrice = () => {
         currencyDisplay: 'narrowSymbol'
       }).format(price || 0)
     } catch (err) {
-      return selectedCurrency.toUpperCase() + parseFloat(price.toFixed(2))
+      return selectedCurrency.toUpperCase() + Number(price.toFixed(2))
     }
   } 
   return {formatPrice}
