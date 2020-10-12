@@ -2,7 +2,7 @@
 
 Noveria is an account-less cryptocurrency portfolio tracker than runs in your browser, optimized for both desktop and mobile. It is designed to be a hassle-free solution for tracking your crypto assets and getting up to date information.
 
-###  Try it out: <a href="https://www.noveria.app" target="_blank" rel="nofollow noreferrer">noveria.app</a>
+###  Try it out: <a href="https://www.noveria.app">noveria.app</a>
 
 ___
 
