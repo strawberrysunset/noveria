@@ -2,21 +2,18 @@ import React from 'react'
 import styled from 'styled-components'
 import {Attribution} from './Attribution'
 import {useMenu} from '../../context'
-import {MenuItem} from './MenuItem'
 import {motion, AnimatePresence} from 'framer-motion'
 import {generateUniqueID} from 'utilities'
 import {menuLists} from './lists'
+import {useDefaultList, useCurrencyList, useShareList, useThemeList} from './lists'
 
 const Wrapper = styled(motion.div)`
   background-color: ${(props) => props.theme.colors.neutral[100]};
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
   height: 100%;
-  max-width: 20rem;
-  
+  width: 20rem;
   border-right: 1px solid ${(props) => props.theme.colors.neutral[200]};
 
   display: flex;
@@ -35,8 +32,8 @@ const Title = styled.h2`
 
 const MenuListWrapper = styled.ul`
   /* border-top: 0.1rem solid ${props => props.theme.colors.neutral[1200]};  */
-  display: grid;
-  grid-gap: 1px;
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
   flex-grow: 1;
   height: min-content;
@@ -53,44 +50,34 @@ const Top = styled.div`
 
 export const MenuFlyout = ({ ...props }) => {
 
-  const {isOpen, useCurrentList} = useMenu()
-  const list = useCurrentList()
+  const menu = useMenu()
+  const base = useDefaultList({updateMenu: menu.updateMenu})
+  const currency = useCurrencyList({updateMenu: menu.updateMenu})
+  const theme = useThemeList({updateMenu: menu.updateMenu})
+  const share = useShareList({updateMenu: menu.updateMenu})
 
-  // const variants = {
-  //   visible: i => ({ 
-  //     opacity: 1,
-  //     // transition: {
-  //     //   duration: 0.03,
-  //     //   ease: 'easeIn'
-  //     // }
-  //   }),
-  //   hidden: { 
-  //     opacity: 0,
-  //   },
-  // }
+  const currentMenuList = {base, currency, theme, share}[menu.listName]
+
+  const animationProps = {
+    initial: { x: -320 },
+    animate: { x: 0 },
+    exit: { x: -320 } ,
+    transition: { 
+      ease: "easeInOut",
+      duration: 0.2
+    }
+  }
 
   return (
     <AnimatePresence>
-      {isOpen && (
-        <Wrapper initial={{ x: -320 }} animate={{ x: 0 }} exit={{ x: -320 }} transition={{ ease: "easeInOut", duration: 0.2}} {...props}>
+      {menu.isOpen && (
+        <Wrapper {...animationProps} {...props}>
           <Top>
-            {/* <Title>Settings</Title> */}
-            <MenuListWrapper>
-              {list}
-            </MenuListWrapper>
+            <MenuListWrapper>{currentMenuList}</MenuListWrapper>
           </Top>
-          <Attribution css="margin-top: auto;" />
+          <Attribution css="margin-top: auto;"/>
         </Wrapper>
       )}
     </AnimatePresence>
   )
 }
-
-// {list.map((item, idx) => <MenuItem 
-//   // initial="hidden"
-//   // animate="visible"
-//   // variants={variants}
-//   // custom={idx}
-//   key={generateUniqueID()}
-//   {...item}
-// />)}
