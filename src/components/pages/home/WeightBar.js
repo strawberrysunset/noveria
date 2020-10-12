@@ -23,8 +23,8 @@ export const WeightBar = ({...rest}) => {
 
   return (
     <Wrapper {...rest}>
-      {isLoading ? [] : assets.map(asset => {
-        return <Item color={asset.color} weight={asset.weight} />
+      {isLoading ? [] : assets.map((asset, idx) => {
+        return <Item key={idx} color={asset.color} weight={asset.weight} />
       })}
     </Wrapper>
   )
