@@ -16,7 +16,7 @@ ___
 - High frequency data refreshing to ensure you are continually provided the latest prices.
 - Your portfolio data persists across browser sessions (providing you have allowed browser data caching).
 
-#### Noveria is proud to be an open-source project. If you have any issues or feature requests please make a [pull request](https://github.com/strawberrysunset/noveria/pulls).
+#### Noveria is proud to be an open-source project. Any issues or feature requests can be made at [the repo](https://github.com/strawberrysunset/noveria/).
 
 ___
 
