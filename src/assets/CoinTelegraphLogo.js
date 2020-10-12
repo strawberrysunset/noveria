@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 import CoinTelegraph from './cointelegraph-logo.png'
-import {Link} from '../components/common'
 
 const Wrapper = styled.div`
   display: flex;
@@ -20,11 +19,9 @@ const Text = styled.p`
 
 export const CoinTelegraphLogo = ({ ...rest}) => {
     return (
-      <Link external to="https://www.coingecko.com">
-        <Wrapper { ...rest}>
-          <Logo src={CoinTelegraph}/>
-          <Text>CoinTelegraph</Text>
-        </Wrapper>
-      </Link>
+      <Wrapper { ...rest}>
+        <Logo src={CoinTelegraph}/>
+        <Text>CoinTelegraph</Text>
+      </Wrapper>
     )
 }
