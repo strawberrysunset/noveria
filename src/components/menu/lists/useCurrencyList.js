@@ -11,7 +11,7 @@ export const useCurrencyList = ({updateMenu}) => {
   const {updateNotification} = useNotification()
 
   // Put selected currency at top of currency list.
-  return supportedCurrencies.sort().reduce((list, currency, idx) => {
+  return supportedCurrencies.reduce((list, currency, idx) => {
     if (currency === currentCurrency) {
       return [<ListItem key={idx} left={currentCurrency.toUpperCase()} right={<MdCheck/>}/>, ...list]
     } 
