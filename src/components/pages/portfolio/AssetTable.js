@@ -20,7 +20,7 @@ const Content = styled.div`
   flex-direction: column;
   height: 100%;
   min-width: 100%;
-  ${props => props.theme.isMobile && css`overflow: auto;`}
+  overflow-y: auto;
 `
 
 const Remove = styled(MdRemoveCircle)`
@@ -45,8 +45,7 @@ const RemoveAll = styled.p`
 const AssetsTable = styled(Table)`
   
   width: 100%;
-  ${props => !props.theme.isMobile && css`overflow-y: auto;`}
-  
+  overflow-y: auto;
   grid-template-columns: auto 1fr repeat(6, auto);
 
   @media (max-width: 102rem) {

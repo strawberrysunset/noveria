@@ -10,7 +10,9 @@ const Wrapper = styled.div`
   height: 100%;
   width: 100%;
   overflow-y: auto;
-  ${props => props.theme.isMobile && css`padding: 2rem;`}
+  ${props => props.theme.isMobile && css`
+    padding: 2rem;
+  `}
   background: ${props => props.theme.colors.neutral[100]};
   /* scroll-padding: 2em; */
 `
@@ -71,6 +73,7 @@ const BackWrapper = styled(Link)`
   align-items: center;
   gap:1rem;
   margin-bottom: 3rem;
+  margin-top: 0.5rem;
   font-size: ${props => props.theme.typeScale.body};
   :hover {
     color: ${props => props.theme.colors.neutral[800]}
