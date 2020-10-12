@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 import {CoinGeckoLogo, CoinTelegraphLogo} from '../../assets'
+import {Link} from '../common'
 
 const Wrapper = styled.div`
   padding: 2rem 0;
@@ -37,13 +38,12 @@ const Poweredby = styled.p`
 `
 
 export const Attribution = ({ ...rest }) => {
-
   return (
     <Wrapper {...rest}>
       <Poweredby>Noveria is Powered by</Poweredby>
       <LogosWrapper>
-        <CoinGecko/>
-        <CoinTelegraph/>
+        <Link external to="https://www.coingecko.com"><CoinGecko/></Link>
+        <Link external to="https://www.cointelegraph.com"><CoinTelegraph/></Link>
       </LogosWrapper>
     </Wrapper>
   )
