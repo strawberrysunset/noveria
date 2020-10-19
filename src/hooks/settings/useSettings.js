@@ -1,4 +1,3 @@
-import React from 'react'
 import {useLocalStorageReducer} from '../../hooks/misc'
 
 export const reducer  = (settings, action) => {
@@ -9,7 +8,13 @@ export const reducer  = (settings, action) => {
     case 'set_theme' : {
       return {...settings, theme: action.theme}
     }
-    case 'set_settings' : {
+    case 'set_dark_mode' : {
+      return {...settings, darkMode: action.darkMode}
+    }
+    case 'set_firstVisit' : {
+      return {...settings, firstVisit: action.firstVisit}
+    }
+    case 'replace_settings' : {
       return action.settings
     }
     default: {
@@ -18,14 +23,13 @@ export const reducer  = (settings, action) => {
   }
 }
   
-export const middleware = (updateSettings, settings, action) => {
+export const middleware = (settings, updateSettings, action) => {
   switch (action.type) {
-    case 'toggle_theme': {
-      const theme = (settings.theme === 'light') ? 'dark' : 'light'
-      return updateSettings({type: 'set_theme', theme})
-    }
-    case 'set_theme': {
+    case 'set_theme_color': {
       return updateSettings({type: 'set_theme', theme: action.theme})
+    }
+    case 'toggle_dark_mode': {
+      return updateSettings({type: 'set_dark_mode', darkMode: !settings.darkMode})
     }
     default: {
       updateSettings(action)
@@ -36,15 +40,13 @@ export const middleware = (updateSettings, settings, action) => {
 export const useSettings = () => {
 
   const [settings, dispatch] = useLocalStorageReducer('noveria-settings', reducer, {
-    theme: 'dark',
+    theme: 'blue',
+    darkMode: true,
     currency: 'usd',
+    firstVisit: true,
   })
 
-  const updateSettings = (action) => middleware(dispatch, settings, action)
-
-  // useLocalStorageSync(settings, 'noveria-settings', (localState) => {
-  //   updateSettings({type: 'set_settings', settings: localState})
-  // }, [settings])
+  const updateSettings = (action) => middleware(settings, dispatch, action)
 
   return {...settings, updateSettings}
 }
