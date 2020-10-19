@@ -3,8 +3,7 @@ import styled from 'styled-components'
 import {Attribution} from './Attribution'
 import {useMenu} from '../../context'
 import {motion, AnimatePresence} from 'framer-motion'
-import {generateUniqueID} from 'utilities'
-import {menuLists} from './lists'
+import {darken} from 'polished'
 import {useDefaultList, useCurrencyList, useShareList, useThemeList} from './lists'
 
 const Wrapper = styled(motion.div)`
@@ -14,24 +13,22 @@ const Wrapper = styled(motion.div)`
   left: 0;
   height: 100%;
   width: 20rem;
-  border-right: 1px solid ${(props) => props.theme.colors.neutral[200]};
+  border-right: 1px solid ${(props) => props.theme.colors.neutral[800]};
 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0rem 0rem 2rem rgba(0, 0, 0, 0.5);
+  box-shadow: 0rem 0rem 2rem darken(0.5, ${(props) => props.theme.colors.neutral[100]});
 `
 
 const Title = styled.h2`
   font-size: ${props => props.theme.typeScale.h5};
   color: ${props => props.theme.colors.neutral[1100]};
   padding:  1rem 2rem;
-  /* padding-bottom: 1.5rem; */
   border-bottom: 1px solid ${props => props.theme.colors.neutral[300]};
 `
 
 const MenuListWrapper = styled.ul`
-  /* border-top: 0.1rem solid ${props => props.theme.colors.neutral[1200]};  */
   display: flex;
   flex-direction: column;
   overflow-y: auto;

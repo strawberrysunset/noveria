@@ -9,10 +9,13 @@ const Wrapper = styled(motion.g)`
 `
 
 const ContentWrapper = styled.div`
-  background: ${props => props.theme.colors.neutral[1600]};
+  background: ${props => props.theme.colors.neutral[1400]};
   margin-left: 0.5rem;
   margin-top: 0.5rem;
-  
+  border-radius: 0.1rem;
+  box-shadow: 0rem 0rem 1.5rem ${props => props.theme.colors.neutral[1000]};
+  width: 5rem;
+  height: 2rem;
 `
 
 const Symbol = styled(PointSymbol)`
@@ -26,7 +29,8 @@ const Symbol = styled(PointSymbol)`
 
 const Content = styled.div`
   padding: 0.5rem;
-  border-top: 0.5rem solid ${props => props.theme.colors.neutral[1200]};
+  
+  /* border-top: 0.5rem solid ${props => props.theme.colors.neutral[1200]}; */
   
 `
 

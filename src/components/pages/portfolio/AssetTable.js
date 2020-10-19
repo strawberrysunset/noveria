@@ -8,13 +8,15 @@ import {usePortfolio} from '../../../context'
 import {useFormatPrice} from '../../../hooks/common'
 import {useIsMobile} from 'utilities'
 
+
 const AssetTableCard = styled(Card)`
   overflow-x: none;
   max-height: 100%;
   overflow-y: auto;
 `
 
-const Content = styled.div`
+const Content = styled.div` 
+  position: relative;
   display: flex;
   align-items: start;
   flex-direction: column;
@@ -48,7 +50,7 @@ const AssetsTable = styled(Table)`
   overflow-y: auto;
   grid-template-columns: auto 1fr repeat(6, auto);
 
-  @media (max-width: 102rem) {
+  @media (max-width: 106rem) {
     grid-template-columns: auto 1fr repeat(5, auto);
     td:nth-child(8n - 1), th:nth-child(8n-1) {
       display: none;
@@ -105,17 +107,35 @@ const AssetsTable = styled(Table)`
   }
 `
 
-const TableItem = ({right, children, ...rest}) => {
-  return <div css={right && 'text-align: right'} {...rest}>{children}</div>
-}
+const TableItem = styled.div`
+  ${props => props.right && css`
+    text-align: right;
+  `}
+  ${props => props.center && css`
+    text-align: center;
+  `}
+`
 
 const HeaderItem = styled(TableItem)`
-  color: ${props => props.theme.colors.neutral[1000]};
+  color: ${props => props.theme.colors.neutral[1400]};
+`
+
+const PlaceHolderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 0;
+  top:0;
+  right:0;
+  bottom:0;
+  width: 100%;
+  height: 100%;
 `
 
 const Placeholder = styled(AssetTablePlaceholder)`
-  flex-grow: 1;
   margin-bottom: 2rem;
+  
 `
 
 const headerData = [
@@ -141,17 +161,19 @@ export const AssetTable = ({ ...rest }) => {
 
   return (
     <AssetTableCard label="Portfolio" icon={PieIcon} items={cardItems} {...rest}>
+
       <Content>
+        {portfolio.assets.length === 0 
+        && 
+        <PlaceHolderWrapper>
+          <Placeholder/>
+        </PlaceHolderWrapper>}
         {tableContent}
       </Content>
     </AssetTableCard>
   )
 
   function getTableContent () {
-
-    if (portfolio.assets.length === 0){
-      return <Placeholder />
-    }
     if (portfolio.isError) {
       return <p>{portfolio.error.message}</p>
     }
@@ -181,16 +203,12 @@ export const AssetTable = ({ ...rest }) => {
           </IndicatorColor>
         </TableItem>,
         <TableItem right>{formattedWeight}</TableItem>,
-        <TableItem css="text-align: center">
+        <TableItem center>
           <Remove onClick={handleRemove}/>
         </TableItem>,
       ]
     })
 
-    return (
-      <AssetsTable headerData={headerData} rowData={rowData} />
-    )
-
+    return <AssetsTable headerData={headerData} rowData={rowData} />
   }
-
 }

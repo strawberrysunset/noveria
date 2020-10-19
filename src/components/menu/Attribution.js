@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import {CoinGeckoLogo, CoinTelegraphLogo} from '../../assets'
+import {CoinGeckoLogo, CoinTelegraphLogo} from '../assets'
 import {Link} from '../common'
 
 const Wrapper = styled.div`
@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   grid-gap: 0.5rem;
   justify-content: center;
   font-weight: 600;
-  border-top: 1px solid ${props => props.theme.colors.neutral[300]}; 
+  border-top: 1px solid ${props => props.theme.colors.neutral[800]}; 
 `
 
 const LogosWrapper = styled.div`

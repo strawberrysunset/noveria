@@ -7,7 +7,7 @@ const Wrapper = styled.li`
   align-items: center;
   :hover {
     cursor: pointer;
-    background-color: ${props => props.theme.colors.neutral[200]};
+    background-color: ${props => props.theme.colors.neutral[800]};
   }
   :active {
     transition: 0.1s ease;
@@ -20,7 +20,7 @@ const Wrapper = styled.li`
 const Left = styled.div``
 
 const Right = styled.div`
-  color: ${props => props.theme.colors.neutral[800]};
+  color: ${props => props.theme.colors.neutral[1200]};
 `
 
 export const ListItem = ({ left, right, children, ...rest }) => {

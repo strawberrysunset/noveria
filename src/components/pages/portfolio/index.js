@@ -7,6 +7,7 @@ const Wrapper = styled.div`
   background: ${(props) => props.theme.colors.neutral[300]};
   display: grid;
   grid-gap: 1px;
+  background: ${props => props.theme.colors.neutral[800]};
   grid-template-columns: 1fr 2fr;
   grid-auto-flow: column;
   width: 100%;
@@ -15,6 +16,7 @@ const Wrapper = styled.div`
   ${props => props.theme.isMobile && css`
     grid-auto-flow: row;
     grid-template-columns: 100%;
+    grid-template-rows: auto 1fr;
     /* height: 100%; */
     overflow-y: auto;
   `}

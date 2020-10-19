@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import { NoveriaLogo } from '../../../assets'
+import { NoveriaLogo } from '../../assets'
 
 const Wrapper = styled.div`
   text-align: center;
@@ -16,10 +16,11 @@ const Title = styled.h2`
 const Subtitle = styled.p`
   line-height: 1.7;
   font-size: ${(props) => props.theme.typeScale.body};
+  color: ${props => props.theme.colors.neutral[1300]};
 `
 
-const title = 'Welcome to Noveria.'
-const subtitle = 'Noveria is an accountless cryptocurrency portfolio tracker that runs in your browser. Get started by adding assets to your portfolio.'
+const title = 'Hi there and welcome to Noveria'
+const subtitle = 'Noveria is an account-less cryptocurrency portfolio tracker that runs in your browser. It provides you with statistics obout your portfolio, market information and more. Enjoy!'
 
 export const Greeting = ({ ...rest }) => {
   return (

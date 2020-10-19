@@ -2,13 +2,13 @@ import React from 'react'
 import styled from 'styled-components' 
 
 const Wrapper = styled.div`
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 ` 
 
 const Left = styled.p`
-    color: ${(props) => props.theme.colors.neutral[1000]};
+  color: ${(props) => props.theme.colors.neutral[1200]};
 `
 
 const Right = styled.p`

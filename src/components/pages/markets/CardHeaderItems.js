@@ -44,7 +44,7 @@ const Right = styled.ul`
 const NavButton = styled.p`
   ${props => {
     return !props.enabled && css`
-      color: ${props.theme.colors.neutral[800]};
+      color: ${props.theme.colors.neutral[1600]};
       cursor: none;
       pointer-events: none;
     `

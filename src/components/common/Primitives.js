@@ -11,15 +11,15 @@ export const ButtonWrapper = styled.button`
   width: 100%;
   padding: 0.5rem 1.25rem;
   padding-top: 0.75rem;
-  border: 1px solid ${(props) => props.theme.colors.neutral[1200]};
+  border: 1px solid ${(props) => props.theme.colors.neutral[1600]};
   background: ${(props) => props.theme.colors.neutral[100]};
   :hover {
-    background: ${(props) => props.theme.colors.neutral[300]};
+    background: ${(props) => props.theme.colors.neutral[800]};
     border: 1px solid inherit;
   }
   transition: 0.15s ease;
   max-height: min-content;
-  color: ${(props) => props.theme.colors.neutral[1200]};
+  color: ${(props) => props.theme.colors.neutral[1600]};
   :disabled {
     cursor: default;
     opacity: 0.3;
@@ -31,7 +31,7 @@ export const ButtonWrapper = styled.button`
 
 const Label = styled.p`
   width: 100%;
-  color: ${(props) => props.theme.colors.neutral[1200]};
+  color: ${(props) => props.theme.colors.neutral[1600]};
   font-size: ${(props) => props.theme.typeScale.bodySmall};
 `
 

@@ -74,6 +74,7 @@ const BackWrapper = styled(Link)`
   gap:1rem;
   margin-bottom: 3rem;
   margin-top: 0.5rem;
+  color: ${props => props.theme.colors.neutral[1200]};
   font-size: ${props => props.theme.typeScale.body};
   :hover {
     color: ${props => props.theme.colors.neutral[800]}
@@ -95,7 +96,7 @@ const Text = styled.div`
 `
 
 const Attribution = styled.p`
-  color: ${props => props.theme.colors.neutral[800]};
+  color: ${props => props.theme.colors.neutral[1200]};
   white-space: nowrap;
   display: flex;
   flex-wrap: wrap;

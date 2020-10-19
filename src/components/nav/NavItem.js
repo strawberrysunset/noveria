@@ -13,14 +13,31 @@ const Wrapper = styled(Link)`
     return (
       props.active === 'yes'
       ? 
-      props.theme.colors.neutral[1200] 
-      : props.theme.colors.neutral[100] 
+      props.theme.colors.neutral[800] 
+      : props.theme.colors.neutral[200] 
     )
   }};
+  /* background: ${(props) => props.theme.colors.neutral[100]}; */
   :hover {
-    background: ${(props) => props.theme.colors.neutral[400]};
-    transition: 0.15s ease;
+    background: ${(props) => props.theme.colors.neutral[800]};
+    transition: 0.05s ease;
   }
+  ${props => {
+    if (props.active) {
+      if (!props.theme.isMobile) {
+        return css`
+          border-right: 0.125rem solid ${props.theme.colors.neutral[1400]};
+          padding-right: -0.125rem;
+          padding-left: +0.125rem;
+        `
+      }
+      return css`
+          border-top: 0.125rem solid ${props.theme.colors.neutral[1400]};
+          /* padding-top: -0.125rem;
+          padding-bottom: +0.125rem; */
+        `
+    }
+  }}
   padding: 0.5 0rem;
 `
 const IconWrapper = styled.div`
@@ -50,7 +67,7 @@ export const NavItem = ({ highlight, path, icon: Icon, active }) => {
         <Icon
           title={`Go to ${title} page.`}
           size="1.333rem"
-          color={active ? theme.colors.neutral[200] : theme.colors.neutral[1600]}
+          color={theme.colors.neutral[1400]}
         />
       </IconWrapper>
     </Wrapper>

@@ -10,11 +10,12 @@ import {formatPercentage} from 'utilities'
 const Wrapper = styled.div`
   display: flex;
   align-items: stretch;
-  border-top: 1px solid ${(props) => props.theme.colors.neutral[400]};
+  /* border-top: 1px solid ${(props) => props.theme.colors.neutral[800]}; */
   ${props => props.theme.isMobile && css`display: none;`}
   height: 2.5rem;
   flex-wrap: nowrap;
   max-width: 100%;
+  background: ${props => props.theme.colors.neutral[400]};
 `
 
 export const MarketBar = ({ ...rest }) => {

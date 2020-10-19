@@ -13,12 +13,14 @@ const Wrapper = styled.div`
   height: 100%;
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto 3fr 3fr;
+  grid-gap: 1px;
+  background: ${props => props.theme.colors.neutral[800]};
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 45% 55%;
   grid-template-areas:
-      'markets markets'
-      'balance history'
-      'balance breakdown';
+      /* 'markets markets' */
+      'balance markets'
+      'balance history';
 
   ${props => props.theme.isMobile && css`
     overflow: hidden; 
@@ -27,25 +29,23 @@ const Wrapper = styled.div`
     grid-template-columns: 1fr;
     grid-template-areas:
       'balance'
-      'history'
-      'breakdown';
+      'markets'
+      'history';
   `}
-  
-  background: ${(props) => props.theme.colors.neutral[300]};
 `
 
 export const Home = () => {
 
   return (
     <Wrapper>
-      <MarketBar
+      {/* <MarketBar
         css={`
           grid-area: markets;
         `}
-      />
-      <Balance css={`grid-area: balance;`}/>
-      <Breakdown css={`grid-area: breakdown;`}/>
-      <History css={`grid-area: history;`}/>
+      /> */}
+      <Balance css="grid-area: balance;"/>
+      <Breakdown css="grid-area: markets;"/>
+      <History css="grid-area: history;"/>
     </Wrapper>
   )
 }

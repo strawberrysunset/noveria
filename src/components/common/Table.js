@@ -43,9 +43,10 @@ const StyledTable = styled.table`
   th {
     position: sticky;
     top: 0;
-    border-bottom: 1px solid ${(props) => props.theme.colors.neutral[300]};
-    background: ${(props) => props.theme.colors.neutral[100]};
+    border-bottom: 1px solid ${(props) => props.theme.colors.neutral[600]};
+    background: ${(props) => props.theme.colors.neutral[400]};
     font-weight: 500;
+    color: ${props => props.theme.colors.neutral[1200]} !important;
   }
 
   td {
@@ -53,7 +54,7 @@ const StyledTable = styled.table`
   }
 
   tr:nth-child(even) td {
-    background: ${(props) => props.theme.colors.neutral[700]};
+    background: ${(props) => props.theme.colors.neutral[400]};
   }
 `
 

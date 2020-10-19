@@ -17,7 +17,7 @@ const Name = styled.p`
 `
 const Symbol = styled.p`
   margin-left: 1rem;
-  color: ${props => props.theme.colors.neutral[800]};
+  color: ${props => props.theme.colors.neutral[1200]};
 `
 
 export const CryptoLogo =({icon, name, symbol, children, ...rest}) => {
