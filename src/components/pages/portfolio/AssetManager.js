@@ -1,18 +1,31 @@
-import React, { useEffect } from 'react'
-import styled, {keyframes} from 'styled-components/macro'
+import React from 'react'
+import styled, {css} from 'styled-components/macro'
 import { MdCreate as Icon } from 'react-icons/md'
-import { AiOutlineReload as StatusIcon } from 'react-icons/ai'
-import { Card, Button, Input, Select, Spinner } from '../../common'
-import { motion} from 'framer-motion'
+import { Card, Button, Input, Select} from '../../common'
+import {motion} from 'framer-motion'
 import {useCoinData} from '../../../hooks/api'
 import {useForm} from '../../../hooks/common'
-import {usePortfolio} from '../../../context'
+import {usePortfolio, useTheme} from '../../../context'
+import {ShowHideToggle} from './ShowHideToggle'
 
-const Wrapper = styled.form`
+const StyledCard = styled(Card)`
+ 
+`
+
+const Wrapper = styled(motion.form)`
+  width: 100%;
+  height: 100%;
   padding: 3rem;
-  @media(max-width: 48rem) {
+  ${props => props.theme.isMobile && css`
     padding: 1.5rem;
-  }
+  `}
+  ${props => {
+    if (!props.theme.isMobile) return css``
+    if (!props.showing) return css`
+      display: none;
+    `
+    return
+  }}
 `
 
 const Inputs = styled.div`
@@ -25,19 +38,12 @@ const Error = styled.p`
   color: ${(props) => props.theme.colors.red[100]};
 `
 
-const rotate = keyframes`
-  from {
-    transform: rotate(0deg)
-  }
-  to {
-    transform: rotate(360deg)
-  }
-`
-
 export const AssetManager = ({ ...rest }) => {
 
   const {coinData, isLoading} = useCoinData()
   const {updatePortfolio} = usePortfolio()
+  const [showing, setShowing] = React.useState(true)
+  const theme = useTheme()
   
   const {values, error, handleChange, submit, isSubmitting} = useForm({
     initialValues : {
@@ -58,9 +64,18 @@ export const AssetManager = ({ ...rest }) => {
     )
   })
 
+  const animate = () => {
+    if (!theme.isMobile) return
+    return {
+      opacity: showing ? 100 : 0, 
+      y: showing ? 0 : -50
+    }
+  }
+   
+
   return (
-    <Card icon={Icon} label="Add an Asset" {...rest}>
-      <Wrapper onSubmit={submit}>
+    <StyledCard icon={Icon} items={<ShowHideToggle showing={showing} setShowing={setShowing}/>} label="Add an Asset" {...rest}>
+      <Wrapper animate={animate()} showing={showing} onSubmit={submit}>
         <Inputs>
           <Select
             name="id"
@@ -86,6 +101,6 @@ export const AssetManager = ({ ...rest }) => {
           <Error>{error}</Error>
         </Inputs>
       </Wrapper>
-    </Card>
+    </StyledCard>
   )
 }
