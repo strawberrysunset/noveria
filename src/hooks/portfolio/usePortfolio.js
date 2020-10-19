@@ -4,7 +4,7 @@ import {useSettings} from '../../context'
 import {createPortfolio} from './createPortfolio'
 import {useExchangeRates} from '../../hooks/api'
 import {getPortfolioHistory} from './getPortfolioHistory'
-import {useLocalStorageReducer} from '../misc'
+import {useCustomReducer} from '../misc'
 import { generateUniqueID } from 'utilities'
 
 export const reducer = (assets, action) => {
@@ -24,7 +24,7 @@ export const reducer = (assets, action) => {
   }
 }
 
-export const middleware = async (dispatch, action) => {
+export const middleware = async (state, dispatch, action) => {
   switch (action.type) {
     case 'create_asset' : {
       if (!action.amount || String(action.amount).match(/^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/) === null) {
@@ -61,9 +61,14 @@ const defaultPortfolio = {
 
 export const usePortfolio = () => {
 
-  const [assets, dispatch] = useLocalStorageReducer('noveria-p', reducer, [])
-  
-  const updatePortfolio = (action) => middleware(dispatch, action)
+  const [assets, updatePortfolio] = useCustomReducer({
+    reducerArgs: [reducer, []],
+    middleware,
+    saveToLocalStorage: {
+      isEnabled: true,
+      key: 'noveria-portfolio', 
+    }
+  })
 
   const {currency} = useSettings()
   const {exchangeRates} = useExchangeRates()

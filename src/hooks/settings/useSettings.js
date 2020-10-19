@@ -1,4 +1,4 @@
-import {useLocalStorageReducer} from '../../hooks/misc'
+import {useCustomReducer} from '../../hooks/misc'
 
 export const reducer  = (settings, action) => {
   switch (action.type) {
@@ -39,14 +39,19 @@ export const middleware = (settings, updateSettings, action) => {
 
 export const useSettings = () => {
 
-  const [settings, dispatch] = useLocalStorageReducer('noveria-settings', reducer, {
-    theme: 'blue',
-    darkMode: true,
-    currency: 'usd',
-    firstVisit: true,
+  const [settings, updateSettings] = useCustomReducer({
+    reducerArgs : [reducer, {
+      theme: 'blue',
+      darkMode: true,
+      currency: 'usd',
+      firstVisit: true,
+    }],
+    middleware,
+    saveToLocalStorage: {
+      isEnabled: true,
+      key: 'noveria-settings'
+    }
   })
-
-  const updateSettings = (action) => middleware(settings, dispatch, action)
 
   return {...settings, updateSettings}
 }
