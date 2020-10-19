@@ -9,9 +9,7 @@ import {useTheme} from '../../../context'
 import {useFormatPrice} from '../../../hooks/common'
 
 const MarketsCard = styled(Card)`
-  overflow-x: none;
-  max-height: 100%;
-  overflow-y: auto;
+  
 `
 
 const hideColumns = (arr) => {
@@ -113,6 +111,7 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   max-height: 100%;
+  flex-grow: 1;
   overflow-y: auto;
 `
 
@@ -125,13 +124,13 @@ const TableItem = ({right, children, ...rest}) => {
 }
 
 const HeaderItem = styled(TableItem)`
-  color: ${props => props.theme.colors.neutral[1000]};
+  color: ${props => props.theme.colors.neutral[1400]};
 `
 
 const Sparkline = styled(Line)`
   border: 1px solid ${props => props.theme.colors.neutral[1000]};
-  height: 1rem;
-  width: 2rem;
+  height: 2rem;
+  width: 6rem;
 `
 
 const headerData = [
@@ -143,14 +142,14 @@ const headerData = [
   <HeaderItem right>Volume (24H)</HeaderItem>,
   <HeaderItem right>ATH</HeaderItem>,
   <HeaderItem right>Supply</HeaderItem>,
-  <HeaderItem >Last 7 Days</HeaderItem>,
+  <HeaderItem right>Last 7 Days</HeaderItem>,
 ]
 
 export const Markets = React.memo(({...rest}) => {
 
   const [page, setPage] = React.useState(1) 
   const perPage = 25;
-  const {coinData} = useCoinData({page, perPage})
+  const {coinData, isLoading} = useCoinData({page, perPage})
   const theme = useTheme()
   const {formatPrice} = useFormatPrice()
 
@@ -168,17 +167,16 @@ export const Markets = React.memo(({...rest}) => {
       <TableItem right>{formatPrice(asset.totalVolume)}</TableItem>,
       <TableItem right>{formatPrice(asset.ath)}</TableItem>,
       <TableItem right>{Number(asset.supply.toFixed(0)).toLocaleString('en-US')}</TableItem>,
-      <p>yo</p>
-      // <Sparkline color={
-      //   (asset.spotPrice.change['7d'].percentage > 0) ? theme.colors.green[100] : theme.colors.red[100] 
-      // } data={asset.sparkline['7d']}/>
+      <Sparkline color={
+        (asset.spotPrice.change['7d'].percentage >= 0) ? theme.colors.green[100] : theme.colors.red[100] 
+      } lineProps={{data: asset.sparkline['7d'] || [[0, 0],[1, 0]]}}/>
     ]
   })
 
   const headerItems = <CardHeaderItems page={page} setPage={setPage}/>
 
   return (
-    <MarketsCard label="Markets" icon={MarketsIcon} items={headerItems} {...rest}>
+    <MarketsCard label="Markets" loading={isLoading} icon={MarketsIcon} items={headerItems} {...rest}>
       <Content>
         <MarketsTable rowData={rowData} headerData={headerData}/>
       </Content>
