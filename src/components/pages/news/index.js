@@ -5,19 +5,22 @@ import {ArticleThumbnail} from './ArticleThumbnail'
 import {BiNews as NewsIcon} from 'react-icons/bi'
 import {Switch, Route} from 'react-router-dom' 
 import {Article} from './Article'
-import {Spinner, Card} from '../../common'
+import {Card} from '../../common'
 
 const Wrapper = styled(Card)`
   background: ${props => props.theme.colors.neutral[300]};
   overflow-x: none;
-  max-height: 100%;
-  overflow-y: auto;
+  /* overflow-y: auto; */
 `
 
 const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
   max-height: 100%;
+  width: 100%;
   overflow-y: auto;
 `
 
@@ -39,20 +42,16 @@ export const News = ({ ...rest}) => {
   })
 
   return (
-      <Wrapper label="News" icon={NewsIcon} {...rest}>
+      <Wrapper label="News" loading={isLoading} icon={NewsIcon} {...rest}>
         <ContentWrapper>
-          {isLoading 
-          ? <Spinner/> 
-          :
-            <Switch>
-              <Route path={`/news/:articleID`} component={Article}/>
-              <Route path="/news">
-                <ThumbnailsWrapper>
-                  {thumbnails}
-                </ThumbnailsWrapper>
-              </Route>
-            </Switch>
-          }     
+          <Switch>
+            <Route path={`/news/:articleID`} component={Article}/>
+            <Route path="/news">
+              <ThumbnailsWrapper>
+                {thumbnails}
+              </ThumbnailsWrapper>
+            </Route>
+          </Switch>
         </ContentWrapper>
       </Wrapper>
   )
