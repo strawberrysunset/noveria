@@ -1,16 +1,20 @@
 import React from "react";
+import styled from 'styled-components'
 import {useTheme} from '../../../context'
 import {
   VictoryLine,
   VictoryTooltip,
   VictoryVoronoiContainer,
-  VictoryContainer,
   VictoryGroup,
-  VictoryChart
+  VictoryContainer,
 } from "victory";
 import { Tooltip } from "./Tooltip";
-// import {ResponsiveContainer} from './ResponsiveContainer'
 import {useResize} from '../../../utils'
+
+
+const Container = styled.div`
+
+`
 
 export const Line = ({lineProps, showLabels = false, color, ...rest}) => {
 
@@ -24,25 +28,27 @@ export const Line = ({lineProps, showLabels = false, color, ...rest}) => {
   } : []
 
   return (
-    <VictoryGroup
-      padding={0}
-      ref={componentRef}
-      domainPadding={{ x: 0, y: 0 }}
-      containerComponent={showLabels ? <VictoryVoronoiContainer/> : <VictoryGroup/>}
-      {...rest}
-    >
-      <VictoryLine
-        style={{
-          data: {
-            stroke: color || theme.colors.neutral[800],
-            strokeWidth: '2px', 
-          }
-        }}
+    <Container ref={componentRef} {...rest}>
+      <VictoryGroup
+        padding={0}
         width={width}
         height={height}
-        {...labelProps}
-        {...lineProps}
-      />
-    </VictoryGroup>
+        domainPadding={{ x: 0, y: 0 }}
+        containerComponent={showLabels ? <VictoryVoronoiContainer/> : <VictoryContainer/>}
+      >
+        <VictoryLine
+          style={{
+            data: {
+              stroke: color || theme.colors.neutral[1400],
+              strokeWidth: '2px', 
+            }
+          }}
+          width={width}
+          height={height}
+          {...labelProps}
+          {...lineProps}
+        />
+      </VictoryGroup>
+    </Container>
   )
 }   
