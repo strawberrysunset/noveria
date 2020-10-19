@@ -22,7 +22,6 @@ const Dialog = styled(motion.div)`
   max-width: 32rem;
   margin: 0 1.5rem;
   background-color: ${props => transparentize(0.2, props.theme.colors.neutral[100])};
-  box-shadow: 1rem 1rem 2rem rgba(0, 0, 0, 0.5);
   border: 1px solid ${(props) => props.theme.colors.neutral[800]};
 `
 const CloseButton = styled(CloseIcon)`
@@ -59,9 +58,9 @@ export const PopUp = ({ showing = false, handleClose, content, ...rest }) => {
 
   return (
     <AnimatePresence>
-      {showing && <Wrapper id="popUp" {...animations.wrapper} {...rest}>
-        <Dialog id="popUp"{...animations.dialog}>
-          <CloseButton id="popUp"onClick={handleClose}/>
+      {showing && <Wrapper  {...animations.wrapper} {...rest}>
+        <Dialog {...animations.dialog}>
+          <CloseButton onClick={handleClose}/>
           {content}
         </Dialog>
       </Wrapper>}
