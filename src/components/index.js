@@ -8,9 +8,9 @@ import {Switch, Route} from 'react-router-dom'
 import {pages} from './pages'
 import {PopUp} from './misc'
 import {Error} from './pages/Error'
-import {getSupportedCurrencies, getNewsFeed} from '../api'
+import {getSupportedCurrencies, getNewsFeed, getCoinData} from '../api'
 import {queryCache} from 'react-query'
-import {useNotification, usePortfolio} from '../context'
+import {useNotification, useSettings} from '../context'
 
 
 const GlobalStyling = createGlobalStyle`
@@ -90,8 +90,8 @@ const NavSticky = styled(Nav)`
   display: grid;
   grid-auto-flow: row;
   height: 100%;
-  width: 4rem;
-  border-top: 1px solid ${(props) => props.theme.colors.neutral[200]};
+  min-width: 4rem;
+  border-top: 1px solid ${(props) => props.theme.colors.neutral[800]};
   ${props => props.theme.isMobile && css`
     width: 100%;
     min-height: 3rem;
@@ -116,7 +116,7 @@ const StyledSwitch = styled(Switch)`
 export const App = () => {
 
   const {showPopUp, popUpContent, updateNotification} = useNotification()
-  const portfolio = usePortfolio()
+  const {firstVisit, updateSettings} = useSettings()
 
   React.useEffect(() => {
     queryCache.prefetchQuery('newsFeed', getNewsFeed)
@@ -124,8 +124,12 @@ export const App = () => {
   }, [])
 
   React.useEffect(() => {
-    if (portfolio.assets.length > 0) updateNotification({type: 'hidePopUp'})
-  }, [portfolio])
+    if (!firstVisit) updateNotification({type: 'hidePopUp'})
+  }, [])
+
+  React.useEffect(() => {
+    updateSettings({type: 'set_firstVisit', firsVisit: false});
+  }, [])
 
   return (
     <>
