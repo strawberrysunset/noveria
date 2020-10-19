@@ -3,15 +3,20 @@ import styled from 'styled-components'
 import {useSettings, useNotification, usePortfolio} from '../../../context'
 import {ListItem} from './ListItem'
 import {capitalize} from 'utilities'
-import {FaDollarSign,FaShareSquare} from 'react-icons/fa'
+import {FaDollarSign,FaShareSquare, FaGithubSquare, FaCoins} from 'react-icons/fa'
 import {CgImport, CgExport} from 'react-icons/cg'
 import {IoIosColorPalette} from 'react-icons/io'
 import {saveData} from '../../../utils'
+import {Link} from '../../common'
+import {DonationPopUp} from '../DonationPopUp'
 
 const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+  display: grid;
+  grid-template-columns: 1.5rem auto;
+  grid-auto-flow: column;
+  /* align-items: center;
+  justify-content:flex-start; */
+  gap: 0.25rem;
 `
 
 const Icon = ({icon, name}) => (
@@ -20,6 +25,7 @@ const Icon = ({icon, name}) => (
     <p css={`margin-top: 0.15rem;`}>{name}</p>
   </Wrapper>
 )
+
 
 export const useDefaultList = ({updateMenu}) => {
 
@@ -33,21 +39,29 @@ export const useDefaultList = ({updateMenu}) => {
     <ListItem left={<Icon icon={<FaShareSquare size="1rem"/>} name="Share"/>} onClick={() => listClickHandler('share')}/>,
     <ListItem as="label" left={<Icon icon={<CgImport size="1.125rem"/>} name="Import Portfolio" />} htmlFor="file"></ListItem>,
     <ListItem left={<Icon icon={<CgExport size="1.125rem"/>} name="Export Portfolio"/>} onClick={handlePortfolioExportClick}/>,
+    <Link external to="https://www.github.com/strawberrysunset/noveria"><ListItem left={<Icon icon={<FaGithubSquare size="1.125rem"/>} name="Source Code"/>}/></Link>,
+    // <ListItem left={<Icon icon={<FaCoins size="1.125rem"/>} name="Donate" />} onClick={() => {
+    //   updateNotification({type: 'set_popUp_content', popUpContent: DonationPopUp})
+    //   updateNotification({type: 'set_showPopUp', showPopUp: true})
+    // }}/>,
     <input style={{display: 'none'}} type="file" accept=".txt" id="file" onChange={handleFileInputChange} />
   ]
 
   async function handleFileInputChange (event) {
-    
     const file = event.target.files[0]
     if (!file) return
-    const text = await file.text()
-    const assets = JSON.parse(text)
-    portfolio.updatePortfolio({type: 'remove_all_assets'})
-    for (const asset of assets) {
-      portfolio.updatePortfolio({type: 'create_asset', id: asset.id, amount: asset.amount })
+    try {
+      const text = await file.text()
+      const assets = JSON.parse(text)
+      portfolio.updatePortfolio({type: 'remove_all_assets'})
+      for (const asset of assets) {
+        portfolio.updatePortfolio({type: 'create_asset', id: asset.id, amount: asset.amount })
+      }
+      updateNotification({type: 'set_message', message: `Portfolio successfully imported.`})
+      updateMenu({type : 'toggle_menu'})
+    } catch (e) {
+      updateNotification({type: 'set_message', message: `Failed to import portfolio.`})
     }
-    updateNotification({type: 'set_message', message: `Portfolio successfully imported.`})
-    updateMenu({type : 'toggle_menu'})
   }
 
   function handlePortfolioExportClick ()  {
