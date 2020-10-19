@@ -1,6 +1,6 @@
 import React from 'react'
-import {useSettings, useMenu, useNotification} from '../../../context'
-import {themes} from '../../../hooks/theme/themes'
+import {useSettings, useNotification} from '../../../context'
+import {hues as themes} from '../../../hooks/theme/theme'
 import {ListItem} from './ListItem'
 import {MdCheck} from 'react-icons/md'
 import {capitalize} from 'utilities'
@@ -12,7 +12,7 @@ export const useThemeList = ({updateMenu}) => {
 
     return Object.keys(themes).reduce((list, theme) => {
       if (theme === currentTheme) {
-        return [<ListItem left={capitalize(currentTheme)} right={<MdCheck/>}/>, ...list]
+        return [<ListItem left={capitalize(theme)} right={<MdCheck/>}/>, ...list]
       }
       return [...list, <ListItem left={capitalize(theme)} onClick={() => {
         updateSettings({type: 'set_theme', theme})
