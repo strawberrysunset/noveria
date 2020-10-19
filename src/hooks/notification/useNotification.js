@@ -29,6 +29,9 @@ export const middleware = (state, dispatch, action) => {
       dispatch({ type: 'set_showPopUp', showPopUp: false })
       return dispatch({ type: 'set_popUp_content', popUpContent: null })
     }
+    case 'set_message' : {
+      return dispatch({type: 'set_message', message: action.message})
+    }
     default: {
       dispatch(action)
     }
