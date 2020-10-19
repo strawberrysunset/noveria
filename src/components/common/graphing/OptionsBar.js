@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import {useLocalStorageState} from '../../../hooks/misc'
 
 const Wrapper = styled.div`
   display: grid;
@@ -23,7 +22,7 @@ const Option = styled.p`
 
 export const OptionsBar = ({ children, ...rest }) => {
 
-  const [selected, setSelected] = useLocalStorageState('history-options', 0)
+  // const [selected, setSelected] = useLocalStorageState('history-options', 0)
 
   return (
     <Wrapper {...rest}>
