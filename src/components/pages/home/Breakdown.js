@@ -69,20 +69,9 @@ export const Breakdown = ({ ...rest }) => {
   // }, {})
 
   return (
-    <Wrapper icon={Icon} label="Breakdown" {...rest}>
+    <Wrapper icon={Icon} loading="true" label="Markets" {...rest}>
       <ContentWrapper>
-        {isEmpty 
-        ? 
-        <Text>Add assets to your portfolio to see a breakdown.</Text> 
-        : 
-        <>
-          <Weights/>
-          <div>Biggest Gainer: {biggestGainer?.name}</div>
-        </>
-        /* <div>Largest Value: {largestValue?.name}</div> */
-        
-        /* <AssetTable headerData={headerData} rowData={rowData}/> */
-        }
+        <p>Hello!</p>
       </ContentWrapper>
     </Wrapper>
   )
