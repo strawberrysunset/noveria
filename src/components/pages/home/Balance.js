@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, {css} from 'styled-components/macro'
-import {Card, Price, IndicatorColor, Doughnut, Spinner} from '../../common'
+import {Card, Price, IndicatorColor, Doughnut, Spinner, OptionsBar} from '../../common'
 import {MdAccountBalanceWallet as Icon, MdArrowDropUp as Arrow, MdRefresh } from 'react-icons/md'
 import {motion} from 'framer-motion'
 import {usePortfolio} from '../../../context'
@@ -12,10 +12,11 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: 2rem 3rem;
-  padding-bottom: 2.5rem;
+  /* padding: 2rem 3rem;
+  padding-bottom: 2.5rem; */
   height: 100%;
-  max-width: 100%;
+  width: 100%;
+  padding: 1.5rem;
 `
 
 const Total = styled.p`
@@ -27,7 +28,7 @@ const Total = styled.p`
 
 const AltTotal = styled.div`
   font-size: ${(props) => props.theme.typeScale.bodySmall};
-  color: ${(props) => props.theme.colors.neutral[1000]};
+  color: ${(props) => props.theme.colors.neutral[1400]};
 
   margin-bottom: 0.5rem;
 `
@@ -59,22 +60,6 @@ const IndicatorArrow = styled(Arrow)`
 
 `
 
-const SVG = styled.div`
-  position: absolute; 
-  display: flex; 
-  top: 0; 
-  bottom: 0; 
-  left: 0;
-  right: 0;
-  align-items: center;
-  justify-content: center;
-`
-
-const Circle = styled.circle`
-  stroke: ${props => props.theme.colors.neutral[500]};
-  stroke-width: 0.5;
-  fill: transparent;
-`
 
 const HeaderItemsWrapper = styled.div`
   display: grid;
@@ -91,72 +76,47 @@ const HeaderItemsWrapper = styled.div`
   }
 `
 
-const RefreshIcon = ({spin}) => {
-  return (
-    <>
-    {spin 
-    ?
-    <motion.div 
-      initial={{ rotate: '0deg' }}
-      animate={{ rotate: '360deg' }}
-      transition={{ duration: 0.5, repeat: Infinity, ease: 'linear' }}>
-        <MdRefresh size="1.25rem"/>
-    </motion.div>
-    : <MdRefresh size="1.25rem"/>
-    }
-    </>
-  )
-}
-
-const Refresh = styled.p`
-  margin-top: 0.25rem;
-`
-
 const Color = styled(IndicatorColor)`
   display: flex;
   align-items: center;
   margin-bottom: -1rem;
 `
 
-const Ring = styled(Doughnut)`
-  position: relative;
-`
-
 const Label = styled.div`
-  top: 0;
-  left: 0;
-  right: 0;
-  top: 0;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  height: 10rem;
-  margin-bottom: 2.25rem;
+  padding: 2rem 0;
 `
 
 export const Balance = ({ ...rest }) => {
 
-  const {total, totalBTC, change, isLoading, refresh} = usePortfolio()
+  const {total, totalBTC, change, isLoading} = usePortfolio()
   const {formatPrice} = useFormatPrice()
 
   const headerItems = (
-    <HeaderItemsWrapper onClick={refresh} >
-      <RefreshIcon size="1.25rem"/>
-      <Refresh>Refresh</Refresh>
+    <HeaderItemsWrapper>
+      <OptionsBar options={[
+        {
+          value:'1H', 
+          action: () => {}
+        },
+        {
+          value:'24H', 
+          action: () => {}
+        },
+        {
+          value:'7D', 
+          action: () => {}
+        }
+      ]}/>
     </HeaderItemsWrapper>
   )
 
   return (
-    <Card label="Balance" icon={Icon} items={headerItems} {...rest}>
+    <Card label="Balance" loading={isLoading} icon={Icon} items={headerItems} {...rest}>
       <Wrapper>
-        <SVG>
-          <svg css="width: 90%; height: 90%;"viewBox="0 0 20 20">
-            <Circle cx="10" cy="10" r="8"></Circle>
-          </svg>
-          {/* <Spinner css="height: 500px; width: 500px;"/> */}
-        </SVG>
-        {/* <Ring data={[ {x: 1, y: 120 }, { x: 2, y: 150 }, { x: 3, y: 75 }]}> */}
           <Label>
             <Color value={change['24h'].percentage}>
               <IndicatorArrow value={change['24h'].percentage}/>
@@ -165,7 +125,6 @@ export const Balance = ({ ...rest }) => {
             <Total>{formatPrice(total)}</Total>
             <AltTotal>(<Price currency="btc">{totalBTC}</Price>)</AltTotal>
           </Label>
-        {/* </Ring> */}
       </Wrapper>
     </Card>
   )
