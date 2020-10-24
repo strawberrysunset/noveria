@@ -1,16 +1,14 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled, {css} from 'styled-components/macro'
-import { Card, Line, OptionsBar, Spinner } from '../../common'
+import { Card, Line, OptionsBar } from '../../common'
 import { MdInsertChart as Icon } from 'react-icons/md'
+import {usePortfolio, } from '../../../context'
 import {usePortfolioHistory} from '../../../hooks/portfolio'
-import {useSettings, usePortfolio} from '../../../context'
-
 const Wrapper = styled(Card)`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
 `
 
 const historyRangeValues = [
@@ -32,14 +30,6 @@ const historyRangeValues = [
   },
 ]
 
-const data = [
-  [ 1, 7 ],
-  [ 2, 1 ],
-  [ 3, 4 ],
-  [ 4, 1 ],
-  [ 5, 1 ]
-]
-
 const Text = styled.p`
   color: ${props => props.theme.colors.neutral[1200]};
 `
@@ -54,6 +44,7 @@ const HistoryGraph = styled(Line)`
   ${props => props.theme.isMobile && css`
     min-height: 12rem;
   `}
+  margin: 1rem 0;
 `
 
 const ContentWrapper = styled.div`
@@ -61,44 +52,60 @@ const ContentWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  min-height: 100%;
   width: 100%;
-  /* padding: 4rem 2rem; */
+  flex-grow: 1;
 `
 
-const HistoryRangeOptions = styled(OptionsBar)``
+const OptionItem = styled.div`
+  ${props => props.selected ? css`
+    color: ${props.theme.colors.neutral[1500]};
+  ` : css`color: ${props.theme.colors.neutral[1200]};`
+  }
+  :hover {
+    color: ${props => props.theme.colors.neutral[1600]};
+    cursor: pointer;
+  }
+  transition: 0.1s ease;
+`
 
-export const History = React.memo(({ ...rest }) => {
+export const History = ({ ...rest }) => {
 
-  const {assets, isEmpty, history, isLoading, isError, setHistoryDays} = usePortfolio()
+  const {isEmpty, isError} = usePortfolio()
+  const {history, setHistoryDays, isLoading} = usePortfolioHistory(1)
 
-  React.useEffect(() => {
-    setHistoryDays(historyRangeValues[0].value)
-  }, [])
-
-  const historyRanges = historyRangeValues.map(({value, displayValue}) => ({
-    action : () => setHistoryDays(value),
-    value: displayValue,
-  }))  
+  const headerItems = (
+    <OptionsBar render={({selected, setSelected}) => {
+      return historyRangeValues.map(({value, displayValue}, idx) => {
+        return <OptionItem key={idx} selected={selected === idx} onClick={() => {
+          setHistoryDays(value)
+          setSelected(idx)
+        }}>{displayValue}</OptionItem>
+      })
+    }}/>
+  )
 
   const lineProps = {
     x:0, 
     y:1,
-    data //: history || data
+    data: history
   }
 
   return (
     <Wrapper 
       icon={Icon} 
-      loading={true}
+      isLoading={isLoading}
       error={isError && "Unable to fetch history."} 
       message={isEmpty && "Add assets to your portfolio to see its history."} 
-      label="History" items={<HistoryRangeOptions 
-      options={historyRanges}
-    />} {...rest}>
+      label="Performance" 
+      items={headerItems}
+      {...rest}>
       <ContentWrapper>
-        <HistoryGraph showLabels="true" lineProps={lineProps}/>
+        <Text>Top Performing Asset</Text>
+        <Text>Change, 1d, 24h, 7d, 30d, max</Text>
+        <Text>WeightBar</Text>
+        {/* {isLoading || <HistoryGraph showLabels="true" lineProps={lineProps}/>} */}
       </ContentWrapper>
     </Wrapper>
   )
-})
+}
