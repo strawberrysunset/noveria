@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/macro'
+import {transparentize} from 'polished'
 
 const Wrapper = styled.div`
   display: grid;
@@ -12,7 +13,7 @@ export const ButtonWrapper = styled.button`
   padding: 0.5rem 1.25rem;
   padding-top: 0.75rem;
   border: 1px solid ${(props) => props.theme.colors.neutral[1600]};
-  background: ${(props) => props.theme.colors.neutral[100]};
+  background: ${(props) => transparentize(0.75, props.theme.colors.neutral[100])};
   :hover {
     background: ${(props) => props.theme.colors.neutral[800]};
     border: 1px solid inherit;
@@ -36,6 +37,15 @@ const Label = styled.p`
 `
 
 export const Button = ({ label, children, ...props }) => {
+  return (
+    <Wrapper>
+      <Label>{label}</Label>
+      <ButtonWrapper {...props}>{children}</ButtonWrapper>
+    </Wrapper>
+  )
+}
+
+export const SmallButton = ({ label, children, ...props }) => {
   return (
     <Wrapper>
       <Label>{label}</Label>
