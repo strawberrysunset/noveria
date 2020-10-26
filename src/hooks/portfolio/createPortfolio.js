@@ -1,15 +1,23 @@
-import {getCoinData} from '../../api'
-import React from 'react'
-import { getPortfolioHistory } from './getPortfolioHistory'
+const defaultPortfolio = {
+  assets : [],
+  total : 0,
+  totalBTC: 0,
+  history: [],
+  change: {
+    '24h' : {
+      value: 0,
+      percentage: 0
+    }
+  },
+  isEmpty: true
+}
 
-export const createPortfolio = async ({assets: staleAssets, currency, exchangeRates, historyDays}) => {
+export const createPortfolio = ({coinData, assets: staleAssets, currency, exchangeRates}) => {
   
-
-  // const history = await getPortfolioHistory({assets, currency, days: historyDays})
-  const data = await getCoinData({coinIDs: staleAssets.map(coin => coin.id), currency})
+  if(coinData.length === 0) return defaultPortfolio
 
   const assets = staleAssets.map(asset => {
-    const assetData = data.find(coin => coin.id === asset.id)
+    const assetData = coinData.find(coin => coin.id === asset.id)
     const price = assetData.spotPrice.value * asset.amount;
     return {
       ...asset, 
@@ -21,8 +29,11 @@ export const createPortfolio = async ({assets: staleAssets, currency, exchangeRa
         }
       },
       // If asset is btc, price is the amount, no neeed to convert.
-      priceBTC: (assetData.symbol == 'btc') ? asset.amount : (price / exchangeRates[currency].value),
+      priceBTC: (assetData.symbol === 'btc') ? asset.amount : (price / exchangeRates[currency].value),
       ...assetData,
+      sparkline: {
+        '7d' : assetData.sparkline['7d'].filter((_, idx) => idx % 2)
+      } 
     }
   })
 
@@ -39,8 +50,6 @@ export const createPortfolio = async ({assets: staleAssets, currency, exchangeRa
     }
   })
 
-  
-
   return {
     assets: weightedAssets, 
     total, 
@@ -51,6 +60,7 @@ export const createPortfolio = async ({assets: staleAssets, currency, exchangeRa
         value : weightedAssets.reduce((total, asset) => total += asset.change['24h'].value, 0),
         percentage : weightedAssets.reduce((total, asset) => total += asset.change['24h'].percentage * asset.weight, 0)
       }
-    } 
+    },
+    rawAssets: staleAssets
   }
 }
