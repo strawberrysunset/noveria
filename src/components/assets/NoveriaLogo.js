@@ -17,6 +17,7 @@ const Wrapper = styled.div`
 const Noveria = styled(Logo)`
   width: 2rem;
   height: 2rem;
+  color: ${props => props.theme.colors.neutral[1500]};
 `
 
 export const NoveriaLogo = ({...props}) => {
