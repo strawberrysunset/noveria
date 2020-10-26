@@ -10,6 +10,7 @@ import {Card} from '../../common'
 const Wrapper = styled(Card)`
   background: ${props => props.theme.colors.neutral[300]};
   overflow-x: none;
+  max-height: 100%;
   /* overflow-y: auto; */
 `
 
@@ -35,14 +36,14 @@ const ThumbnailsWrapper = styled.div`
 
 export const News = ({ ...rest}) => {
 
-  const {news, isLoading} = useNewsFeed()
+  const {data: news, isLoading} = useNewsFeed()
 
-  const thumbnails = isLoading ? null : news.map((article, idx) => {
+  const thumbnails = (isLoading || !news) ? null : news.map((article, idx) => {
     return <ArticleThumbnail idx={idx} key={idx} article={article}/>
   })
 
   return (
-      <Wrapper label="News" loading={isLoading} icon={NewsIcon} {...rest}>
+      <Wrapper label="News" isLoading={isLoading} icon={NewsIcon} {...rest}>
         <ContentWrapper>
           <Switch>
             <Route path={`/news/:articleID`} component={Article}/>
