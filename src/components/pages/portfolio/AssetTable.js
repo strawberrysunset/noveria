@@ -1,12 +1,11 @@
 import React from 'react'
 import styled, {css} from 'styled-components'
-import {Card, Table, IndicatorColor, CryptoLogo} from '../../common'
+import {Card, Button, Table, IndicatorColor, CryptoLogo} from '../../common'
 import {MdPieChart as PieIcon} from 'react-icons/md'
 import {AssetTablePlaceholder} from './AssetTablePlaceholder'
 import {MdRemoveCircle} from 'react-icons/md'
-import {usePortfolio} from '../../../context'
+import {usePortfolio, useTheme} from '../../../context'
 import {useFormatPrice} from '../../../hooks/common'
-import {useIsMobile} from 'utilities'
 
 
 const AssetTableCard = styled(Card)`
@@ -41,6 +40,13 @@ const RemoveAll = styled.p`
   :hover {
     color: ${(props) => props.theme.colors.red[100]};
     cursor: pointer;
+  }
+  font-weight: 600;
+`
+
+const AddAsset = styled(RemoveAll)`
+  :hover {
+    color: ${(props) => props.theme.colors.green[100]};
   }
 `
 
@@ -149,19 +155,17 @@ const headerData = [
   <HeaderItem right>Remove</HeaderItem>
 ]
 
-export const AssetTable = ({ ...rest }) => {
+export const AssetTable = ({ showPopUp, ...rest }) => {
 
   const {formatPrice} = useFormatPrice()
-  const isMobile = useIsMobile(768)
   const portfolio = usePortfolio()
-  const handleRemoveAll = () => portfolio.updatePortfolio({ type: 'remove_all_assets' });
+  const {isMobile} = useTheme()
+  const removeAllAssets = React.useCallback(() => portfolio.updatePortfolio({ type: 'remove_all_assets' }), [portfolio]);
+  const tableContent = getTableContent({portfolio, formatPrice, isMobile});
+  const cardItems = isMobile ? <AddAsset onClick={showPopUp}>+ Add Asset</AddAsset> : <RemoveAll onClick={removeAllAssets}>Remove All</RemoveAll>
   
-  const cardItems = <RemoveAll onClick={handleRemoveAll}>Remove All</RemoveAll>
-  const tableContent = React.useMemo(getTableContent, [portfolio.assets, isMobile])
-
   return (
     <AssetTableCard label="Portfolio" icon={PieIcon} items={cardItems} {...rest}>
-
       <Content>
         {portfolio.assets.length === 0 
         && 
@@ -172,43 +176,43 @@ export const AssetTable = ({ ...rest }) => {
       </Content>
     </AssetTableCard>
   )
+}
 
-  function getTableContent () {
-    if (portfolio.isError) {
-      return <p>{portfolio.error.message}</p>
-    }
-
-    const rowData = portfolio.assets.map((asset) => {
-
-      const formattedPrice =formatPrice(asset.price);
-      const formattedPriceBTC = formatPrice(asset.priceBTC, 'btc')
-      const formattedSpotPrice = formatPrice(asset.spotPrice.value)
-      const formattedSpotPriceChange24H = asset.spotPrice.change['24h'].percentage.toFixed(2) + '%'
-      const formattedWeight = (asset.weight * 100).toFixed(2) + '%'
-      
-      const handleRemove = () => portfolio.updatePortfolio({ type: 'remove_asset', uniqueID: asset.uniqueID })
-      const bigLogo = <CryptoLogo css="margin-right: 1rem" icon={asset.image} name={asset.name} symbol={asset.symbol.toUpperCase()}/>;
-      const smallLogo = <CryptoLogo icon={asset.image} name={asset.symbol.toUpperCase()} symbol={''}/>
-      const logo = isMobile ? smallLogo : bigLogo
-     
-      return [
-        <TableItem>{logo}</TableItem>,
-        <TableItem css="margin-right: auto">{asset.amount}</TableItem>,
-        <TableItem css="margin-left: auto" right>{formattedPrice}</TableItem>,
-        <TableItem right>{formattedPriceBTC}</TableItem>,
-        <TableItem right>{formattedSpotPrice}</TableItem>,
-        <TableItem right>
-          <IndicatorColor value={asset.spotPrice.change['24h'].percentage}>
-            {formattedSpotPriceChange24H}
-          </IndicatorColor>
-        </TableItem>,
-        <TableItem right>{formattedWeight}</TableItem>,
-        <TableItem center>
-          <Remove onClick={handleRemove}/>
-        </TableItem>,
-      ]
-    })
-
-    return <AssetsTable headerData={headerData} rowData={rowData} />
+function getTableContent ({portfolio, formatPrice, isMobile}) {
+  if (portfolio.isError) {
+    return <p>{portfolio.error.message}</p>
   }
+
+  const rowData = portfolio.assets.map((asset) => {
+
+    const formattedPrice =formatPrice(asset.price);
+    const formattedPriceBTC = formatPrice(asset.priceBTC, 'btc')
+    const formattedSpotPrice = formatPrice(asset.spotPrice?.value)
+    const formattedSpotPriceChange24H = asset.spotPrice?.change['24h']?.percentage?.toFixed(2) + '%'
+    const formattedWeight = (asset.weight * 100).toFixed(2) + '%'
+    
+    const handleRemove = () => portfolio.updatePortfolio({ type: 'remove_asset', uniqueID: asset.uniqueID })
+    const bigLogo = <CryptoLogo css="margin-right: 1rem" icon={asset.image} name={asset.name} symbol={asset.symbol.toUpperCase()}/>;
+    const smallLogo = <CryptoLogo icon={asset.image} name={asset.symbol.toUpperCase()} symbol={''}/>
+    const logo = isMobile ? smallLogo : bigLogo
+   
+    return [
+      <TableItem>{logo}</TableItem>,
+      <TableItem css="margin-right: auto">{asset.amount}</TableItem>,
+      <TableItem css="margin-left: auto" right>{formattedPrice}</TableItem>,
+      <TableItem right>{formattedPriceBTC}</TableItem>,
+      <TableItem right>{formattedSpotPrice}</TableItem>,
+      <TableItem right>
+        <IndicatorColor value={asset.spotPrice.change['24h'].percentage}>
+          {formattedSpotPriceChange24H}
+        </IndicatorColor>
+      </TableItem>,
+      <TableItem right>{formattedWeight}</TableItem>,
+      <TableItem center>
+        <Remove onClick={handleRemove}/>
+      </TableItem>,
+    ]
+  })
+
+  return <AssetsTable headerData={headerData} rowData={rowData} />
 }
