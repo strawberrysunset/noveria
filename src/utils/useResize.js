@@ -1,19 +1,31 @@
 import React from "react";
  
 export const useResize = (myRef) => {
+
   const [width, setWidth] = React.useState(0);
   const [height, setHeight] = React.useState(0);
-
-  const handleResize = () => {
-    setWidth(myRef.current.offsetWidth);
-    setHeight(myRef.current.offsetHeight);
-  };
-
+  const [isResizing, setIsResizing] = React.useState(true);
+  
+  // Set dimensions initially if ref exists.
   React.useEffect(() => {
-    handleResize()
+    setIsResizing(true)
+    if (myRef.current) {
+      setWidth(myRef.current.offsetWidth);
+      setHeight(myRef.current.offsetHeight);
+    }
+    setIsResizing(false)
   }, [])
 
   React.useEffect(() => {
+
+    const handleResize = () => {
+      setIsResizing(true)
+      if (myRef.current) {
+        setWidth(myRef.current.offsetWidth);
+        setHeight(myRef.current.offsetHeight);
+      }
+      setIsResizing(false)
+    };
     
     window.addEventListener("resize", handleResize);
  
@@ -22,5 +34,5 @@ export const useResize = (myRef) => {
     };
   }, [myRef]);
  
-  return { width, height };
+  return { width, height, isResizing };
 };
