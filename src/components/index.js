@@ -5,13 +5,14 @@ import {Nav} from './nav'
 import {Header, LoadingScreen} from './misc'
 import {MenuFlyout} from './menu'
 import {Switch, Route} from 'react-router-dom'
-import {pages} from './pages'
-import {PopUp} from './misc'
 import {Error} from './pages/Error'
-import {getSupportedCurrencies, getNewsFeed, getCoinData} from '../api'
-import {queryCache} from 'react-query'
-import {useNotification, useSettings} from '../context'
-
+import {Home} from './pages/home'
+import {Markets} from './pages/markets'
+import {News} from './pages/news'
+import {Portfolio} from './pages/portfolio'
+import {useIsFetching, useQueryCache} from 'react-query'
+import {getCoinData, getNewsFeed} from '../api'
+import {useSettings} from '../context'
 
 const GlobalStyling = createGlobalStyle`
   ${reset()};
@@ -27,7 +28,6 @@ const GlobalStyling = createGlobalStyle`
     color : ${(props) => props.theme.colors.neutral[1600]};
     list-style: none;
     text-decoration:none; 
-    /* overflow-y: auto;  */
   }
   body {
     font-size: ${(props) => props.theme.typeScale.body};
@@ -57,13 +57,16 @@ const GlobalStyling = createGlobalStyle`
     margin-bottom: -0.2rem;
   }
 `
+
+const height = window.innerHeight;
 const SiteWrapper = styled.div`
   background: ${(props) => props.theme.colors.neutral[100]};
   color: ${(props) => props.theme.colors.neutral[1600]};
-  height:  100vh;
-  max-height: 100vh;
+  height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+  height: calc(${css`${height}px`});
+  max-height: calc(${css`${height}px`});
   min-width: 20rem;
-
+  overflow-y: none;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -77,12 +80,13 @@ const Main = styled.main`
   position: relative;
   display: flex;
   overflow: hidden;
+  /* flex-direction: column; */
   align-items: stretch;
+  /* overflow-y: auto; */
   flex-grow: 1;
   ${props => props.theme.isMobile && css`
-    flex-direction: column-reverse;
-    margin-bottom: 3rem;
-    height: calc(${window.innerHeight}px - 3.5rem);
+    flex-direction: column;
+    margin-bottom: 3.5rem;
   `}
 `
 
@@ -91,13 +95,11 @@ const NavSticky = styled(Nav)`
   grid-auto-flow: row;
   height: 100%;
   min-width: 4rem;
-  border-top: 1px solid ${(props) => props.theme.colors.neutral[800]};
   ${props => props.theme.isMobile && css`
     width: 100%;
-    min-height: 3rem;
-    max-height: 3rem;
-    border-top: 0;
-    border-right: 1px solid ${(props) => props.theme.colors.neutral[200]};;
+    min-height: 3.5rem;
+    max-height: 3.5rem;
+    border-right: 1px solid ${(props) => props.theme.colors.neutral[800]};
     
     position: fixed;
     z-index: 5;
@@ -110,43 +112,49 @@ const NavSticky = styled(Nav)`
 
 const StyledSwitch = styled(Switch)`
   flex-grow: 1;
-  ${props => props.theme.isMobile && css`margin-bottom: 3.5rem;`}
+  
 `
 
 export const App = () => {
 
-  const {showPopUp, popUpContent, updateNotification} = useNotification()
-  const {firstVisit, updateSettings} = useSettings()
-
+  const isFetching = useIsFetching()
+  const [loading, setLoading] = React.useState(true)
+  const queryCache = useQueryCache()
+  const {currency} = useSettings()
+  
   React.useEffect(() => {
-    queryCache.prefetchQuery('newsFeed', getNewsFeed)
-    queryCache.prefetchQuery('supportedCurrencies', getSupportedCurrencies)
+    const loadCoinData = async () => {
+      const coinData = await getCoinData({currency})
+      const newsFeed = await getNewsFeed()
+      queryCache.setQueryData('coinData', coinData)
+      queryCache.setQueryData('newsFeed', newsFeed)
+    };
+    loadCoinData();
   }, [])
 
   React.useEffect(() => {
-    if (!firstVisit) updateNotification({type: 'hidePopUp'})
-  }, [])
-
-  React.useEffect(() => {
-    updateSettings({type: 'set_firstVisit', firsVisit: false});
-  }, [])
+    if(isFetching === 0) {
+      setTimeout(() => setLoading(false), 3000)
+    }
+  }, [isFetching, setLoading])
 
   return (
     <>
       <GlobalStyling />
-      <LoadingScreen css={`z-index: 999;`}/>
-      <PopUp showing={showPopUp} handleClose={() => updateNotification({type: 'hidePopUp'})} content={popUpContent}/>
+      {<LoadingScreen loading={loading} css={`z-index: 999;`}/>}
       <SiteWrapper>
         <HeaderSticky/>
         <Main>
-          <MenuFlyout css={`z-index: 1;`}/>
           <NavSticky css="grid-area: nav;"/>
+          <MenuFlyout css={`z-index: 4;`}/>
           <StyledSwitch css="grid-area: page;">
-            {pages.map((page, idx) => (
-              <Route exact={page.path === '/'} key={idx} path={page.path} component={page.component} />
-            ))}
+            <Route exact path="/" component={Home} />
+            <Route path="/portfolio" component={Portfolio} />
+            <Route path="/markets" component={Markets} />
+            <Route path="/news" component={News} />
             <Route component={Error}></Route>
           </StyledSwitch>
+          
         </Main>
       </SiteWrapper>
     </>
