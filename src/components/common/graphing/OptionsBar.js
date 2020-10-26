@@ -1,32 +1,27 @@
 import React from 'react'
 import styled from 'styled-components'
+import {useCustomState} from '../../../hooks/misc'
 
 const Wrapper = styled.div`
-  display: grid;
-  grid-auto-flow: column;
+  display: flex;
   max-width: min-content;
   align-items: center;
+  gap: 0.75rem;
+  transition: 0.15s;
 `
+export const OptionsBar = ({ render = () => null, ...rest }) => {
 
-const Option = styled.p`
-  padding: 0.25rem 0.5rem;
-  color: ${(props) => {
-    return props.selected ? props.theme.colors.neutral[1600] : props.theme.colors.neutral[1200]
-  }};
-  :hover {
-    cursor: pointer;
-    color: ${(props) => props.theme.colors.neutral[1400]};
-  }
-  transition: 0.1s ease;
-`
-
-export const OptionsBar = ({ children, ...rest }) => {
-
-  // const [selected, setSelected] = useLocalStorageState('history-options', 0)
+  const [selected, setSelected] = useCustomState({
+    initialState : 0,
+    saveToLocalStorage: {
+      isEnabled: true,
+      key: 'options-bar-history'
+    }
+  })
 
   return (
     <Wrapper {...rest}>
-      {children}
-  </Wrapper>
+      {render({selected, setSelected})}
+    </Wrapper>
   )
 }
