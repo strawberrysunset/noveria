@@ -1,30 +1,30 @@
 import React from 'react'
-import styled, {css} from 'styled-components'
-import { usePortfolio } from '../../../context'
-import { transparentize } from 'polished'
-import { BiRestaurant } from 'react-icons/bi'
+import styled, {css} from 'styled-components/macro'
+import { usePortfolio } from '../../../hooks/portfolio'
 
 const Wrapper = styled.div`
-  height: 1rem;
   display: flex;
   align-items: stretch;
-  border: 1px solid ${props => props.theme.colors.neutral[300]};
-  background: ${props => props.theme.colors.neutral[300]};
+  justify-content: stretch;
+  width: 100%;
+  height: 0.5rem;
 `
 
-const Item = styled.div`
-  width: ${({ weight }) => css`${weight}fr`};
-  background: ${({ color }) => transparentize(0.8, color)};
+const Segment = styled.div`
+  background-color: ${props => props.theme.colors.neutral[1600]};
+  width: ${props => props.width};
+  height: 100%;
 `
 
-export const WeightBar = ({...rest}) => {
+export const WeightBar = ({ ...rest}) => {
 
-  const {assets, isLoading} = usePortfolio()
+  const {assets} = usePortfolio()
 
   return (
-    <Wrapper {...rest}>
-      {isLoading ? [] : assets.map((asset, idx) => {
-        return <Item key={idx} color={asset.color} weight={asset.weight} />
+    <Wrapper { ...rest}>
+      {assets.map(({weight, color}) => {
+        console.log({weight, color})
+        return <Segment width={String(weight * 100) + '%'} color={color}/>
       })}
     </Wrapper>
   )
