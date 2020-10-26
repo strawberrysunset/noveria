@@ -1,4 +1,5 @@
 import {useCustomReducer} from '../../hooks/misc'
+import React from 'react'
 
 export const reducer  = (settings, action) => {
   switch (action.type) {
@@ -23,7 +24,7 @@ export const reducer  = (settings, action) => {
   }
 }
   
-export const middleware = (settings, updateSettings, action) => {
+export const asyncMiddleware = async (settings, updateSettings, action) => {
   switch (action.type) {
     case 'set_theme_color': {
       return updateSettings({type: 'set_theme', theme: action.theme})
@@ -46,12 +47,12 @@ export const useSettings = () => {
       currency: 'usd',
       firstVisit: true,
     }],
-    middleware,
+    middleware: [asyncMiddleware],
     saveToLocalStorage: {
       isEnabled: true,
-      key: 'noveria-settings'
+      key: 'noveria--Settings'
     }
   })
 
-  return {...settings, updateSettings}
+  return React.useMemo(() => ({...settings, updateSettings}), [settings, updateSettings])
 }
