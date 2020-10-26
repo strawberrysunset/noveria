@@ -1,11 +1,9 @@
 import React from 'react'
-import {useQuery, useQueryCache} from 'react-query'
 import {useSettings} from '../../context'
 import {createPortfolio} from './createPortfolio'
-import {useExchangeRates} from '../../hooks/api'
-import {getPortfolioHistory} from './getPortfolioHistory'
+import {useExchangeRates, useCoinData} from '../../hooks/api'
 import {useCustomReducer} from '../misc'
-import { generateUniqueID } from 'utilities'
+import {generateUniqueID} from 'utilities'
 
 export const reducer = (assets, action) => {
   switch (action.type) {
@@ -24,11 +22,11 @@ export const reducer = (assets, action) => {
   }
 }
 
-export const middleware = async (state, dispatch, action) => {
+export const asyncMiddleware = async (state, dispatch, action) => {
   switch (action.type) {
     case 'create_asset' : {
       if (!action.amount || String(action.amount).match(/^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/) === null) {
-        throw new Error('Specified amount is not valid.')
+        throw new Error('Amount must be a positive number.')
       }
       if (!action.id) {
         throw new Error('Asset id is undefined.')
@@ -46,53 +44,32 @@ export const middleware = async (state, dispatch, action) => {
   }
 }
 
-const defaultPortfolio = {
-  assets : [],
-  total : 0,
-  totalBTC: 0,
-  change: {
-    '24h' : {
-      value: 0,
-      percentage: 0
-    }
-  },
-  isEmpty: true
+export const logger = (state) => {
+  console.log(`Portfolio assets: ${state.assets}`)
 }
+
+
 
 export const usePortfolio = () => {
 
   const [assets, updatePortfolio] = useCustomReducer({
     reducerArgs: [reducer, []],
-    middleware,
+    middleware: [asyncMiddleware, logger],
     saveToLocalStorage: {
       isEnabled: true,
-      key: 'noveria-portfolio', 
+      key: 'noveria--portfolio', 
     }
   })
 
   const {currency} = useSettings()
-  const {exchangeRates} = useExchangeRates()
-  const [historyDays, setHistoryDays] = React.useState()
-  const queryCache = useQueryCache()
-
-  const {data, ...asyncInfo} = useQuery(['portfolio-data', assets, currency, exchangeRates], () => {
-    return createPortfolio({assets, currency, exchangeRates})
-  }, {keepPreviousData: true, initialData: defaultPortfolio})
-
-  return {
-    ...data, 
-    ...asyncInfo, 
-    setHistoryDays, 
-    updatePortfolio,
-    refresh: () => queryCache.refetchQueries(['portfolio-data', assets, currency, exchangeRates]),
-    rawAssets: assets
-  }
+  const {data: exchangeRates, isLoading: EXisLoading} = useExchangeRates({config: {isEnabled: currency}})
+  const {data: coinData, isLoading: CDisLoading} = useCoinData({config: {isEnabled: exchangeRates && currency}});
+  const portfolio = React.useMemo(() => createPortfolio({coinData, assets, currency, exchangeRates, updatePortfolio}), [coinData, assets, currency, exchangeRates, updatePortfolio]);
+  
+  return {...portfolio, updatePortfolio, isLoading: EXisLoading || CDisLoading}
 }
 
-// const usePortfolioHistory = ({days}) => {
-//   const {data: history, ...asyncInfo} = useQuery(['portfolio-history', portfolio.assets, currency, days], () => {
-//     return 
-//   })
-//   return {history, ...asyncInfo}
-// }
 
+// const {data, ...asyncInfo} = useQuery(['noveria-portfolio', coins, assets, currency, exchangeRates], async () => {
+//   return await 
+// }, {keepPreviousData: true, initialData: defaultPortfolio, enabled: coins && !isLoading})
