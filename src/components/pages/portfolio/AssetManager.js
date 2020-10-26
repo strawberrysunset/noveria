@@ -5,7 +5,7 @@ import { Card, Button, Input, Select} from '../../common'
 import {motion} from 'framer-motion'
 import {useCoinData} from '../../../hooks/api'
 import {useForm} from '../../../hooks/common'
-import {usePortfolio, useTheme} from '../../../context'
+import {usePortfolio} from '../../../context'
 import {ShowHideToggle} from './ShowHideToggle'
 
 const StyledCard = styled(Card)`
@@ -19,13 +19,6 @@ const Wrapper = styled(motion.form)`
   ${props => props.theme.isMobile && css`
     padding: 1.5rem;
   `}
-  ${props => {
-    if (!props.theme.isMobile) return css``
-    if (!props.showing) return css`
-      display: none;
-    `
-    return
-  }}
 `
 
 const Inputs = styled.div`
@@ -37,26 +30,27 @@ const Inputs = styled.div`
 const Error = styled.p`
   color: ${(props) => props.theme.colors.red[100]};
 `
+const Cancel = styled.p`
+  color :${props => props.theme.colors.neutral[1400]};
+`
 
-export const AssetManager = ({ ...rest }) => {
+export const AssetManager = ({ handleClose, ...rest }) => {
 
-  const {coinData, isLoading} = useCoinData()
+  const {data: topCoins, isLoading} = useCoinData({limit: 500});
   const {updatePortfolio} = usePortfolio()
-  const [showing, setShowing] = React.useState(true)
-  const theme = useTheme()
   
-  const {values, error, handleChange, submit, isSubmitting} = useForm({
+  const {values, error, isSubmitting, handleChange, submit} = useForm({
     initialValues : {
       id: 'bitcoin', 
       amount: undefined,
     },
     onSubmit: async ({id, amount}) => {
       await updatePortfolio({type: 'create_asset', id, amount})
+      if (handleClose) handleClose();
     }
   })
 
-
-  const listOptions = coinData.sort((a, b) => a.name > b.name).map((coin, idx) => {
+  const listOptions = isLoading ? <option>Loading...</option> : topCoins.sort((a, b) => a.name > b.name).map((coin, idx) => {
     return (
       <option key={idx} value={coin.id}>
         {coin.name}
@@ -64,18 +58,10 @@ export const AssetManager = ({ ...rest }) => {
     )
   })
 
-  const animate = () => {
-    if (!theme.isMobile) return
-    return {
-      opacity: showing ? 100 : 0, 
-      y: showing ? 0 : -50
-    }
-  }
-   
 
   return (
-    <StyledCard icon={Icon} items={<ShowHideToggle showing={showing} setShowing={setShowing}/>} label="Add an Asset" {...rest}>
-      <Wrapper animate={animate()} showing={showing} onSubmit={submit}>
+    <StyledCard isLoading={isLoading} icon={Icon} items={handleClose && <Cancel onClick={handleClose}>Cancel</Cancel>} label="Add an Asset" {...rest}>
+      <Wrapper onSubmit={submit}>
         <Inputs>
           <Select
             name="id"
@@ -86,13 +72,12 @@ export const AssetManager = ({ ...rest }) => {
             label="Asset" // For component
             value={values.id}
           >
-            {isLoading ? <option>Loading...</option> : listOptions}
+            {listOptions}
           </Select>
           <Input
             name="amount"
             label="Amount"
             type="text"
-            // pattern="^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$" // Match decimal
             placeholder="Enter Amount"
             onChange={handleChange}
             disabled={isLoading}
