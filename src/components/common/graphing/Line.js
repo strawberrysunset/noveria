@@ -1,54 +1,66 @@
 import React from "react";
 import styled from 'styled-components'
-import {useTheme} from '../../../context'
 import {
   VictoryLine,
-  VictoryTooltip,
-  VictoryVoronoiContainer,
   VictoryGroup,
-  VictoryContainer,
-} from "victory";
-import { Tooltip } from "./Tooltip";
-import {useResize} from '../../../utils'
-
+} from "victory"
 
 const Container = styled.div`
 
 `
 
-export const Line = ({lineProps, showLabels = false, color, ...rest}) => {
-
-  const theme = useTheme()
-  const componentRef = React.useRef();
-  const {width, height} = useResize(componentRef)
-
-  const labelProps = showLabels ? {
-    labels: () => "",
-    labelComponent : <VictoryTooltip flyoutComponent={<Tooltip />}/>
-  } : []
+export const Line = ({data: bigData, color, lineProps, ...rest}) => {
 
   return (
-    <Container ref={componentRef} {...rest}>
-      <VictoryGroup
-        padding={0}
-        width={width}
-        height={height}
-        domainPadding={{ x: 0, y: 0 }}
-        containerComponent={showLabels ? <VictoryVoronoiContainer/> : <VictoryContainer/>}
-      >
-        <VictoryLine
-          style={{
-            data: {
-              stroke: color || theme.colors.neutral[1400],
-              strokeWidth: '2px', 
-            }
-          }}
-          width={width}
-          height={height}
-          {...labelProps}
-          {...lineProps}
-        />
-      </VictoryGroup>
-    </Container>
-  )
-}   
+        <Container {...rest}> 
+          {lineProps.data && (
+          <VictoryGroup
+            padding={0}
+            width={300}
+            height={100}
+            domainPadding={{ x: 0, y: 0 }}
+          >
+            <VictoryLine
+              style={{
+                data: {
+                  stroke: color,
+                  strokeWidth: '4px', 
+                }
+              }}
+              width={300}
+              height={100}
+              {...lineProps}
+            />
+          </VictoryGroup>
+          )}
+        </Container>
+      )
+
+
+  // return (
+  //   // <ResponsiveContainer width={100} height="40%">
+  //     <LineChart
+  //       width={20}
+  //       height={60}
+  //       data={data}
+  //       margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+  //       {...rest}
+        
+  //     >
+  //       {/* <XAxis dataKey="name" /> */}
+  //       <LineEl type="monotone" dataKey="value" dot={false} stroke={color} strokeWidth={1.5} isAnimationActive={false}/>
+  //     </LineChart>
+  //   // </ResponsiveContainer>
+  // )
+}
+
+//   
+
+  
+
+
+
+
+
+//   
+// }
