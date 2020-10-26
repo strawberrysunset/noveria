@@ -1,3 +1,4 @@
 export const Percentage = ({children}) => {
-  return children.toFixed(2) + '%'
+  const prefix = (children >= 0) ? '+' : '-'
+  return prefix + children.toFixed(2) + '%'
 }
