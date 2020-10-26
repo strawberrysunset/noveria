@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   width: 100%;
   overflow-y: auto;
   ${props => props.theme.isMobile && css`
-    padding: 2rem;
+    padding: 2.5rem 1.5rem;
   `}
   background: ${props => props.theme.colors.neutral[100]};
   /* scroll-padding: 2em; */
@@ -20,10 +20,12 @@ const Wrapper = styled.div`
 const Title = styled.h1`
   font-size: ${props => props.theme.typeScale.h2};
   font-weight: bold;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.75em;
   line-height: 1.2;
   max-width: 40rem;
-  ${props => props.theme.isMobile && css`font-size: ${props => props.theme.typeScale.h3};`}
+  ${props => props.theme.isMobile && css`
+    font-size: ${props => props.theme.typeScale.h3};
+  `}
 `
 
 const Author = styled.p`
@@ -33,11 +35,6 @@ const Author = styled.p`
 const Date = styled.p`
 
 `
-
-// const Text = styled.div`
-//   padding: 1.5rem;
-//   background: ${props => props.theme.colors.neutral[200]};
-// `
 
 const Description = styled.p`
   margin-bottom: 1em;
@@ -55,6 +52,7 @@ const Subtitle = styled.div`
   gap: 0.5rem;
   margin-bottom: 3rem;
   font-size: ${props => props.theme.typeScale.bodySmall};
+  color: ${props => props.theme.colors.neutral[1400]};
 `
 
 const BackArrow = styled(Arrow)`
@@ -64,8 +62,6 @@ const ArticleArrow = styled(BackArrow)`
   transform: rotate(135deg);
   width: 1.25rem;
   height: 1.25rem;
-  
-  /* display: inline; */
 `
 
 const BackWrapper = styled(Link)`
@@ -82,6 +78,9 @@ const BackWrapper = styled(Link)`
   :active{
     color: ${props => props.theme.colors.neutral[300]}
   }
+  ${props => props.theme.isMobile && css`
+    margin-bottom: 2.5rem;
+  `}
 `
 
 const Text = styled.div`
@@ -89,6 +88,7 @@ const Text = styled.div`
   column-gap: 4rem;
   line-height: 1.7;
   max-width: 65rem;
+  overflow-wrap: break-word;
   @media(max-width: 48rem) {
     column-count: 1;
   }
@@ -102,14 +102,17 @@ const Attribution = styled.p`
   flex-wrap: wrap;
   font-size: ${props => props.theme.typeScale.bodySmall};
   margin-bottom: 4rem;
+  ${props => props.theme.isMobile && css`
+    margin-bottom: 2rem;
+  `}
 `
 
 export const Article = ({...rest}) => {
     
   const {articleID} = useParams() 
-  const {news, isLoading} = useNewsFeed()
-  if (isLoading) return null
+  const {data: news, isLoading} = useNewsFeed()
   const article = news[articleID];
+  if (isLoading || !article) return null
 
   return (
         <Wrapper { ...rest}>
@@ -117,7 +120,6 @@ export const Article = ({...rest}) => {
             <BackArrow size="1.5rem"/>
             <p css={`margin-top: 0.2em;`}>Back to Articles</p>
           </BackWrapper>
-          
           <Title>{article.title}</Title>
           <Subtitle>
             <AuthorIcon css="margin-right: -0.25rem;" size="0.9rem"/>
@@ -125,7 +127,6 @@ export const Article = ({...rest}) => {
             <DateIcon css="margin-left: 0.5rem; margin-right: -0.25rem;"
             size="0.9rem"/>
             <Date>{article.date}</Date>
-            
           </Subtitle>
           <Text>
             {article.text}
