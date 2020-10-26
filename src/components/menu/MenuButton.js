@@ -13,8 +13,8 @@ const Wrapper = styled.a`
   justify-content: center;
   height: 3.5rem;
   min-width: 4rem;
-  background-color: ${(props) => props.theme.colors.neutral[800]};
-  border-right: 1px solid ${(props) => props.theme.colors.neutral[800]};
+  background-color: ${(props) => props.theme.colors.neutral[1100]};
+  /* border-right: 1px solid ${(props) => props.theme.colors.neutral[1200]}; */
   :hover {
     background-color: ${(props) => props.theme.colors.neutral[800]};
     cursor: pointer;

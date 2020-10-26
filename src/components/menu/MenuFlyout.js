@@ -1,9 +1,9 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 import {Attribution} from './Attribution'
 import {useMenu} from '../../context'
 import {motion, AnimatePresence} from 'framer-motion'
-import {darken} from 'polished'
+import {transparentize} from 'polished'
 import {useDefaultList, useCurrencyList, useShareList, useThemeList} from './lists'
 
 const Wrapper = styled(motion.div)`
@@ -14,11 +14,11 @@ const Wrapper = styled(motion.div)`
   height: 100%;
   width: 20rem;
   border-right: 1px solid ${(props) => props.theme.colors.neutral[800]};
-
+  border-top: 1px solid ${(props) => props.theme.colors.neutral[800]};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0rem 0rem 2rem darken(0.5, ${(props) => props.theme.colors.neutral[100]});
+  box-shadow: 2rem 0rem 2rem ${props => transparentize(0.1, props.theme.colors.neutral[100])};
 `
 
 const Title = styled.h2`
@@ -34,9 +34,19 @@ const MenuListWrapper = styled.ul`
   overflow-y: auto;
   flex-grow: 1;
   height: min-content;
+  position: relative;
   
   padding: 1rem 0;
   background: ${props => props.theme.colors.neutral[100]};
+`
+
+const MenuListShadow = styled.div`
+  position: absolute;
+  bottom: 1rem;
+  width: 100%;
+  height: 2rem;
+  z-index: 999;
+  background: linear-gradient(0deg, ${props => props.theme.colors.neutral[100]}, transparent);
 `
 
 const Top = styled.div`
@@ -45,7 +55,7 @@ const Top = styled.div`
   overflow-y: auto;
 `
 
-export const MenuFlyout = ({ ...props }) => {
+export const MenuFlyout = ({ ...rest }) => {
 
   const menu = useMenu()
   const base = useDefaultList({updateMenu: menu.updateMenu})
@@ -68,9 +78,12 @@ export const MenuFlyout = ({ ...props }) => {
   return (
     <AnimatePresence>
       {menu.isOpen && (
-        <Wrapper {...animationProps} {...props}>
+        <Wrapper {...animationProps} {...rest}>
           <Top>
-            <MenuListWrapper>{currentMenuList}</MenuListWrapper>
+            <MenuListWrapper>
+              {/* <MenuListShadow/> */}
+              {currentMenuList}
+            </MenuListWrapper>
           </Top>
           <Attribution css="margin-top: auto;"/>
         </Wrapper>
