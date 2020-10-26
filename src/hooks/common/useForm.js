@@ -1,42 +1,78 @@
 import React from "react"
+import {useCustomReducer} from '../misc'
 
-export const useForm = ({initialValues, onSubmit}) => {
-
-  const [values, setValues] = React.useState(initialValues);
-  const [error, setError] = React.useState('')
-  const [isSubmitting, setIsSubmitting] = React.useState(false)
-  const [submitPause, setSubmitPause] = React.useState(1000)
-
-  const handleChange = event => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value
-    });
+const logger = (state, dispatch, action) => {
+  console.log({state, dispatch, action})
+}
+const reducer = (state, action) => {
+  switch(action.type) {
+    case 'set_error': {
+      return {...state, error: action.error}
+    }
+    case 'set_values': {
+      return {...state, values: action.values}
+    }
+    case 'set_isSubmitting': {
+      return {...state, isSubmitting: action.isSubmitting}
+    }
+    default: {
+      throw new Error(`Unhandled action type: ${action.type}`)
+    }
   }
+}
 
-  const submit = async event => {
-    event.preventDefault()
-    if (error) setError('')
-    setIsSubmitting(true)
-    await onSubmit(values)
-    .catch(error => {
-      setError(error.message)
-      setIsSubmitting(false)
-    })
-    setTimeout(() => setIsSubmitting(false), submitPause) // Prevent spam.
+const asyncMiddleware = async (state, dispatch, action) => {
+  switch(action.type) {
+    case 'submit': {
+      action.event.preventDefault()
+      if (state.error) dispatch({type: 'set_error', error: ''})
+      dispatch({type: 'set_isSubmitting', isSubmitting: true})
+      await state.onSubmit(state.values)
+      .catch(error => {
+        dispatch({type: 'set_error', error: error.message})
+        dispatch({type: 'set_isSubmitting', isSubmitting: false})
+      })
+      return setTimeout(() => {
+        dispatch({type: 'set_isSubmitting', isSubmitting: false})
+      }, state.submitThrottleTime)
+    }
+    case 'updateValues' : {
+      const newValues = {...state.values, 
+        [action.event.target.name]: action.event.target.value
+      }
+      return dispatch({type: 'set_values', values: newValues})
+    }
+    case 'replaceValues' : {
+      return dispatch({type: 'set_values', values: action.values})
+    }
+    default : {
+      return dispatch(action)
+    }
   }
+}
 
-  const manualSet = (obj) => {
-    setValues({...values, ...obj});
-  }
+export const useForm = ({initialValues, isSubmitting = false, onSubmit = () => {}, submitThrottleTime = 1000}) => {
 
-  return {
-    values,
-    error,
+  const initialState = {
+    values: initialValues,
+    error: '',
     isSubmitting,
-    manualSet,
-    handleChange,
-    submit,
-    setSubmitPause
-  };
-};
+    submitThrottleTime,
+    onSubmit
+  }
+
+  const [state, updateForm] = useCustomReducer({
+    reducerArgs: [reducer, initialState],
+    middleware: [asyncMiddleware, logger]
+  })
+
+  const handleChange = React.useCallback((event) => {
+    updateForm(({type: 'updateValues', event}))
+  }, [updateForm])
+
+  const submit = React.useCallback((event) => {
+    updateForm(({type: 'submit', event}))
+  }, [updateForm])
+  
+  return {...state, handleChange, submit}
+}
