@@ -1,19 +1,26 @@
 import {getCoinHistory} from '../../api'
 
-const sumHistories = (histories) => {
-  return histories.reduce((total, history) => {
-    history.forEach((el, idx) => {
-      total[idx][0] = el[0]
-      total[idx][1] += el[1]
-    }, )
-    return total
-  }, Array(histories[0].length).fill([0, 0]))
+export const sumHistories = (histories) => {
+  // Sum histories into a single total.
+  let historyTotal = []
+  for (let i = 0; i < histories.length; i++){
+    const history = histories[i]
+    for (let j = 0; j < history.length; j++) {
+      if (i === 0) historyTotal[j] = [0, 0]
+      historyTotal[j][0] = history[j][0]
+      historyTotal[j][1] += history[j][1]
+    }
+  }
+  return historyTotal
 }
 
 export async function getPortfolioHistory ({assets, currency, days}) {
   if (!assets) return []
-  const histories = await Promise.all(assets.map(async asset => {
-    return await getCoinHistory({id: asset.id, currency, days})
-  }, []))
-  return sumHistories(histories)
+  // Get histories.
+  let histories = []
+  for (let i = 0; i < assets.length; i++) {
+    histories[i] = await getCoinHistory({id: assets[i].id, currency, days})
+  }
+  const history = sumHistories(histories)
+  return history
 }
