@@ -7,7 +7,7 @@ import {ListItem} from './ListItem'
 export const useCurrencyList = ({updateMenu}) => {
 
   const {currency: currentCurrency, updateSettings} = useSettings()
-  const {supportedCurrencies}= useSupportedCurrencies()
+  const {data: supportedCurrencies}= useSupportedCurrencies()
   const {updateNotification} = useNotification()
 
   // Put selected currency at top of currency list.
