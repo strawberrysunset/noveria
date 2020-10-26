@@ -1,10 +1,14 @@
 import React from 'react'
 import styled, {css} from 'styled-components/macro'
-import {Card, Price, IndicatorColor, Doughnut, Spinner, OptionsBar} from '../../common'
+import {Card, Price, IndicatorColor} from '../../common'
 import {MdAccountBalanceWallet as Icon, MdArrowDropUp as Arrow, MdRefresh } from 'react-icons/md'
 import {motion} from 'framer-motion'
 import {usePortfolio} from '../../../context'
 import {useFormatPrice} from '../../../hooks/common'
+import {transparentize} from 'polished'
+import { useQueryCache } from 'react-query'
+import {BiUpArrow} from 'react-icons/bi'
+import {formatPercentage} from 'utilities'
 
 
 const Wrapper = styled.div`
@@ -12,18 +16,18 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  /* padding: 2rem 3rem;
-  padding-bottom: 2.5rem; */
   height: 100%;
   width: 100%;
   padding: 1.5rem;
+  background-color: ${props => props.theme.colors.neutral[400]};
 `
 
-const Total = styled.p`
+const Total = styled(motion.p)`
   font-size: clamp(${(props) => props.theme.typeScale.caption}, 12vw, ${(props) => props.theme.typeScale.h2});
   font-weight: 900;
   letter-spacing: -0.02em;
   margin: 0.25rem 0;
+  text-shadow: 0rem 0rem 1.5rem ${props => transparentize(0.8, props.theme.colors.neutral[1400])};
 `
 
 const AltTotal = styled.div`
@@ -49,7 +53,7 @@ const IndicatorArrow = styled(Arrow)`
     if (props.value >= 0) {
       return css`
         transform: rotate(0deg);
-        margin-bottom: 0.35rem;
+        margin-bottom: 0.30rem;
       `
     }
     return css`
@@ -58,22 +62,6 @@ const IndicatorArrow = styled(Arrow)`
     ` 
   }};
 
-`
-
-
-const HeaderItemsWrapper = styled.div`
-  display: grid;
-  grid-auto-flow: column;
-  grid-gap: 0.5rem;
-  align-items: center;
-  :hover {
-    color: ${props => props.theme.colors.green[100]};
-    cursor: pointer;
-    :first-child {
-      transform: rotate(45deg);
-      transition: 0.3s ease;
-    }
-  }
 `
 
 const Color = styled(IndicatorColor)`
@@ -87,40 +75,44 @@ const Label = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  padding: 2rem 0;
+  padding: 1rem 0;
 `
+
+const OptionItem = styled.div`
+  ${props => props.selected ? css`
+    color: ${props.theme.colors.neutral[1500]};
+  ` : css`color: ${props.theme.colors.neutral[1200]};`
+  }
+  :hover {
+    color: ${props => props.theme.colors.neutral[1600]};
+    cursor: pointer;
+  }
+  transition: 0.1s ease;
+`
+
+const priceChangePeriods = ['1H', '24H', '7D', '30D'];
 
 export const Balance = ({ ...rest }) => {
 
   const {total, totalBTC, change, isLoading} = usePortfolio()
   const {formatPrice} = useFormatPrice()
+  const queryCache = useQueryCache()
 
-  const headerItems = (
-    <HeaderItemsWrapper>
-      <OptionsBar options={[
-        {
-          value:'1H', 
-          action: () => {}
-        },
-        {
-          value:'24H', 
-          action: () => {}
-        },
-        {
-          value:'7D', 
-          action: () => {}
-        }
-      ]}/>
-    </HeaderItemsWrapper>
-  )
+
+  // const headerItems = (
+  //   <button onClick={() => {
+  //     queryCache.refetchQueries()
+  //   }}>Refresh</button>
+  // )
+
 
   return (
-    <Card label="Balance" loading={isLoading} icon={Icon} items={headerItems} {...rest}>
+    <Card label="Balance (24H)" isLoading={isLoading} icon={Icon} {...rest}>
       <Wrapper>
           <Label>
             <Color value={change['24h'].percentage}>
               <IndicatorArrow value={change['24h'].percentage}/>
-              <IndicatorValue>{change['24h'].percentage.toFixed(2) + '%'}</IndicatorValue>
+              <IndicatorValue>{formatPercentage(change['24h'].percentage)}</IndicatorValue>
             </Color>
             <Total>{formatPrice(total)}</Total>
             <AltTotal>(<Price currency="btc">{totalBTC}</Price>)</AltTotal>
