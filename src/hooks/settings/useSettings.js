@@ -42,7 +42,7 @@ export const useSettings = () => {
 
   const [settings, updateSettings] = useCustomReducer({
     reducerArgs : [reducer, {
-      theme: 'blue',
+      theme: 'carbon',
       darkMode: true,
       currency: 'usd',
       firstVisit: true,
