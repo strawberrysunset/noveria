@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components/macro'
+import styled, {css} from 'styled-components/macro'
 
 const StyledTable = styled.table`
   display: grid;
@@ -16,10 +16,16 @@ const StyledTable = styled.table`
     width: 100%;
     overflow-y: auto;
   }
+  tbody {
+    padding: 0 1rem;
+  }
 
   th,
   td {
     padding: 1rem 1rem;
+    /* ${props => props.theme.isMobile && css`
+      padding: 1rem 1rem;
+    `} */
     overflow: hidden;
     white-space: nowrap;
     background: ${(props) => props.theme.colors.neutral[100]};
@@ -32,12 +38,7 @@ const StyledTable = styled.table`
       flex-grow: 1;
     }
     min-height: min-content;
-  }
-
-  th:first-child,
-  td:first-child {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    border-bottom: 1px solid ${(props) => props.theme.colors.neutral[100]};
   }
 
   th {
@@ -47,6 +48,9 @@ const StyledTable = styled.table`
     background: ${(props) => props.theme.colors.neutral[400]};
     font-weight: 500;
     color: ${props => props.theme.colors.neutral[1200]} !important;
+    > * {
+      margin-top: 0.2rem;
+    }
   }
 
   td {
@@ -55,33 +59,31 @@ const StyledTable = styled.table`
 
   tr:nth-child(even) td {
     background: ${(props) => props.theme.colors.neutral[400]};
+    
   }
-`
-
-const TableWrapper = styled.div`
-  overflow-y: auto;
-  width: 100%;
-  height: 100%;
+  tr:nth-child(odd) td {
+    background: ${(props) => props.theme.colors.neutral[200]};
+  }
 `
 
 export const Table = ({ headerData, rowData, ...rest }) => {
 
-  const headerMarkup = headerData.map((item, idx) => <th key={idx}>{item}</th>)
-  const rowMarkup = rowData.map((row, idx) => (
+  const headerMarkup = (
+    headerData.map((item, idx) => <th key={idx}>{item}</th>)
+  )
+
+  const rowMarkup = React.useMemo(() => rowData.map((row, idx) => (
     <tr key={idx}>
       {row.map((item, idx) => (
         <td key={idx}>{item}</td>
       ))}
     </tr>
-  ))
+  )), [rowData])
 
   return (
-    <TableWrapper>
-      <StyledTable colNum={headerData.length} {...rest}>
-        <thead><tr>{headerMarkup}</tr></thead>
-        <tbody>{rowMarkup}</tbody>
-      </StyledTable>
-    </TableWrapper>
+    <StyledTable colNum={headerData.length} {...rest}>
+      <thead><tr>{headerMarkup}</tr></thead>
+      <tbody>{rowMarkup}</tbody>
+    </StyledTable>
   )
-  
 }
