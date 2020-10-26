@@ -1,11 +1,11 @@
 
 export const hues = {
-    neutral: null,
-    purple: 252, 
-    blue: 218, 
-    pink: 307, 
-    green: 144, 
-    orange: 37
+    carbon: null,
+    lavender: 252, 
+    royal: 218, 
+    rose: 307, 
+    matrix: 144, 
+    retro: 37
 }
 export const neutralShades = {
   'dark' : {
@@ -24,7 +24,7 @@ export const neutralShades = {
     '1300': '#a2a2a2',
     '1400': '#b9b9b9',
     '1500': '#d1d1d1',
-    '1600': '#e8e8e8'
+    '1600': '#f1f1f1'
   },
   'light' : {
     100: "#f1f1f1",
@@ -35,14 +35,14 @@ export const neutralShades = {
     600: "#d1d1d1",
     700: "#d1d1d1",
     800: "#d1d1d1",
-    900: "#222",
-    1000: "#222",
-    1100: "#222",
+    900: "#ccc",
+    1000: "#bbb",
+    1100: "#bbb",
     1200: "#777",
-    1300: "#222",
-    1400: "#222",
-    1500: "#222",
-    1600: "#222"
+    1300: "#444",
+    1400: "#444",
+    1500: "#444",
+    1600: "#444"
   }
 }
 export const  colors = {
