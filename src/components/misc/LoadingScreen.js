@@ -60,8 +60,6 @@ const Text = styled(motion.p)`
   color: ${props => props.theme.colors.neutral[1400]};
 `
 
-
-
 const Version = styled.p`
   text-transform: uppercase;
   position: absolute;
@@ -72,30 +70,11 @@ const Version = styled.p`
   color: ${props => props.theme.colors.neutral[1300]};
 `
 
-const animation = {
+export const LoadingScreen = ({loading, ...rest}) => {
 
-}
-
-export const LoadingScreen = ({ ...rest }) => {
-
-  const isFetching = useIsFetching()
-  const [loaded, setLoaded] = React.useState(false)
-  const queryCache = useQueryCache()
-
-  React.useEffect(() => {
-    if(!isFetching){
-      setLoaded(true)
-    }
-  }, [isFetching])
-
-  React.useEffect(() => {
-    console.log(queryCache.isFetching)
-  }, [queryCache.isFetching])
- 
   return (
     <AnimatePresence>
-      {!loaded && isFetching && (
-        
+      {loading && (
         <Wrapper
           {...rest}
           initial={{ opacity: 1 }}
