@@ -7,7 +7,7 @@ import {useNotification, useSettings} from '../../context'
 import {motion, useAnimation} from 'framer-motion'
 
 const Wrapper = styled.header`
-  border-bottom: 0.5rem solid ${props => props.theme.colors.neutral[1000]}; 
+  border-bottom: 1px solid ${props => props.theme.colors.neutral[1200]}; 
   background-color: ${props => props.theme.colors.neutral[600]};
   width: 100%;
   display: grid;
@@ -18,12 +18,12 @@ const Wrapper = styled.header`
   @media (min-width: 48rem) {
     grid-auto-columns: 3.5rem 1fr 1fr 1fr;
   }
-  /* background: linear-gradient(90deg, ${props => props.theme.colors.neutral[100]},${props => props.theme.colors.neutral[1100]} , ${props => props.theme.colors.neutral[100]}); */
+  background: linear-gradient(90deg, ${props => props.theme.colors.neutral[1100]}, ${props => props.theme.colors.neutral[100]});
 `
 
 const Message = styled(motion.div)`
   margin-bottom: -0.35rem;
-  font-weight: 400;
+  font-weight: 600;
   margin-left: 2rem;
   user-select: none;
   display: none;
