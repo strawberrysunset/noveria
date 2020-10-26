@@ -54,15 +54,15 @@ const NavButton = styled.p`
   }
 `
 
-export const CardHeaderItems = ({page, setPage}) => {
+export const CardHeaderItems = ({page, setPage, totalPages}) => {
 
   return (
     <Wrapper>
       <Right>
         {/* <NavButton enabled={page > 1} onClick={()=> setPage(1)}>First</NavButton> */}
-        <NavButton enabled={page > 1} onClick={()=> setPage(page - 1)}>Previous</NavButton>
-        <Item css={`font-weight: bold;`}>{page}</Item>
-        <NavButton enabled={page < 20} onClick={()=> setPage(page + 1)}>Next</NavButton>
+        <NavButton enabled={page > 0} onClick={()=> setPage(page - 1)}>Previous</NavButton>
+        <Item css={`font-weight: bold;`}>{page + 1}</Item>
+        <NavButton enabled={page < totalPages - 1} onClick={()=> setPage(page + 1)}>Next</NavButton>
       </Right>
     </Wrapper> 
   )
