@@ -34,17 +34,17 @@ export const useDefaultList = ({updateMenu}) => {
   const {updateNotification} = useNotification()
 
   return [
-    <ListItem left={<Icon icon={<FaDollarSign size="1.125rem"/>} name="Currency"/>} right={settings.currency.toUpperCase()} onClick={() => listClickHandler('currency')}/>,
-    <ListItem left={<Icon icon={<IoIosColorPalette size="1.125rem"/>} name="Theme"/>} right={capitalize(settings.theme)} onClick={() => listClickHandler('theme')}/>,
-    <ListItem left={<Icon icon={<FaShareSquare size="1rem"/>} name="Share"/>} onClick={() => listClickHandler('share')}/>,
-    <ListItem as="label" left={<Icon icon={<CgImport size="1.125rem"/>} name="Import Portfolio" />} htmlFor="file"></ListItem>,
-    <ListItem left={<Icon icon={<CgExport size="1.125rem"/>} name="Export Portfolio"/>} onClick={handlePortfolioExportClick}/>,
-    <Link external to="https://www.github.com/strawberrysunset/noveria"><ListItem left={<Icon icon={<FaGithubSquare size="1.125rem"/>} name="Source Code"/>}/></Link>,
+    <ListItem key={1} left={<Icon icon={<FaDollarSign size="1.125rem"/>} name="Currency"/>} right={settings.currency.toUpperCase()} onClick={() => listClickHandler('currency')}/>,
+    <ListItem key={2} left={<Icon icon={<IoIosColorPalette size="1.125rem"/>} name="Theme"/>} right={capitalize(settings.theme)} onClick={() => listClickHandler('theme')}/>,
+    <ListItem key={3} left={<Icon icon={<FaShareSquare size="1rem"/>} name="Share"/>} onClick={() => listClickHandler('share')}/>,
+    <ListItem key={4} as="label" left={<Icon icon={<CgImport size="1.125rem"/>} name="Import Portfolio" />} htmlFor="file"></ListItem>,
+    <ListItem key={5} left={<Icon icon={<CgExport size="1.125rem"/>} name="Export Portfolio"/>} onClick={handlePortfolioExportClick}/>,
+    <Link key={6} external to="https://www.github.com/strawberrysunset/noveria"><ListItem left={<Icon icon={<FaGithubSquare size="1.125rem"/>} name="Source Code"/>}/></Link>,
     // <ListItem left={<Icon icon={<FaCoins size="1.125rem"/>} name="Donate" />} onClick={() => {
     //   updateNotification({type: 'set_popUp_content', popUpContent: DonationPopUp})
     //   updateNotification({type: 'set_showPopUp', showPopUp: true})
     // }}/>,
-    <input style={{display: 'none'}} type="file" accept=".txt" id="file" onChange={handleFileInputChange} />
+    <input key={7} style={{display: 'none'}} type="file" accept=".txt" id="file" onChange={handleFileInputChange} />
   ]
 
   async function handleFileInputChange (event) {

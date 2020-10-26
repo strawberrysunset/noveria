@@ -35,9 +35,9 @@ export const useShareList = () => {
         <p css={`margin-top: 0.15rem;`}>{name}</p>
       </Wrapper>
     )
-    return shareItems.map(({url, icon, name}) => {
+    return shareItems.map(({url, icon, name}, idx) => {
       return (
-        <Link external to={url}>
+        <Link key={idx} external to={url}>
           <ListItem left={<Icon icon={icon} name={name}/>}/>
         </Link>
       )
