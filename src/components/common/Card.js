@@ -50,6 +50,7 @@ const ContentWrapper = styled.div`
   display: flex;
   align-items: stretch;
   justify-content: stretch;
+  
 `
 
 const Message = styled.p`
@@ -73,16 +74,17 @@ const PlaceHolderWrapper = styled.div`
   height: 100%;
   ${props => props.transparentBackground 
   ? css`
-    background-color: ${props => transparentize(0.1, props.theme.colors.neutral[100])};
+    background-color: ${props => transparentize(0.1, props.theme.colors.neutral[400])};
   `
   : css`
-    background-color: ${props => props.theme.colors.neutral[100]};
+    background-color: ${props => props.theme.colors.neutral[400]};
   `}
   
   z-index: 2;
   padding: 2.5rem;
   
 `
+
 
 export const Card = ({ children, icon: Icon, transparentBackground=false, label, render, items, message, isLoading, error, ...rest }) => {
 
