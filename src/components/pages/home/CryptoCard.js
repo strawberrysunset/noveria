@@ -45,7 +45,7 @@ const IconBackground = styled.img`
   height: 160%;
   width: auto;
   position: absolute;
-  left: -8%;
+  left: -15%;
   top: -30%;
   opacity: 0.05;
 `
