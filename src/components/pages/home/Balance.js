@@ -94,20 +94,12 @@ const priceChangePeriods = ['1H', '24H', '7D', '30D'];
 
 export const Balance = ({ ...rest }) => {
 
-  const {total, totalBTC, change, isLoading, isFetching} = usePortfolio()
+  const {total, totalBTC, change, isFetching, isEmpty} = usePortfolio()
   const {formatPrice} = useFormatPrice()
-  const queryCache = useQueryCache()
-
-
-  // const headerItems = (
-  //   <button onClick={() => {
-  //     queryCache.refetchQueries()
-  //   }}>Refresh</button>
-  // )
 
 
   return (
-    <Card label="Balance (24H)" isLoading={isFetching} icon={Icon} {...rest}>
+    <Card label="Balance (24H)" isLoading={!isEmpty && isFetching} icon={Icon} {...rest}>
       <Wrapper>
           <Label>
             <Color value={change['24h'].percentage}>
