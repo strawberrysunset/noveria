@@ -1,10 +1,6 @@
-# 🏔️ Noveria
-<img width="100%" src="https://github.com/strawberrysunset/noveria/blob/master/public/marketing/thumbnail.jpeg"/>
-
+<img width="100%" src="https://github.com/strawberrysunset/noveria/blob/master/public/marketing/thumbnail.jpg"/>
 
 ###  Try it out: <a href="https://www.noveria.app">noveria.app</a>
-
-
 
 ___
 
