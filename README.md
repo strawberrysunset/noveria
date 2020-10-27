@@ -1,10 +1,10 @@
 # 🏔️ Noveria
+<img width="100%" src="https://github.com/strawberrysunset/noveria/blob/master/public/marketing/thumbnail.jpeg"/>
 
-The account-less cryptocurrency portfolio tracker than runs in your browser. Track your crypto assets and get up to date market information and news.
 
 ###  Try it out: <a href="https://www.noveria.app">noveria.app</a>
 
-<img width="100%" src="https://github.com/strawberrysunset/noveria/blob/master/public/marketing/noveria_home.jpeg"/>
+
 
 ___
 
