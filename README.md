@@ -1,15 +1,18 @@
+# 🏔️ Noveria
 
-
-Noveria is an account-less cryptocurrency portfolio tracker than runs in your browser, optimized for both desktop and mobile. It is designed to be a hassle-free solution for tracking your crypto assets and getting up to date information.
+The account-less cryptocurrency portfolio tracker than runs in your browser. Track your crypto assets and get up to date market information and news.
 
 ###  Try it out: <a href="https://www.noveria.app">noveria.app</a>
+
+<img width="100%" src="https://github.com/strawberrysunset/noveria/blob/master/public/marketing/noveria_home.jpeg"/>
 
 ___
 
 ## Features
 - No account or sign-up required.
-- Private: Your portfolio is only stored locally in your browser.
-- Support for over 5000 cryptocurrencies and tokens.
+- Works on both mobile and desktop.
+- Private: Your portfolio is only stored locally in your browser. We bulk fetch coin data so all user api requests are identical.
+- Supports the top 1000 cryptocurrencies and tokens (by market cap).
 - Display prices in over 30 fiat currencies (e.g. USD, EUR, GBP, CAD, BTC...)
 - Cutomizable color theming to suit your taste.
 - Light/dark modes for all color themes.
@@ -17,6 +20,13 @@ ___
 - Get the latest crypto news (powered by CoinTelegraph).
 - High frequency data refreshing to ensure you are continually provided the latest prices.
 - Your portfolio data persists across browser sessions (providing you have allowed browser data caching).
+
+## Customize your dashboard with themes.
+<div style="display: flex;">
+  <img width="15%" src="https://github.com/strawberrysunset/noveria/blob/master/public/marketing/mobile_matrix.jpeg">
+  <img width="15%" style="margin-left: 1rem;" src="https://github.com/strawberrysunset/noveria/blob/master/public/marketing/mobile_rose.jpeg">
+  <img width="15%" style="margin-left: 1rem;" src="https://github.com/strawberrysunset/noveria/blob/master/public/marketing/mobile_retro.jpeg">
+</div>
 
 #### Noveria is proud to be an open-source project. Any issues or feature requests can be created at [the repo](https://github.com/strawberrysunset/noveria/).
 
