@@ -23,5 +23,5 @@ ___
 
 Noveria is powered by [CoinGecko](https://www.coingecko.com/en) and [CoinTelegraph](https://cointelegraph.com/). 
 
-<sub>Disclaimer: Noveria holds no resposibility for the accuracy of the data displayed on the platform.</sub>
+<sub>Disclaimer: Noveria holds no responsibility as to the accuracy of the data displayed in the Noveria app.</sub>
 
