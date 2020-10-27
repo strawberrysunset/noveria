@@ -41,12 +41,17 @@ const Icon = styled.img`
   width: 1.5rem;
 `
 
+const IconBackgroundContainer = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+`
 const IconBackground = styled.img`
   height: 160%;
-  width: auto;
-  position: absolute;
-  left: -15%;
-  top: -30%;
+  margin-left: -4vw;
   opacity: 0.05;
 `
 
@@ -121,7 +126,9 @@ export const CryptoCard = ({ label, labelIcon, asset, value, ...rest}) => {
 
   const assetContent = asset && (
     <>
-      <IconBackground src={asset.image}/>
+      <IconBackgroundContainer>
+        <IconBackground src={asset.image}/>
+      </IconBackgroundContainer>
       <StyledCryptoLogo name={asset.name} icon={asset.image}></StyledCryptoLogo>
       <Divider>|</Divider>
       {value}
