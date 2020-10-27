@@ -9,12 +9,10 @@ export const usePortfolioHistory = (initialHistoryDays) => {
   const {currency} = useSettings()
   const {assets} = usePortfolio()
 
-  console.log(assets, currency, historyDays)
   const {data, ...asyncInfo} = useQuery(['portfolio-history', currency, assets, historyDays], async () => {
     return await getPortfolioHistory({assets, currency, days: historyDays})
   })
 
-  console.log({data})
   return {
     history: data,
     setHistoryDays,

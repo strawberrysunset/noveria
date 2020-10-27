@@ -2,7 +2,6 @@ import React from "react"
 import {useCustomReducer} from '../misc'
 
 const logger = (state, dispatch, action) => {
-  console.log({state, dispatch, action})
 }
 const reducer = (state, action) => {
   switch(action.type) {

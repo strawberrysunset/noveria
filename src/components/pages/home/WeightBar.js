@@ -23,7 +23,6 @@ export const WeightBar = ({ ...rest}) => {
   return (
     <Wrapper { ...rest}>
       {assets.map(({weight, color}) => {
-        console.log({weight, color})
         return <Segment width={String(weight * 100) + '%'} color={color}/>
       })}
     </Wrapper>

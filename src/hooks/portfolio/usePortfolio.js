@@ -45,7 +45,7 @@ export const asyncMiddleware = async (state, dispatch, action) => {
 }
 
 export const logger = (state) => {
-  console.log(`Portfolio assets: ${state.assets}`)
+ 
 }
 
 

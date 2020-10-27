@@ -52,8 +52,6 @@ export const getCoinData = async ({currency, limit = 500} = {}) => {
     list = [...list, ...coins] 
   }
 
-  console.log(list)
-
   return list.map(coin => formatCoin(coin))
 }
 

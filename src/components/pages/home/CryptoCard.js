@@ -134,8 +134,6 @@ export const CryptoCard = ({ label, labelIcon, asset, value, ...rest}) => {
       {value}
     </>
   )
-
-  if(asset) console.log(asset.color)
   
   return (
     <Wrapper { ...rest}>

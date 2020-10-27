@@ -26,7 +26,6 @@ export const Markets = ({...rest}) => {
   const {data, isLoading: coinDataIsLoading} = useCoinData()
   const startIndex = page * perPage;
   const coinData = data.slice(startIndex, startIndex + perPage)
-  console.log({coinData})
   const [isLoading, setIsLoading] = React.useState(true)
 
   return React.useMemo(() => (
