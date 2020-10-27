@@ -47,7 +47,7 @@ const IconBackground = styled.img`
   position: absolute;
   left: -8%;
   top: -30%;
-  opacity: 0.02;
+  opacity: 0.05;
 `
 
 const Banner = styled.div`
@@ -57,8 +57,8 @@ const Banner = styled.div`
   gap: 0.5rem;
   padding: 0.75rem;
   /* border-bottom:1px solid ${props => props.theme.colors.neutral[800]}; */
-  background-color: ${props => props.theme.colors.neutral[800]};
-  background: linear-gradient(90deg, ${props => props.theme.colors.neutral[800]}, ${props => props.theme.colors.neutral[200]}, ${props => props.theme.colors.neutral[800]});
+  background-color: ${props => props.theme.colors.neutral[400]};
+  /* background: linear-gradient(90deg, ${props => props.theme.colors.neutral[800]}, ${props => props.theme.colors.neutral[200]}, ${props => props.theme.colors.neutral[800]}); */
 `
 
 
@@ -85,7 +85,7 @@ const Main = styled.div`
     return props.theme.colors.neutral[600]
   }};
   
-  background: linear-gradient(90deg, ${props => props.theme.colors.neutral[1100]}, ${props => props.theme.colors.neutral[400]}, ${props => props.theme.colors.neutral[1100]});
+  /* background: linear-gradient(90deg, ${props => props.theme.colors.neutral[1100]}, ${props => props.theme.colors.neutral[400]}, ${props => props.theme.colors.neutral[1100]}); */
   flex-grow: 1;
   font-weight: 600;
   font-size: ${props => props.theme.typeScale.h5};
