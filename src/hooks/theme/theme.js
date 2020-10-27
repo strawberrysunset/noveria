@@ -2,7 +2,7 @@
 export const hues = {
     carbon: null,
     lavender: 252, 
-    royal: 218, 
+    avalanche: 218, 
     rose: 307, 
     matrix: 144, 
     retro: 37
