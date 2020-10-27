@@ -17,13 +17,6 @@ ___
 - High frequency data refreshing to ensure you are continually provided the latest prices.
 - Your portfolio data persists across browser sessions (providing you have allowed browser data caching).
 
-## Customize your dashboard with themes.
-<div style="display: flex;">
-  <img width="15%" src="https://github.com/strawberrysunset/noveria/blob/master/public/marketing/mobile_matrix.jpeg">
-  <img width="15%" style="margin-left: 1rem;" src="https://github.com/strawberrysunset/noveria/blob/master/public/marketing/mobile_rose.jpeg">
-  <img width="15%" style="margin-left: 1rem;" src="https://github.com/strawberrysunset/noveria/blob/master/public/marketing/mobile_retro.jpeg">
-</div>
-
 #### Noveria is proud to be an open-source project. Any issues or feature requests can be created at [the repo](https://github.com/strawberrysunset/noveria/).
 
 ___
