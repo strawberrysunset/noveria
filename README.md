@@ -1,4 +1,4 @@
-<img width="100%" src="https://github.com/strawberrysunset/noveria/blob/master/public/marketing/thumbnail.jpg"/>
+<a href="https://www.noveria.app" target="_blank" rel="noopener noreferrer"><img width="100%" src="https://github.com/strawberrysunset/noveria/blob/master/public/marketing/thumbnail.jpg"/></a>
 
 ###  Try it out: <a href="https://www.noveria.app">noveria.app</a>
 
