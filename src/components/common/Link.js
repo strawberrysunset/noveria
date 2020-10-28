@@ -13,7 +13,7 @@ export const Link = ({external, to, children, ...rest}) => {
   return (
     external 
     ? 
-    <NativeLink href={to} target="_blank" rel="external nofollow noreferrer noopener" {...rest}>{children}</NativeLink>
+    <NativeLink href={to} target="_blank" rel="external noreferrer noopener" {...rest}>{children}</NativeLink>
     : 
     <RRDLink to={to} {...rest}>{children}</RRDLink>
   )
