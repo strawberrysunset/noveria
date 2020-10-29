@@ -41,7 +41,7 @@ const RemoveAll = styled.p`
     color: ${(props) => props.theme.colors.red[100]};
     cursor: pointer;
   }
-  font-weight: 600;
+  font-weight: bold;
 `
 
 const AddAsset = styled(RemoveAll)`

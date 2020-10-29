@@ -33,7 +33,6 @@ const Total = styled(motion.p)`
 const AltTotal = styled.div`
   font-size: ${(props) => props.theme.typeScale.bodySmall};
   color: ${(props) => props.theme.colors.neutral[1400]};
-
   margin-bottom: 0.5rem;
 `
 
@@ -41,7 +40,7 @@ const IndicatorValue = styled.p`
   text-transform: uppercase;
   font-size: ${(props) => props.theme.typeScale.body};
   margin-bottom: 0.25rem;
-  font-weight: 600;
+  font-weight: bold;
   margin-left: -0.5rem;
   margin-right: 1rem;
 `
