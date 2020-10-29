@@ -19,7 +19,6 @@ export const ButtonWrapper = styled.button`
     border: 1px solid inherit;
   }
   transition: 0.15s ease;
-  max-height: min-content;
   color: ${(props) => props.theme.colors.neutral[1600]};
   :disabled {
     cursor: default;
