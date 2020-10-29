@@ -3,10 +3,12 @@ import styled from 'styled-components/macro'
 import {useTheme} from '../../../context'
 
 const Wrapper = styled.div`
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
   align-items: center;
-  gap: 0.375rem;
+  grid-gap: 0.375rem;
   white-space: nowrap;
+  max-width: min-content;
   color: ${props => props.theme.colors.neutral[1400]};
 `
 

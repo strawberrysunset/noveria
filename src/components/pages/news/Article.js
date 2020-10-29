@@ -46,10 +46,11 @@ const Description = styled.p`
 `
 
 const Subtitle = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-auto-flow: column;
   white-space: nowrap;
-  gap: 0.5rem;
+  max-width: min-content;
+  grid-gap: 0.5rem;
   margin-bottom: 3rem;
   font-size: ${props => props.theme.typeScale.bodySmall};
   color: ${props => props.theme.colors.neutral[1400]};
@@ -65,9 +66,12 @@ const ArticleArrow = styled(BackArrow)`
 `
 
 const BackWrapper = styled(Link)`
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
   align-items: center;
-  gap:1rem;
+  max-width: min-content;
+  white-space: nowrap;
+  grid-gap:1rem;
   margin-bottom: 3rem;
   margin-top: 0.5rem;
   color: ${props => props.theme.colors.neutral[1200]};

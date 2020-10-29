@@ -23,9 +23,11 @@ const shareItems = [
 ]
 
 const Wrapper = styled.div`
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
   align-items: center;
-  gap: 0.75rem;
+  grid-gap: 0.75rem;
+  max-width: min-content;
 `
 
 export const useShareList = () => {

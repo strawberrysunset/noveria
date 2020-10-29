@@ -3,9 +3,11 @@ import styled from 'styled-components/macro'
 import CoinTelegraph from '../../assets/cointelegraph-logo.png'
 
 const Wrapper = styled.div`
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
   align-items: center;
-  gap: 0.25rem;
+  grid-gap: 0.25rem;
+  max-width: min-content;
 `
 
 const Logo = styled.img`

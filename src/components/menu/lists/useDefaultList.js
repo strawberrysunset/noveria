@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   grid-auto-flow: column;
   /* align-items: center;
   justify-content:flex-start; */
-  gap: 0.25rem;
+  grid-gap: 0.25rem;
 `
 
 const Icon = ({icon, name}) => (

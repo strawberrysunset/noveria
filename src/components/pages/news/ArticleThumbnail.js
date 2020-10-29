@@ -55,8 +55,11 @@ const Description = styled.p`
 `
 
 const SubText = styled.div`
-  display: flex;
-  gap: 0.25rem;
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 0.25rem;
+  white-space: nowrap;
+  max-width: min-content;
 `
 
 const ReadArticle = styled.div`

@@ -56,10 +56,11 @@ const IconBackground = styled.img`
 `
 
 const Banner = styled.div`
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  grid-gap: 0.5rem;
   padding: 0.75rem;
   /* border-bottom:1px solid ${props => props.theme.colors.neutral[800]}; */
   background-color: ${props => props.theme.colors.neutral[400]};
@@ -74,12 +75,13 @@ const Label = styled.h3`
 `
 
 const Main = styled.div`
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
   /* flex-direction: column; */
   align-items: center;
   /* align-items: center; */
   justify-content: center;
-  gap: 1.5rem;
+  grid-gap: 1.5rem;
   position: relative;
   padding: 1.5rem;
   overflow: hidden;

@@ -17,20 +17,6 @@ const ContentWrapper = styled.div`
 `
 
 
-const StatsWrapper = styled.div`
-  display: flex;
-  /* grid-auto-flow: column; */
-  /* grid-template-columns: repeat(auto-fit, 1fr); */
-  gap: 1.25rem;
-  flex-wrap: wrap;
-  max-height: 3.25rem;
-  align-items: center;
-  padding: 1rem 1.5rem;
-  background-color: ${props => props.theme.colors.neutral[600]};
-  max-width: 100%;
-  overflow: hidden;
-`
-
 const ViewAllCoinsButton = styled(Link)`
   color: ${props => props.theme.colors.neutral[1400]};
   :hover {
