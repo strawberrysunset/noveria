@@ -23,22 +23,11 @@ const Item = styled.li`
   
 `
 
-const Left = styled.ul`
-  display: flex;
-  /* grid-auto-flow: column; */
-  gap: 1.5rem;
-  overflow: hidden;
-  flex-wrap: wrap;
-  max-height: 100%;
-  /* grid-template-columns: repeat(auto-fit, repeat(min-content, 1fr) ); */
-`
-
 const Right = styled.ul`
   display: grid;
   grid-auto-flow: column;
   grid-gap: 1.5rem;
   margin-left: auto;
-  
 `
 
 const NavButton = styled.p`
