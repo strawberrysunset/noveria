@@ -19,12 +19,13 @@ const GlobalStyling = createGlobalStyle`
   * {
     list-style: none;
     vertical-align: middle;
+    font-weight: normal;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
   }
   
   html {
     font-family: 'Overpass', sans-serif;
-    font-weight: normal;
-    font-style: normal;
     user-select: none;
     color : ${(props) => props.theme.colors.neutral[1600]};
     list-style: none;
