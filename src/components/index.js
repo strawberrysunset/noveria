@@ -23,7 +23,8 @@ const GlobalStyling = createGlobalStyle`
   
   html {
     font-family: 'Overpass', sans-serif;
-    
+    font-weight: normal;
+    font-style: normal;
     user-select: none;
     color : ${(props) => props.theme.colors.neutral[1600]};
     list-style: none;
@@ -58,13 +59,12 @@ const GlobalStyling = createGlobalStyle`
   }
 `
 
-const height = window.innerHeight;
 const SiteWrapper = styled.div`
   background: ${(props) => props.theme.colors.neutral[100]};
   color: ${(props) => props.theme.colors.neutral[1600]};
   height: 100vh; /* Fallback for browsers that do not support Custom Properties */
-  height: calc(${css`${height}px`});
-  max-height: calc(${css`${height}px`});
+  height: calc(${css`${props => props.theme.innerHeight}px`});
+  max-height: calc(${css`${props => props.theme.innerHeight}px`});
   min-width: 20rem;
   overflow-y: none;
   position: relative;
@@ -80,9 +80,7 @@ const Main = styled.main`
   position: relative;
   display: flex;
   overflow: hidden;
-  /* flex-direction: column; */
   align-items: stretch;
-  /* overflow-y: auto; */
   flex-grow: 1;
   ${props => props.theme.isMobile && css`
     flex-direction: column;
@@ -93,7 +91,7 @@ const Main = styled.main`
 const NavSticky = styled(Nav)`
   display: grid;
   grid-auto-flow: row;
-  height: 100%;
+  min-height: 100%;
   min-width: 4rem;
   ${props => props.theme.isMobile && css`
     width: 100%;
