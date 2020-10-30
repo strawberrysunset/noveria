@@ -5,7 +5,9 @@ import { Statistics } from './Statistics'
 import { Markets } from './Markets'
 import {Greeting} from './Greeting'
 import {PopUp} from '../../common'
-import {useSettings} from '../../../context'
+import {useSettings, useTheme} from '../../../context'
+import {PulldownRebound} from '../../animators'
+import { useQueryCache } from 'react-query'
 
 const Wrapper = styled.div`
   height: 100%;
@@ -37,21 +39,29 @@ const StyledMarkets = styled(Markets)`
   `}
 `
 
-export const Home = () => {
+
+export const Home = ({...rest}) => {
 
   const {firstVisit, updateSettings} = useSettings()
+  const theme = useTheme()
+  const queryCache = useQueryCache()
 
   return (
-    <Wrapper>
-      {firstVisit && <PopUp showClose={false} render={({setShowing}) => (
-        <Greeting handleClose={() => {
-          setShowing(false)
-          updateSettings({type: 'set_firstVisit', firstVisit: false})
-        }}/>
-      )}/>}
-      <Balance css="grid-area: balance;"/>
-      <StyledMarkets css="grid-area: markets;"/>
-      <Statistics css="grid-area: statistics;"/>
-    </Wrapper>
+      
+        <Wrapper {...rest}>
+          <PulldownRebound action={() => queryCache.refetchQueries('coinData')} disabled={!theme.isMobile}>
+            {firstVisit && <PopUp showClose={false} render={({setShowing}) => (
+              <Greeting handleClose={() => {
+                setShowing(false)
+                updateSettings({type: 'set_firstVisit', firstVisit: false})
+              }}/>
+            )}/>}
+            <Balance css="grid-area: balance;"/>
+            <StyledMarkets css="grid-area: markets;"/>
+            <Statistics css="grid-area: statistics;"/>
+          </PulldownRebound>
+        </Wrapper>
+      
+   
   )
 }
