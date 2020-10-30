@@ -29,6 +29,7 @@ const IconBackgroundContainer = styled.div`
 
 const IconBackground = styled.img`
   height: 160%;
+  width: auto;
   margin-left: -4vw;
   opacity: 0.05;
 `
@@ -49,14 +50,14 @@ const Label = styled.h3`
   margin-top: 0.1rem; 
 `
 
-const Main = styled.div`
-  display: grid;
-  grid-auto-flow: column;
+const MainWrapper = styled.div`
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
   align-items: center;
   justify-content: center;
-  grid-gap: 1.5rem;
-  position: relative;
   padding: 1.5rem;
+  position: relative;
   overflow: hidden;
   background-color: ${props => {
     if (props.color) {
@@ -64,7 +65,14 @@ const Main = styled.div`
     }
     return props.theme.colors.neutral[600]
   }};
-  flex-grow: 1;
+`
+
+const Main = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  justify-content: center;
+  grid-gap: 1.5rem;
   font-weight: bold;
   font-size: ${props => props.theme.typeScale.h5};
 `
@@ -87,14 +95,16 @@ export const CryptoCard = ({ label, labelIcon, asset, value, ...rest}) => {
   if (!asset) return null
 
   const assetContent = asset && (
-    <>
+    <MainWrapper>
       <IconBackgroundContainer>
         <IconBackground src={asset.image}/>
       </IconBackgroundContainer>
-      <StyledCryptoLogo name={asset.name} icon={asset.image}></StyledCryptoLogo>
-      <Divider>|</Divider>
-      {value}
-    </>
+      <Main color={asset.color}>
+        <StyledCryptoLogo name={asset.name} icon={asset.image}></StyledCryptoLogo>
+        <Divider>|</Divider>
+        {value}
+      </Main>
+    </MainWrapper>
   )
   
   return (
@@ -103,11 +113,7 @@ export const CryptoCard = ({ label, labelIcon, asset, value, ...rest}) => {
         <IconStyle>{labelIcon}</IconStyle>
         <Label>{label}</Label>
       </Banner>
-      <Main color={asset.color}>
-        {/* <AssetWrapper> */}
-          {assetContent}
-        {/* </AssetWrapper> */}
-      </Main>
+      {assetContent}
     </Wrapper>
   )
 }
