@@ -3,6 +3,8 @@ import styled from 'styled-components/macro'
 import {mix} from 'polished'
 
 const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
   border: 1px solid ${props => props.theme.colors.neutral[1100]};
   padding: 1rem;
   overflow: hidden;
