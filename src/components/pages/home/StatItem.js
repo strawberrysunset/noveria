@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 `
 
 const Title = styled.p`
-  font-weight: 600;
+  font-weight: bolder;
   color: ${props => props.theme.colors.neutral[1200]};
 `
 

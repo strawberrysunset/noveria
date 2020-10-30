@@ -12,7 +12,7 @@ import {useFormatPrice} from '../../../hooks/common'
 
 
 const Value = styled.p`
-  font-weight: 600;
+  font-weight: bold;
 `
 
 const Wrapper = styled(Card)`

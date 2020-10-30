@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 `
 const Title = styled.h2`
   font-size: ${(props) => props.theme.typeScale.h4};
-  font-weight: 700;
+  font-weight: bold;
 `
 const Subtitle = styled.p`
   line-height: 1.7;

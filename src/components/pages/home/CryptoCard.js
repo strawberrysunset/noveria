@@ -24,11 +24,11 @@ const Wrapper = styled.div`
 `
 
 const Percentage = styled.p`
-  font-weight: 600;
+  font-weight: bold;
 `
 
 const Value = styled.p`
-  font-weight: 600;
+  font-weight: bold;
 `
 
 const Name = styled.h3`
@@ -94,7 +94,7 @@ const Main = styled.div`
   
   /* background: linear-gradient(90deg, ${props => props.theme.colors.neutral[1100]}, ${props => props.theme.colors.neutral[400]}, ${props => props.theme.colors.neutral[1100]}); */
   flex-grow: 1;
-  font-weight: 600;
+  font-weight: bold;
   font-size: ${props => props.theme.typeScale.h5};
 `
 

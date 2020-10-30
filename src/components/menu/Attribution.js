@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   align-items: center;
   grid-gap: 0.5rem;
   justify-content: center;
-  font-weight: 600;
+  font-weight: bold;
   border-top: 1px solid ${props => props.theme.colors.neutral[800]}; 
   box-shadow: 0 1rem 2rem ${props => props.theme.colors.neutral[400]}; 
 `
