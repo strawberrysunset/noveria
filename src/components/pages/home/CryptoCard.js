@@ -3,42 +3,19 @@ import styled from 'styled-components/macro'
 import {mix} from 'polished'
 import {CryptoLogo} from '../../common'
 
-
 const Wrapper = styled.div`
-  
   border: 1px solid ${props => props.theme.colors.neutral[800]};
   display: flex;
   flex-direction: column;
   align-items: stretch;
   justify-content: stretch;
   max-width: 100%;
-  
   box-shadow: 0.25rem 0.25rem 2rem ${props => props.theme.colors.neutral[400]};
-  
-
   :hover {
     background-color: ${props => props.theme.colors.neutral[800]};
     box-shadow: 0rem 0rem 2rem ${props => props.theme.colors.neutral[1100]};
     transition: 0.2s;
   }
-`
-
-const Percentage = styled.p`
-  font-weight: bold;
-`
-
-const Value = styled.p`
-  font-weight: bold;
-`
-
-const Name = styled.h3`
-  font-size: ${props => props.theme.typeScale.h5};
-  font-weight: bold;
-`
-
-const Icon = styled.img`
-  height: 1.5rem;
-  width: 1.5rem;
 `
 
 const IconBackgroundContainer = styled.div`
@@ -49,6 +26,7 @@ const IconBackgroundContainer = styled.div`
   align-items: center;
   overflow: hidden;
 `
+
 const IconBackground = styled.img`
   height: 160%;
   margin-left: -4vw;
@@ -62,11 +40,8 @@ const Banner = styled.div`
   justify-content: center;
   grid-gap: 0.5rem;
   padding: 0.75rem;
-  /* border-bottom:1px solid ${props => props.theme.colors.neutral[800]}; */
   background-color: ${props => props.theme.colors.neutral[400]};
-  /* background: linear-gradient(90deg, ${props => props.theme.colors.neutral[800]}, ${props => props.theme.colors.neutral[200]}, ${props => props.theme.colors.neutral[800]}); */
 `
-
 
 const Label = styled.h3`
   color: ${props => props.theme.colors.neutral[1200]};
@@ -77,9 +52,7 @@ const Label = styled.h3`
 const Main = styled.div`
   display: grid;
   grid-auto-flow: column;
-  /* flex-direction: column; */
   align-items: center;
-  /* align-items: center; */
   justify-content: center;
   grid-gap: 1.5rem;
   position: relative;
@@ -91,8 +64,6 @@ const Main = styled.div`
     }
     return props.theme.colors.neutral[600]
   }};
-  
-  /* background: linear-gradient(90deg, ${props => props.theme.colors.neutral[1100]}, ${props => props.theme.colors.neutral[400]}, ${props => props.theme.colors.neutral[1100]}); */
   flex-grow: 1;
   font-weight: bold;
   font-size: ${props => props.theme.typeScale.h5};
@@ -110,17 +81,6 @@ const StyledCryptoLogo = styled(CryptoLogo)`
     width: 1.75rem; height: 1.75rem;
   }
 `
-
-const AssetWrapper = styled.div`
-  background-color:${props => props.theme.colors.neutral[400]};
-  padding: 2rem;
-  border: 1px solid ${props => props.theme.colors.neutral[800]};
-  border-radius: 2rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-`
-
 
 export const CryptoCard = ({ label, labelIcon, asset, value, ...rest}) => {
 
