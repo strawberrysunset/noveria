@@ -48,6 +48,7 @@ const Description = styled.p`
 const Subtitle = styled.div`
   display: grid;
   grid-auto-flow: column;
+  align-items: center;
   white-space: nowrap;
   max-width: min-content;
   grid-gap: 0.5rem;
