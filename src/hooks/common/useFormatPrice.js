@@ -9,7 +9,7 @@ export const useFormatPrice = () => {
       return new Intl.NumberFormat('en-US', { 
         style: 'currency', 
         currency: selectedCurrency,
-        currencyDisplay: 'narrowSymbol'
+        currencyDisplay: 'symbol'
       }).format(price || 0)
     } catch (err) {
       return selectedCurrency.toUpperCase() + Number(price.toFixed(2))
