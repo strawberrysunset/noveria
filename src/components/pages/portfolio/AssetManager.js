@@ -6,7 +6,6 @@ import {motion} from 'framer-motion'
 import {useCoinData} from '../../../hooks/api'
 import {useForm} from '../../../hooks/common'
 import {usePortfolio} from '../../../context'
-import {ShowHideToggle} from './ShowHideToggle'
 
 const StyledCard = styled(Card)`
  
