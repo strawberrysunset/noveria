@@ -15,7 +15,7 @@ const pages = [
     icon: HomeIcon,
   },
   {
-    path: '/portfolio',
+    path: '/assets',
     icon: PortfolioIcon,
   },
   {
