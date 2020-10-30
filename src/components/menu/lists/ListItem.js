@@ -13,8 +13,8 @@ const Wrapper = styled.li`
     transition: 0.1s ease;
     background-color: ${props => props.theme.colors.neutral[100]};
   }
-  padding: 1.125rem 2rem;
-  padding-right: 2.25rem;
+  padding: 0 2rem;
+  min-height: 3.5rem;
   max-width: 20rem;
 `
 const Left = styled.div``
