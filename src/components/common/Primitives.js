@@ -13,8 +13,8 @@ export const ButtonWrapper = styled.button`
   position: relative;
   width: 100%;
   padding: 0.75rem 1.25rem;
-  padding-top: 1rem;
   height: 3rem;
+  border-radius: 0;
   border: 1px solid ${(props) => props.theme.colors.neutral[1600]};
   background: ${(props) => transparentize(0.75, props.theme.colors.neutral[100])};
   :hover {
