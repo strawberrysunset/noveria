@@ -68,10 +68,11 @@ const SelectWrapper = styled.div`
 const Arrow = styled(MdArrowDropDown)`
   position: absolute;
   right: 0.6rem;
-  top: 2.25rem;
-  height: 2rem;
-  width: 2rem;
+  top: 2.5rem;
+  height: 1.5rem;
+  width: 1.5rem;
   z-index: 800;
+  color: ${props => props.theme.colors.neutral[1400]};
   pointer-events: none;
   :hover {
     cursor: pointer;
