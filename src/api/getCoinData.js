@@ -52,7 +52,9 @@ export const getCoinData = async ({currency, limit = 500} = {}) => {
     list = [...list, ...coins] 
   }
 
-  return list.map(coin => formatCoin(coin))
+  const formattedCoins = list.map(coin => formatCoin(coin));
+
+  return formattedCoins
 }
 
 
