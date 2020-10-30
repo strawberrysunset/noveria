@@ -31,7 +31,7 @@ export const Markets = ({ ...rest }) => {
   const [isLoading, setIsLoading] = React.useState(true)
 
   return (
-    <Wrapper icon={Icon} isLoading={coinDataIsLoading || isLoading} label="Market Overview" items={<ViewAllCoinsButton to="/markets">View All Coins</ViewAllCoinsButton>} {...rest}>
+    <Wrapper icon={Icon} isLoading={coinDataIsLoading || isLoading} label="Markets (Top 25)" items={<ViewAllCoinsButton to="/markets">View All Coins</ViewAllCoinsButton>} {...rest}>
       {<ContentWrapper>
         <CoinTable  setIsLoading={setIsLoading} coinData={coinData} />
       </ContentWrapper>}
