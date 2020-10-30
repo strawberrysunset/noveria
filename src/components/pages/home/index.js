@@ -10,7 +10,7 @@ import {PulldownRebound} from '../../animators'
 import { useQueryCache } from 'react-query'
 
 const Wrapper = styled.div`
-  height: 100%;
+  max-height: 100%;
   width: 100%;
   flex-grow: 1;
   display: grid;
