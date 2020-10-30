@@ -144,7 +144,7 @@ export const Article = ({...rest}) => {
           </Text>
           <Attribution>
             <p>Article provided by CoinTelegraph</p> 
-            <Link css="padding-top: 0.2rem;" external to={article.url}> 
+            <Link external to={article.url}> 
               <ArticleArrow/>
               (Full Article)
             </Link>
