@@ -46,7 +46,7 @@ const StyledTable = styled.table`
     top: 0;
     border-bottom: 1px solid ${(props) => props.theme.colors.neutral[600]};
     background: ${(props) => props.theme.colors.neutral[400]};
-    font-weight: 500;
+    font-weight: 600;
     color: ${props => props.theme.colors.neutral[1200]} !important;
     > * {
       margin-top: 0.2rem;
