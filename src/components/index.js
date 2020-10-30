@@ -96,8 +96,8 @@ const NavSticky = styled(Nav)`
   min-width: 4rem;
   ${props => props.theme.isMobile && css`
     width: 100%;
-    min-height: 3.5rem;
-    max-height: 3.5rem;
+    min-height: 3.75rem;
+    max-height: 3.75rem;
     border-right: 1px solid ${(props) => props.theme.colors.neutral[800]};
     
     position: fixed;

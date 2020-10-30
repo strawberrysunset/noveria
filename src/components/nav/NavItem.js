@@ -45,6 +45,9 @@ const IconWrapper = styled.div`
   display: grid;
   grid-gap: 0.25rem;
   place-items: center;
+  ${props => props.theme.isMobile && css`
+    grid-gap: 0rem;
+  `}
 `
 
 const Highlight = styled.circle`
