@@ -14,8 +14,8 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 1.5rem auto;
   grid-auto-flow: column;
-  /* align-items: center;
-  justify-content:flex-start; */
+  align-items: center;
+  justify-content:flex-start;
   grid-gap: 0.25rem;
 `
 
