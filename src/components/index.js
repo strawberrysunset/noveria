@@ -38,7 +38,7 @@ const GlobalStyling = createGlobalStyle`
   input, button, select { 
       border:none;
       outline: none; 
-      appearance: none;
+      /* appearance: none; */
       box-sizing: border-box;
   } 
   button, a, select{
