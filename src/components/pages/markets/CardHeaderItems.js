@@ -38,6 +38,8 @@ const NavButton = styled.p`
       pointer-events: none;
     `
   }}
+  padding-top: 0;
+  
   :hover{
     cursor: pointer;
   }

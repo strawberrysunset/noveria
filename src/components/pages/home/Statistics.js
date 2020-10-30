@@ -17,6 +17,7 @@ const Value = styled.p`
 
 const Wrapper = styled(Card)`
   overflow-x: none;
+  height: 100%;
 `
 
 const ContentWrapper = styled.div`

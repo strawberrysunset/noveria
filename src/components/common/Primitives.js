@@ -14,6 +14,7 @@ export const ButtonWrapper = styled.button`
   width: 100%;
   padding: 0.75rem 1.25rem;
   padding-top: 1rem;
+  height: 3rem;
   border: 1px solid ${(props) => props.theme.colors.neutral[1600]};
   background: ${(props) => transparentize(0.75, props.theme.colors.neutral[100])};
   :hover {
@@ -65,13 +66,21 @@ const SelectWrapper = styled.div`
   position: relative;
 `
 
-const Arrow = styled(MdArrowDropDown)`
+const ArrowWrapper = styled.div`
+  height: 3rem;
+  width: 3rem;
   position: absolute;
-  right: 0.6rem;
-  top: 2.5rem;
+  right: 0;
+  z-index: 800;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+const Arrow = styled(MdArrowDropDown)`
   height: 1.5rem;
   width: 1.5rem;
-  z-index: 800;
   color: ${props => props.theme.colors.neutral[1400]};
   pointer-events: none;
   :hover {
@@ -82,9 +91,10 @@ const Arrow = styled(MdArrowDropDown)`
 export const Select = ({children, ...props}) => {
   return (
     <SelectWrapper>
-      <Arrow/>
+      <ArrowWrapper>
+        <Arrow/>
+      </ArrowWrapper>
       <Button as="select" {...props}>
-
         {children}
       </Button>
     </SelectWrapper>

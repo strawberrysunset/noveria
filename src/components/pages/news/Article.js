@@ -84,7 +84,7 @@ const BackWrapper = styled(Link)`
     color: ${props => props.theme.colors.neutral[300]}
   }
   ${props => props.theme.isMobile && css`
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
   `}
 `
 
@@ -98,13 +98,19 @@ const Text = styled.div`
     column-count: 1;
   }
   margin-bottom: 3rem;
+  ${props => props.theme.isMobile && css`
+    margin-bottom: 1.5rem;
+  `}
 `
 
 const Attribution = styled.p`
   color: ${props => props.theme.colors.neutral[1200]};
   white-space: nowrap;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 0.5rem;
+  align-items: center;
+  width: min-content;
   font-size: ${props => props.theme.typeScale.bodySmall};
   margin-bottom: 4rem;
   ${props => props.theme.isMobile && css`
@@ -137,8 +143,8 @@ export const Article = ({...rest}) => {
             {article.text}
           </Text>
           <Attribution>
-            <p css={`margin-top: 0.15rem; margin-right: 0.5rem;`}>Article provided by CoinTelegraph</p> 
-            <Link external to={article.url}> 
+            <p>Article provided by CoinTelegraph</p> 
+            <Link css="padding-top: 0.2rem;" external to={article.url}> 
               <ArticleArrow/>
               (Full Article)
             </Link>
