@@ -2,24 +2,47 @@ import React from 'react'
 import { motion, useTransform, useMotionValue } from 'framer-motion'
 import styled from 'styled-components/macro'
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  position: relative;
+  display: contents;
+  width: 100%;
+  height: 100%;
+  background-color: ${props => props.theme.colors.neutral[200]};
+`
+
+const Text = styled.p`
+  position: absolute;
+  top: 1.5rem;
+  color: ${props => props.theme.colors.neutral[1200]};
+  text-transform: uppercase;
+  font-size: ${props => props.theme.typeScale.bodySmall};
+  letter-spacing: 0.05em;
+  width: 100%;
+  text-align: center;
+  opacity: ${(props) => props.opacity};
+`
 
 const Light = styled(motion.div)`
+  position: absolute;
+  
+  width: 100%;
+  z-index: 1000;
+  top: 0;
   height: 1rem;
   background: radial-gradient(
     ellipse at top,
-    ${props => props.theme.colors.neutral[300]},
-    10%,
-    rgba(0, 0, 0, 0),
+    ${props => props.theme.colors.neutral[1300]},
+    20%,
+    transparent,
     100%,
-    rgba(0, 0, 0, 0)
+    transparent
   );
   opacity: ${(props) => props.opacity};
 `
 
-export const PulldownRebound = ({ action, children }) => {
+export const PulldownRebound = ({ disabled, action = () => {}, children, ...rest }) => {
   const y = useMotionValue(0) // Create source value
-  const opacity = useTransform(y, [0, 80], [0, 1]) // Map source value range to opacity range.
+  const opacity = useTransform(y, [0, 20], [0, 1]) // Map source value range to opacity range.
 
   const options = {
     onDragEnd: (_, info) => {
@@ -34,10 +57,13 @@ export const PulldownRebound = ({ action, children }) => {
     dragTransition: { bounceStiffness: 600 },
   }
 
+  if (disabled) return <Wrapper {...rest}>{children}</Wrapper>
+
   return (
-    <Wrapper>
-      {/* <Light style={{ opacity }} /> */}
-      <motion.div {...options}>{children}</motion.div>
+    <Wrapper {...rest}>
+        <Light style={{ opacity }} />
+        <Text style={{opacity }}>Refresh</Text>
+        <motion.div {...options}>{children}</motion.div>
     </Wrapper>
   )
 }
