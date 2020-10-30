@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 import {transparentize} from 'polished'
+import {MdArrowDropDown} from 'react-icons/md'
 
 const Wrapper = styled.div`
   display: grid;
@@ -9,9 +10,10 @@ const Wrapper = styled.div`
 
 export const ButtonWrapper = styled.button`
   display: block;
+  position: relative;
   width: 100%;
-  padding: 0.5rem 1.25rem;
-  padding-top: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  padding-top: 1rem;
   border: 1px solid ${(props) => props.theme.colors.neutral[1600]};
   background: ${(props) => transparentize(0.75, props.theme.colors.neutral[100])};
   :hover {
@@ -28,6 +30,7 @@ export const ButtonWrapper = styled.button`
     }
   }
 `
+
 
 const Label = styled.p`
   width: 100%;
@@ -57,6 +60,32 @@ export const Input = ({children, ...props}) => {
   return <Button as="input" {...props}>{children}</Button>
 }
 
+
+const SelectWrapper = styled.div`
+  position: relative;
+`
+
+const Arrow = styled(MdArrowDropDown)`
+  position: absolute;
+  right: 0.6rem;
+  top: 2.25rem;
+  height: 2rem;
+  width: 2rem;
+  z-index: 800;
+  pointer-events: none;
+  :hover {
+    cursor: pointer;
+  }
+`
+
 export const Select = ({children, ...props}) => {
-  return <Button as="select" {...props}>{children}</Button>
+  return (
+    <SelectWrapper>
+      <Arrow/>
+      <Button as="select" {...props}>
+
+        {children}
+      </Button>
+    </SelectWrapper>
+  )
 }
