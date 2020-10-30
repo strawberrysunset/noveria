@@ -38,7 +38,7 @@ const GlobalStyling = createGlobalStyle`
   input, button, select { 
       border:none;
       outline: none; 
-      /* appearance: none; */
+      appearance: none;
       box-sizing: border-box;
   } 
   button, a, select{
@@ -55,8 +55,8 @@ const GlobalStyling = createGlobalStyle`
       color: ${props => props.theme.colors.neutral[800]}
     }
   }
-  p {
-    margin-bottom: -0.2rem;
+  h1, h2, h3, h4, h5, p {
+    padding-top: 0.3rem;
   }
 `
 
@@ -148,7 +148,7 @@ export const App = () => {
           <MenuFlyout css={`z-index: 4;`}/>
           <StyledSwitch css="grid-area: page;">
             <Route exact path="/" component={Home} />
-            <Route path="/portfolio" component={Portfolio} />
+            <Route path="/assets" component={Portfolio} />
             <Route path="/markets" component={Markets} />
             <Route path="/news" component={News} />
             <Route component={Error}></Route>
