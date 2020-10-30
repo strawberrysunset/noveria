@@ -23,7 +23,7 @@ const Wrapper = styled.div`
 `
 
 const Total = styled(motion.p)`
-  font-size: clamp(${(props) => props.theme.typeScale.caption}, 12vw, ${(props) => props.theme.typeScale.h2});
+  font-size: ${(props) => props.theme.typeScale.h2};
   font-weight: 900;
   letter-spacing: -0.02em;
   margin: 0.25rem 0;
