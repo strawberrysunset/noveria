@@ -13,6 +13,7 @@ import {Portfolio} from './pages/portfolio'
 import {useIsFetching, useQueryCache} from 'react-query'
 import {getCoinData, getNewsFeed} from '../api'
 import {useSettings} from '../context'
+import {useWindowDimensions} from '../utils'
 
 const GlobalStyling = createGlobalStyle`
   ${reset()};
@@ -64,8 +65,8 @@ const SiteWrapper = styled.div`
   background: ${(props) => props.theme.colors.neutral[100]};
   color: ${(props) => props.theme.colors.neutral[1600]};
   height: 100vh; /* Fallback for browsers that do not support Custom Properties */
-  height: calc(${css`${props => props.theme.innerHeight}px`});
-  max-height: calc(${css`${props => props.theme.innerHeight}px`});
+  height: calc(${css`${props => props.innerHeight}px`});
+  max-height: calc(${css`${props => props.innerHeight}px`});
   min-width: 20rem;
   overflow-y: none;
   position: relative;
@@ -120,15 +121,15 @@ export const App = () => {
   const [loading, setLoading] = React.useState(true)
   const queryCache = useQueryCache()
   const {currency} = useSettings()
+  const {innerHeight} = useWindowDimensions()
   
   React.useEffect(() => {
-    const loadCoinData = async () => {
+    (async () => {
       const coinData = await getCoinData({currency})
       const newsFeed = await getNewsFeed()
       queryCache.setQueryData('coinData', coinData)
       queryCache.setQueryData('newsFeed', newsFeed)
-    };
-    loadCoinData();
+    })();
   }, [])
 
   React.useEffect(() => {
@@ -141,7 +142,7 @@ export const App = () => {
     <>
       <GlobalStyling />
       {<LoadingScreen loading={loading} css={`z-index: 999;`}/>}
-      <SiteWrapper>
+      <SiteWrapper innerHeight={innerHeight}>
         <HeaderSticky/>
         <Main>
           <NavSticky css="grid-area: nav;"/>
@@ -153,7 +154,6 @@ export const App = () => {
             <Route path="/news" component={News} />
             <Route component={Error}></Route>
           </StyledSwitch>
-          
         </Main>
       </SiteWrapper>
     </>
