@@ -57,6 +57,7 @@ const Description = styled.p`
 const SubText = styled.div`
   display: grid;
   grid-auto-flow: column;
+  align-items: center;
   grid-gap: 0.25rem;
   white-space: nowrap;
   max-width: min-content;
