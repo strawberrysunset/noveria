@@ -42,6 +42,9 @@ const Wrapper = styled(Link)`
 `
 const IconWrapper = styled.div`
   position: relative;
+  display: grid;
+  grid-gap: 0.25rem;
+  place-items: center;
 `
 
 const Highlight = styled.circle`
@@ -54,21 +57,29 @@ const Highlight = styled.circle`
   color: ${props => props.theme.colors.green[100]};
 `
 
+const Text = styled.p`
+  font-size: ${props => props.theme.typeScale.caption};
+  color: ${props => props.theme.colors.neutral[1200]};
+  text-transform: uppercase;
+  
+`
+
 export const NavItem = ({ highlight, path, icon: Icon, active }) => {
 
   const theme = useTheme()
 
-  const title = (path === '/') ? 'home' : path.slice(1)
+  const pageName = (path === '/') ? 'home' : path.slice(1)
 
   return (
     <Wrapper active={active ? 'yes':undefined} to={path}>
       <IconWrapper>
         {/* {highlight && <Highlight/>} */}
         <Icon
-          title={`Go to ${title} page.`}
+          title={`Go to ${pageName} page.`}
           size="1.333rem"
           color={theme.colors.neutral[1400]}
         />
+        <Text>{pageName}</Text>
       </IconWrapper>
     </Wrapper>
   )
