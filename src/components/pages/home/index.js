@@ -12,6 +12,7 @@ import { useQueryCache } from 'react-query'
 const Wrapper = styled.div`
   height: 100%;
   width: 100%;
+  flex-grow: 1;
   display: grid;
   grid-gap: 1px;
   background: ${props => props.theme.colors.neutral[1100]};
