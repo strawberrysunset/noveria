@@ -27,6 +27,6 @@ export const getNewsFeed = async () => {
     const text = Object.values(nodes).reduce((string, node) => {
       return string + node.innerText
     }, '')
-    return text.replace(/\.\S/, ' ') // Add missing full stops after spaces
+    return text //.replace(/\.\S/, ' ')  Add missing full stops after spaces
   }
 }
