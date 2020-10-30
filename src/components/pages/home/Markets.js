@@ -16,7 +16,6 @@ const ContentWrapper = styled.div`
   overflow-y: auto;
 `
 
-
 const ViewAllCoinsButton = styled(Link)`
   color: ${props => props.theme.colors.neutral[1400]};
   :hover {
@@ -25,11 +24,10 @@ const ViewAllCoinsButton = styled(Link)`
   transition: 0.2s;
 `
 
-
 export const Markets = ({ ...rest }) => {
 
   const {data, isLoading: coinDataIsLoading} = useCoinData()
-  const coinData = data.slice(0, 25);
+  const coinData = React.useMemo(() => data.slice(0, 25), [data]);  
   const [isLoading, setIsLoading] = React.useState(true)
 
   return (
