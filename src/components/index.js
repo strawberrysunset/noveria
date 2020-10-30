@@ -35,12 +35,11 @@ const GlobalStyling = createGlobalStyle`
   body {
     font-size: ${(props) => props.theme.typeScale.body};
   }
-  input, button { 
+  input, button, select { 
       border:none;
       outline: none; 
       appearance: none;
       box-sizing: border-box;
-      
   } 
   button, a, select{
     cursor: pointer;
