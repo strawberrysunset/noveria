@@ -51,7 +51,7 @@ const Spin = styled.div`
 `
 
 const Text = styled(motion.p)`
-  /* font-weight: bold; */
+  font-weight: bold;
   margin-top: 1.5rem;
   margin-left: 0.1rem;
   text-align: center;
@@ -87,7 +87,7 @@ export const LoadingScreen = ({loading, ...rest}) => {
               <Spinner css="width: 4.5rem; height: 4.5rem;"/>
             </Spin>
           </LogoWrapper>
-          <Text initial={{opacity: 0}} animate={{opacity: 100}} transition={{duration: 3}}>loading</Text>
+          {/* <Text initial={{opacity: 0}} animate={{opacity: 100}} transition={{duration: 3}}>loading</Text> */}
           <Version>Noveria v1.0</Version>
         </Wrapper>
       )}
