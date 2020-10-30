@@ -20,7 +20,6 @@ const MarketsTable = styled(Table)`
     const width = props.width / 16;
     let cssString = ''
     let idx = 0;
-    console.log({width})
     const breakpoints = [85, 75, 65, 55, 45, 35, 30].map(val => val + 5);
     const columnRemovalOrder = [1, 8, 7, 6, 5, 4, 9]
     while(true) {
