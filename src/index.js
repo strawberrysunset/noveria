@@ -14,8 +14,7 @@ import {IconContext} from 'react-icons'
 
 const reactQueryConfig = {
   queries: {
-      keepPreviousData: true,
-      initialStale: true
+    keepPreviousData: true,
   }
 }
 
