@@ -41,7 +41,7 @@ const CloseButton = styled(CloseIcon)`
   }
 `
 
-export const PopUp = ({ showing: initialShowing = true, render, showClose = true, ...rest }) => {
+export const PopUp = ({ showing: initialShowing = true, children, showClose = true, ...rest }) => {
   
   const [showing, setShowing] = React.useState(initialShowing);
 
@@ -73,7 +73,7 @@ export const PopUp = ({ showing: initialShowing = true, render, showClose = true
       {(initialShowing || showing) && <Wrapper  {...animations.wrapper} {...rest}>
         <Dialog {...animations.dialog}>
           {showClose && <CloseButton onClick={handleClose}/>}
-          {render({showing, setShowing, handleClose})}
+          {children({showing, setShowing, handleClose})}
         </Dialog>
       </Wrapper>}
     </AnimatePresence>
