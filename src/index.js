@@ -11,7 +11,13 @@ import {QueryCache, ReactQueryCacheProvider, ReactQueryConfigProvider} from 'rea
 import { BrowserRouter } from 'react-router-dom'
 import {App} from './components'
 import {IconContext} from 'react-icons'
-import {reactQueryConfig} from './config'
+
+const reactQueryConfig = {
+  queries: {
+      keepPreviousData: true,
+      initialStale: true
+  }
+}
 
 const queryCache = new QueryCache()
 
