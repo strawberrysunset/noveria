@@ -86,7 +86,7 @@ const PlaceHolderWrapper = styled.div`
 `
 
 
-export const Card = ({ children, icon: Icon, transparentBackground=false, label, render, items, message, isLoading, error, ...rest }) => {
+export const Card = ({ children, icon: Icon, transparentBackground=false, label, items, message, isLoading, error, ...rest }) => {
 
   const placeholderState = getPlaceholderState();
 
