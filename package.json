@@ -15,8 +15,6 @@
     "react-query": "^2.23.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
-    "react-table": "^7.5.2",
-    "recharts": "^1.8.5",
     "styled-components": "^5.2.0",
     "utilities": "github:strawberrysunset/utilities",
     "victory": "^35.1.1"
