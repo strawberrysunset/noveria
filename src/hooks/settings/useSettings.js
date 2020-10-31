@@ -1,4 +1,4 @@
-import {useCustomReducer} from '../../hooks/misc'
+import {useReducerCustom} from '../common/'
 import React from 'react'
 
 export const reducer  = (settings, action) => {
@@ -40,7 +40,7 @@ export const asyncMiddleware = async (settings, updateSettings, action) => {
 
 export const useSettings = () => {
 
-  const [settings, updateSettings] = useCustomReducer({
+  const [settings, updateSettings] = useReducerCustom({
     reducerArgs : [reducer, {
       theme: 'avalanche',
       darkMode: true,

@@ -5,7 +5,7 @@ import {MdPieChart as PieIcon} from 'react-icons/md'
 import {AssetTablePlaceholder} from './AssetTablePlaceholder'
 import {MdRemoveCircle} from 'react-icons/md'
 import {usePortfolio, useTheme} from '../../../context'
-import {useFormatPrice} from '../../../hooks/common'
+import {useFormatPrice} from '../../../hooks/misc'
 
 
 const AssetTableCard = styled(Card)`

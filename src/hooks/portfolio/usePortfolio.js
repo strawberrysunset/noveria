@@ -2,7 +2,7 @@ import React from 'react'
 import {useSettings} from '../../context'
 import {createPortfolio} from './createPortfolio'
 import {useExchangeRates, useCoinData} from '../../hooks/api'
-import {useCustomReducer} from '../misc'
+import {useReducerCustom} from '../common'
 import {generateUniqueID} from 'utilities'
 
 export const reducer = (assets, action) => {
@@ -52,7 +52,7 @@ export const logger = (state) => {
 
 export const usePortfolio = () => {
 
-  const [assets, updatePortfolio] = useCustomReducer({
+  const [assets, updatePortfolio] = useReducerCustom({
     reducerArgs: [reducer, []],
     middleware: [asyncMiddleware, logger],
     saveToLocalStorage: {

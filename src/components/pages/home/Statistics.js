@@ -8,7 +8,7 @@ import {OptionsBar, IndicatorColor} from '../../common'
 import {getAssetStatistics} from './getAssetStatistics'
 import {CgArrowUpR} from 'react-icons/cg'
 import {formatPercentage} from 'utilities'
-import {useFormatPrice} from '../../../hooks/common'
+import {useFormatPrice} from '../../../hooks/misc'
 
 
 const Value = styled.p`

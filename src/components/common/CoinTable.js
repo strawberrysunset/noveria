@@ -3,7 +3,7 @@ import styled, {css} from 'styled-components/macro'
 import {Table, CryptoLogo, IndicatorColor} from '.'
 import {Line} from '.'
 import {useTheme} from '../../context'
-import {useFormatPrice} from '../../hooks/common'
+import {useFormatPrice} from '../../hooks/misc'
 import {useResize} from '../../utils'
 import {formatPercentage} from 'utilities'
 

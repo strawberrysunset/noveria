@@ -2,7 +2,7 @@ import React from 'react'
 import styled, {css} from 'styled-components/macro'
 import { useGlobalData } from '../../../hooks/api'
 import {Input} from '../../common'
-import {useFormatPrice} from '../../../hooks/common'
+import {useFormatPrice} from '../../../hooks/misc'
 
 const Wrapper = styled.div`
   display: flex;

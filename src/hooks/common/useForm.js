@@ -1,5 +1,5 @@
 import React from "react"
-import {useCustomReducer} from '../misc'
+import {useReducerCustom} from './useReducerCustom'
 
 const logger = (state, dispatch, action) => {
 }
@@ -60,7 +60,7 @@ export const useForm = ({initialValues, isSubmitting = false, onSubmit = () => {
     onSubmit
   }
 
-  const [state, updateForm] = useCustomReducer({
+  const [state, updateForm] = useReducerCustom({
     reducerArgs: [reducer, initialState],
     middleware: [asyncMiddleware, logger]
   })

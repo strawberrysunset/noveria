@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import {useCustomState} from '../../../hooks/misc'
+import {useStateCustom} from '../../../hooks/common'
 
 const Wrapper = styled.div`
   display: grid;
@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 `
 export const OptionsBar = ({ render = () => null, ...rest }) => {
 
-  const [selected, setSelected] = useCustomState({
+  const [selected, setSelected] = useStateCustom({
     initialState : 0,
     saveToLocalStorage: {
       isEnabled: true,
