@@ -96,9 +96,9 @@ export const CryptoCard = ({ label, labelIcon, asset, value, ...rest}) => {
 
   const assetContent = asset && (
     <MainWrapper>
-      {/* <IconBackgroundContainer>
+      <IconBackgroundContainer>
         <IconBackground src={asset.image}/>
-      </IconBackgroundContainer> */}
+      </IconBackgroundContainer>
       <Main color={asset.color}>
         <StyledCryptoLogo name={asset.name} icon={asset.image}></StyledCryptoLogo>
         <Divider>|</Divider>
