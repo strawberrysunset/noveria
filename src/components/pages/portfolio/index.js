@@ -58,12 +58,15 @@ export const Portfolio = () => {
   const [showing, setShowing] = React.useState(false);
   return (
     <Wrapper>
-      {theme.isMobile 
-      ? <StyledPopUp showClose={false} showing={showing} render={() => {
-        return <StyledAssetManager handleClose={() => setShowing(false)}/>
-      }}/>
-      :<StyledAssetManager/>
-      }
+      {theme.isMobile ? (
+        <StyledPopUp showClose={false} showing={showing}>
+          {() => (
+            <StyledAssetManager handleClose={() => setShowing(false)}/>
+          )}
+        </StyledPopUp>
+        ) : (
+          <StyledAssetManager/>
+        )}
       <AssetTable showPopUp={() => setShowing(true)} css="overflow-y: auto;"/>
     </Wrapper>
   )

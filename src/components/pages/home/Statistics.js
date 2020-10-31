@@ -74,15 +74,17 @@ export const Statistics = ({ ...rest }) => {
   const theme = useTheme()
   const {formatPrice} = useFormatPrice()
 
-
-  const timeRangeOptionsBar = <OptionsBar render={({selected, setSelected}) => {
-    return timeRangeOptions.map(({displayValue, value}, idx) => {
-      return <Option selected={selected === idx} onClick={() => {
-        setSelected(idx)
-        // set value in portfolio here
-      }}>{displayValue}</Option>
-    })
-  }}/>
+  const timeRangeOptionsBar = (
+    <OptionsBar>
+      {({selected, setSelected}) => (
+        timeRangeOptions.map(({displayValue, value}, idx) => (
+          <Option selected={selected === idx} onClick={() => {
+            setSelected(idx)
+          }}>{displayValue}</Option>
+        ))
+      )}
+    </OptionsBar>
+  )
   
   const stats = getAssetStatistics({assets})
  

@@ -51,12 +51,16 @@ export const Home = ({...rest}) => {
       
         <Wrapper {...rest}>
           <PulldownRebound action={() => queryCache.refetchQueries('coinData')} disabled={!theme.isMobile}>
-            {firstVisit && <PopUp showClose={false} render={({setShowing}) => (
-              <Greeting handleClose={() => {
-                setShowing(false)
-                updateSettings({type: 'set_firstVisit', firstVisit: false})
-              }}/>
-            )}/>}
+            {firstVisit && (
+              <PopUp showClose={false}>
+                {({setShowing}) => (
+                  <Greeting handleClose={() => {
+                    setShowing(false)
+                    updateSettings({type: 'set_firstVisit', firstVisit: false})
+                  }}/>
+                )}
+              </PopUp>
+            )}
             <Balance css="grid-area: balance;"/>
             <StyledMarkets css="grid-area: markets;"/>
             <Statistics css="grid-area: statistics;"/>
