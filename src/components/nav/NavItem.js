@@ -46,7 +46,7 @@ const IconWrapper = styled.div`
   grid-gap: 0.5rem;
   place-items: center;
   ${props => props.theme.isMobile && css`
-    grid-gap: 0rem;
+    grid-gap: 0.35rem;
   `}
 `
 
