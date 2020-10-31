@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   grid-gap: 0.75rem;
   transition: 0.15s;
 `
-export const OptionsBar = ({ render = () => null, ...rest }) => {
+export const OptionsBar = ({ children = () => null, ...rest }) => {
 
   const [selected, setSelected] = useStateCustom({
     initialState : 0,
@@ -22,7 +22,7 @@ export const OptionsBar = ({ render = () => null, ...rest }) => {
 
   return (
     <Wrapper {...rest}>
-      {render({selected, setSelected})}
+      {children({selected, setSelected})}
     </Wrapper>
   )
 }
