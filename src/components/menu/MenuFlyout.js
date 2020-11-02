@@ -18,7 +18,7 @@ const Wrapper = styled(motion.div)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 2rem 0rem 2rem ${props => transparentize(0.1, props.theme.colors.neutral[100])};
+  box-shadow: 2rem 0rem 2rem ${props => transparentize(0.5, props.theme.colors.neutral[100])};
 `
 
 const Title = styled.h2`
