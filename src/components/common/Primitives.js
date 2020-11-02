@@ -9,12 +9,17 @@ const Wrapper = styled.div`
 `
 
 export const ButtonWrapper = styled.button`
-  display: block;
+  display: inline-flex;
+  align-items: center; 
+  justify-content: center;
+
   position: relative;
   width: 100%;
   padding: 0.75rem 1.25rem;
-  height: 3rem;
+  padding-top: 0.85rem;
+  /* height: 3rem; */
   border-radius: 0;
+  vertical-align: middle;
   border: 1px solid ${(props) => props.theme.colors.neutral[1600]};
   background: ${(props) => transparentize(0.75, props.theme.colors.neutral[100])};
   :hover {
