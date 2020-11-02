@@ -8,7 +8,7 @@ import {motion, useAnimation} from 'framer-motion'
 
 const Wrapper = styled.header`
   border-bottom: 1px solid ${props => props.theme.colors.neutral[1200]}; 
-  background-color: ${props => props.theme.colors.neutral[600]};
+  background-color: ${props => props.theme.colors.neutral[1100]};
   width: 100%;
   display: grid;
   width: 100%;
@@ -18,7 +18,7 @@ const Wrapper = styled.header`
   @media (min-width: 48rem) {
     grid-auto-columns: 3.5rem 1fr 1fr 1fr;
   }
-  background: linear-gradient(90deg, ${props => props.theme.colors.neutral[1100]}, ${props => props.theme.colors.neutral[100]});
+  /* background: linear-gradient(90deg, ${props => props.theme.colors.neutral[1100]}, ${props => props.theme.colors.neutral[100]}); */
 `
 
 const Message = styled(motion.div)`
@@ -34,7 +34,7 @@ const Message = styled(motion.div)`
 `
 
 const Logo = styled(NoveriaLogo)`
-
+  margin: 0 auto;
 `
 
 const DarkMode = styled(DarkModeButton)`
