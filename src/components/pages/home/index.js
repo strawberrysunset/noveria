@@ -14,13 +14,15 @@ const Wrapper = styled.div`
   background: ${props => props.theme.colors.neutral[1100]};
   display: grid;
   grid-gap: 1px;
+  overflow-y: auto;
+  overflow-x: hidden;
   grid-template-areas: "balance markets";
   grid-template-columns: 50% 50%;
   grid-template-rows: minmax(0, auto);
   ${props => props.theme.isMobile && css`
-    overflow-y: auto;
+    height: auto;
     grid-template-columns: 100%;
-    /* grid-template-rows: auto; */
+    grid-template-rows: auto;
     grid-template-areas: 
     "balance";
   `}
@@ -30,20 +32,18 @@ const StyledMarkets = styled(Markets)`
   ${props => props.theme.isMobile && css`
     display: none;
   `}
-  
-`
+` 
 
 
 export const Home = ({...rest}) => {
 
   const {firstVisit, updateSettings} = useSettings()
-  const theme = useTheme()
-  const queryCache = useQueryCache()
+  // const theme = useTheme()
+  // const queryCache = useQueryCache()
 
   return (
-      
         <Wrapper {...rest}>
-          <PulldownRebound css="overflow-y: auto;" action={() => queryCache.refetchQueries('coinData')} disabled={!theme.isMobile}>
+          {/* <PulldownRebound  action={() => queryCache.refetchQueries('coinData')} disabled={!theme.isMobile}> */}
           {firstVisit && (
             <PopUp showClose={false}>
               {({setShowing}) => (
@@ -56,7 +56,7 @@ export const Home = ({...rest}) => {
           )}
           <Balance css="height: 100%; grid-area: balance;"/>
           <StyledMarkets css="grid-area: markets;"/>
-          </PulldownRebound>
+          {/* </PulldownRebound> */}
         </Wrapper>
      
   )
