@@ -19,6 +19,7 @@ export const createPortfolio = ({coinData, assets: staleAssets, currency, exchan
   const assets = staleAssets.map(asset => {
     const assetData = coinData.find(coin => coin.id === asset.id)
     const price = assetData.spotPrice.value * asset.amount;
+    console.log(assetData.color)
     return {
       ...asset, 
       price,
@@ -33,7 +34,8 @@ export const createPortfolio = ({coinData, assets: staleAssets, currency, exchan
       ...assetData,
       sparkline: {
         '7d' : assetData.sparkline['7d'].filter((_, idx) => idx % 2)
-      } 
+      },
+      color: assetData.color
     }
   })
 
@@ -62,5 +64,6 @@ export const createPortfolio = ({coinData, assets: staleAssets, currency, exchan
       }
     },
     rawAssets: staleAssets
+    
   }
 }
