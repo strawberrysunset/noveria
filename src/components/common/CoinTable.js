@@ -14,13 +14,14 @@ const TableWrapper = styled.div`
 
 const MarketsTable = styled(Table)`
   width: 100%;
+  color: ${props => props.theme.colors.neutral[1500]};
   ${props => !props.theme.isMobile && css`overflow-y: auto;`}
   grid-template-columns: auto 1fr repeat(7, auto);
   ${props => {
     const width = props.width / 16;
     let cssString = ''
     let idx = 0;
-    const breakpoints = [85, 75, 65, 55, 45, 35, 30].map(val => val + 5);
+    const breakpoints = [85, 75, 65, 55, 45, 32, 30].map(val => val + 5);
     const columnRemovalOrder = [1, 8, 7, 6, 5, 4, 9]
     while(true) {
       if (width < breakpoints[idx]) {
@@ -45,7 +46,7 @@ const Rank = styled.p`
 `
 
 const TableItem = ({right, children, ...rest}) => {
-  return <div css={right && 'text-align: right'} {...rest}>{children}</div>
+  return <div css={right && 'text-align: right;'} {...rest}>{children}</div>
 }
 
 const HeaderItem = styled(TableItem)`
@@ -85,7 +86,7 @@ export const CoinTable = ({setIsLoading, page, perPage, coinData, ...rest}) => {
     return [
       <Rank>{page * perPage + idx + 1}</Rank>,
       <CryptoLogo icon={asset.image} name={asset.name} symbol={!theme.isMobile && asset.symbol}/>,
-      <TableItem css="margin-left: auto" right>{formatPrice(asset.spotPrice.value)}</TableItem>,
+      <TableItem css="margin-left: auto;" right>{formatPrice(asset.spotPrice.value)}</TableItem>,
       <TableItem right>
         <IndicatorColor value={asset.spotPrice.change['7d'].percentage}>
           {formatPercentage(asset.spotPrice.change['7d'].percentage)}
