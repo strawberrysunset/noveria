@@ -76,7 +76,8 @@ const ReadArticle = styled.div`
   }};
   opacity: 0;
   display: grid;
-  place-items: center;
+  align-items: center;
+  justify-content: center;
   :hover {
     opacity: 1;
   }

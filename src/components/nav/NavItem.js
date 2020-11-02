@@ -20,13 +20,13 @@ const Wrapper = styled(Link)`
   /* background: ${(props) => props.theme.colors.neutral[100]}; */
   :hover {
     background: ${(props) => props.theme.colors.neutral[800]};
-    transition: 0.05s ease;
+    transition: 0.2s ease;
   }
   ${props => {
     if (props.active) {
       if (!props.theme.isMobile) {
         return css`
-          border-right: 0.125rem solid ${props.theme.colors.neutral[1400]};
+          border-left: 0.125rem solid ${props.theme.colors.neutral[1400]};
           padding-right: -0.125rem;
           padding-left: +0.125rem;
         `

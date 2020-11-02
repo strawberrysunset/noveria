@@ -6,12 +6,13 @@ import {Button} from '../../common'
 const Wrapper = styled.div`
   text-align: center;
   display: grid;
-  grid-gap: 0.5rem;
-  padding: 1.5rem 2.25rem;
-  padding-bottom: 2.25rem;
+  grid-gap: 0.25rem;
+  padding: 2rem 2.25rem;
+  /* padding-bottom: 2.25rem;
+  padding-top: 2rem; */
 `
 const Title = styled.h2`
-  font-size: ${(props) => props.theme.typeScale.h4};
+  font-size: 1.5rem;
   font-weight: bold;
 `
 const Subtitle = styled.p`
@@ -28,7 +29,7 @@ const subtitle = 'Noveria is an account-less cryptocurrency portfolio tracker th
 export const Greeting = ({ handleClose, ...rest }) => {
   return (
     <Wrapper {...rest}>
-      <NoveriaLogo />
+      <NoveriaLogo css="width: 3rem; height: 3rem; margin: 0 auto;"/>
       <Title>{title}</Title>
       <Subtitle>{subtitle}</Subtitle>
       <Button onClick={handleClose}>Dismiss</Button>

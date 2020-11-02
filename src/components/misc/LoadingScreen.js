@@ -28,7 +28,8 @@ const Wrapper = styled(motion.div)`
 const LogoWrapper = styled.div`
   position: relative;
   display: grid;
-  place-items: center;
+  align-items: center;
+  justify-content: center;
   width: 4.5rem;
   height: 4.5rem;
 `
@@ -47,7 +48,8 @@ const Spin = styled.div`
   height: 100%;
   z-index: 999999;
   display: grid;
-  place-items: center;
+  align-items: center;
+  justify-content: center;
 `
 
 const Text = styled(motion.p)`

@@ -6,13 +6,14 @@ import {useCoinData} from '../../../hooks/api'
 import {CoinTable, Link} from '../../common'
 
 const Wrapper = styled(Card)`
-  height: 100%;
-  grid-area: breakdown;
+flex-grow:1;
 `
 
 const ContentWrapper = styled.div`
-  height: 100%;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  flex-grow: 1;
   overflow-y: auto;
 `
 
