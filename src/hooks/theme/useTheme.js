@@ -17,6 +17,7 @@ export const useTheme = () => {
     typeScale,
     fonts, 
     colors: colorPalette, 
-    isMobile
+    isMobile,
+    darkMode
   }
 }
