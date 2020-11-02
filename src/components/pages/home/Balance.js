@@ -94,6 +94,7 @@ const Label = styled.div`
   background: ${props => props.theme.colors.neutral[900]};
   ${props => props.theme.isMobile && css`
     border: none;
+    border-bottom: 1px solid ${props => props.theme.colors.neutral[1200]};
   `}
 `
 
@@ -111,9 +112,9 @@ const StatsWrapper = styled.div`
   grid-gap: 1.5rem;
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   grid-template-rows: repeat(auto-fit, minmax(min-content, 1fr));
-  ${props => props.theme.isMobile && css`
+  /* ${props => props.theme.isMobile && css`
     display: none;
-  `}
+  `} */
 `
 
 const Value = styled.p``
