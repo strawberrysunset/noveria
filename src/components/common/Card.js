@@ -46,7 +46,7 @@ const Header = styled.div`
 const ContentWrapper = styled.div`
   position: relative;
   width: 100%;
-  max-height: calc(100% - 3.5rem);
+  height: calc(100% - 3.5rem);
   flex-grow: 1;
   display: flex;
   align-items: stretch;
