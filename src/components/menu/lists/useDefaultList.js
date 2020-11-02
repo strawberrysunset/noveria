@@ -19,10 +19,14 @@ const Wrapper = styled.div`
   grid-gap: 0.25rem;
 `
 
+const Text = styled.p`
+  margin-bottom: -0.3rem;
+`
+
 const Icon = ({icon, name}) => (
   <Wrapper>
     {icon}
-    <p css={`margin-top: 0.15rem;`}>{name}</p>
+    <Text>{name}</Text>
   </Wrapper>
 )
 
