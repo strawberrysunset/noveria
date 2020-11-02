@@ -20,11 +20,24 @@ export const getAssetStatistics = ({assets}) => {
     return (asset.price < previous.price) ? asset : previous
   }, undefined)
 
+  const rarestAsset = assets.reduce((previous, asset) => {
+    if (!previous) return asset
+    return ((asset.supply / asset.supplyMax) < (previous.supply / previous.supplyMax)) ? asset : previous
+  }, undefined)
+
+  const highestAllTimeHigh = assets.reduce((previous, asset) => {
+    if (!previous) return asset
+    return (asset.ath > previous.ath) ? asset : previous
+  }, undefined)
+
+
   return {
     lowestValueAsset, 
     highestValueAsset, 
     bestPerformingAsset, 
-    worstPerformingAsset
+    worstPerformingAsset,
+    rarestAsset,
+    highestAllTimeHigh
   }
 }
 
