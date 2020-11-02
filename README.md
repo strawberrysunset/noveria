@@ -15,7 +15,6 @@ ___
 - Import/export your portfolio in case you lose it or want to share it.
 - Get the latest crypto news (powered by CoinTelegraph).
 - High frequency data refreshing to ensure you are continually provided the latest prices.
-- On mobile, dragging down refreshes your balance. 
 - Re-focusing the window automatically updates the application.
 - Your portfolio data persists across browser sessions (providing you have not disabled cookies/caching).
 
