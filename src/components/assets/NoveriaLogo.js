@@ -1,28 +1,33 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import { MdFilterHdr as Logo } from 'react-icons/md'
+import { 
+  MdFilterHdr as Logo 
+} from 'react-icons/md'
 // import {GiAbstract060 as Logo} from 'react-icons/gi'
 import {
-  GiDiplodocus as Dino,
-  GiEclipse as Arrow,
-  GiDrinkMe as Dr,
+  // GiDiplodocus as Logo,
+  // GiEclipse as Logo,
+  // GiDrinkMe as Logo,
 } from 'react-icons/gi'
 
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  
 `
 
 const Noveria = styled(Logo)`
-  width: 2rem;
-  height: 2rem;
+  height: 100%;
+  width: 100%;
   color: ${props => props.theme.colors.neutral[1500]};
 `
 
-export const NoveriaLogo = ({...props}) => {
+export const NoveriaLogo = ({...rest}) => {
   return (
-    <Wrapper {...props}>
+    <Wrapper {...rest}>
       <Noveria />
     </Wrapper>
   )
