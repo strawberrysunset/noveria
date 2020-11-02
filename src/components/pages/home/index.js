@@ -18,10 +18,11 @@ const Wrapper = styled.div`
   grid-template-columns: 50% 50%;
   grid-template-rows: minmax(0, auto);
   ${props => props.theme.isMobile && css`
-    /* overflow-y: auto; */
+    overflow-y: auto;
     grid-template-columns: 100%;
-    grid-template-rows: 100%;
-    grid-template-areas: "balance";
+    /* grid-template-rows: auto; */
+    grid-template-areas: 
+    "balance";
   `}
 `
 
@@ -42,7 +43,7 @@ export const Home = ({...rest}) => {
   return (
       
         <Wrapper {...rest}>
-          <PulldownRebound action={() => queryCache.refetchQueries('coinData')} disabled={!theme.isMobile}>
+          <PulldownRebound css="overflow-y: auto;" action={() => queryCache.refetchQueries('coinData')} disabled={!theme.isMobile}>
           {firstVisit && (
             <PopUp showClose={false}>
               {({setShowing}) => (
