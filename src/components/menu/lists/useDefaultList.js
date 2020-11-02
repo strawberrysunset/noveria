@@ -20,7 +20,7 @@ const Wrapper = styled.div`
 `
 
 const Text = styled.p`
-  margin-bottom: -0.3rem;
+  margin-bottom: -0.2rem;
 `
 
 const Icon = ({icon, name}) => (
