@@ -6,12 +6,14 @@ import {AssetTablePlaceholder} from './AssetTablePlaceholder'
 import {MdRemoveCircle} from 'react-icons/md'
 import {usePortfolio, useTheme} from '../../../context'
 import {useFormatPrice} from '../../../hooks/misc'
+import {WeightBar} from '../../common'
 
 
 const AssetTableCard = styled(Card)`
   overflow-x: none;
   max-height: 100%;
   overflow-y: auto;
+  border-left: 1px solid ${props => props.theme.colors.neutral[1000]};
 `
 
 const Content = styled.div` 
@@ -41,13 +43,15 @@ const RemoveAll = styled.p`
     color: ${(props) => props.theme.colors.red[100]};
     cursor: pointer;
   }
-  font-weight: bold;
+  font-weight: 600;
+  color: ${props => props.theme.colors.neutral[1400]};
 `
 
 const AddAsset = styled(RemoveAll)`
   :hover {
     color: ${(props) => props.theme.colors.green[100]};
   }
+  color: ${props => props.theme.colors.neutral[1400]};
 `
 
 const AssetsTable = styled(Table)`
@@ -145,7 +149,7 @@ const Placeholder = styled(AssetTablePlaceholder)`
 `
 
 const headerData = [
-  <HeaderItem>Asset</HeaderItem>,
+  <HeaderItem >Asset</HeaderItem>,
   <HeaderItem>Amount</HeaderItem>,
   <HeaderItem right>Asset Value (Fiat)</HeaderItem>,
   <HeaderItem right>Asset Value (BTC)</HeaderItem>,
@@ -166,6 +170,7 @@ export const AssetTable = ({ showPopUp, ...rest }) => {
   
   return (
     <AssetTableCard label="Portfolio" icon={PieIcon} items={cardItems} {...rest}>
+      <WeightBar assets={portfolio.assets}/>
       <Content>
         {portfolio.assets.length === 0 
         && 
