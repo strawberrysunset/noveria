@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, {css} from 'styled-components/macro'
-import {Card, Price, IndicatorColor} from '../../common'
+import {Card, Price, IndicatorColor, Spinner} from '../../common'
 import {MdAccountBalanceWallet as Icon, MdArrowDropUp as Arrow } from 'react-icons/md'
 import {motion} from 'framer-motion'
 import {usePortfolio, useTheme} from '../../../context'
@@ -8,8 +8,9 @@ import {useFormatPrice} from '../../../hooks/misc'
 import {transparentize} from 'polished'
 import {formatPercentage} from 'utilities'
 import {StatCard} from './StatCard'
-import {mix, lighten, darken} from 'polished'
+import {mix, darken} from 'polished'
 import {getAssetStatistics} from './getAssetStatistics'
+import {useIsFetching} from 'react-query'
 
 
 const StyledCard = styled(Card)`
@@ -17,14 +18,15 @@ const StyledCard = styled(Card)`
 `
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: min-content 1fr;
   width: 100%;
   height: 100%;
   min-width: 100%;
   background-color: ${props => props.theme.colors.neutral[600]};
   ${props => props.theme.isMobile && css`
-    overflow-y: auto;
+    /* overflow-y: auto; */
+    /* height: auto; */
   `}
 `
 
@@ -79,11 +81,11 @@ const Color = styled(IndicatorColor)`
 
 const Label = styled.div`
   min-height: min-content;
+  height: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  flex-grow: 1;
   padding: 3rem 0;
   box-shadow: 0rem 0rem 2rem ${props => {
     const toMix = props.positive ? props.theme.colors.green[100] : props.theme.colors.red[100]
@@ -100,21 +102,22 @@ const Label = styled.div`
 
 const StatsWrapper = styled.div`
   width: 100%;
-  height: 100%;
   padding: 1.5rem;
-  :after{
-    content:"";
-    display:block;
-    height:0.5rem; /* Which is the padding of div.container */
-  }
-  overflow-y: auto;
+  ${props => !props.theme.isMobile && css`
+    overflow-y: auto;
+  `}
+`
+
+const TempWrapper = styled.div`
+  padding-bottom: 1.5rem;
   display: grid;
+  max-height: min-content;
   grid-gap: 1.5rem;
+  ${props => !props.theme.isMobile && css`
+    overflow-y: auto;
+  `}
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   grid-template-rows: repeat(auto-fit, minmax(min-content, 1fr));
-  /* ${props => props.theme.isMobile && css`
-    display: none;
-  `} */
 `
 
 const Value = styled.p``
@@ -125,6 +128,7 @@ export const Balance = ({ ...rest }) => {
   const {formatPrice} = useFormatPrice()
   const stats = getAssetStatistics({assets})
   const theme = useTheme()
+  const iFetching = useIsFetching()
 
   return (
     <StyledCard hideHeader={theme.isMobile} label="Portfolio (24H)" icon={Icon} {...rest}>
@@ -139,6 +143,7 @@ export const Balance = ({ ...rest }) => {
         </Label>
         {/* <StatsOverflow> */}
         <StatsWrapper>
+          <TempWrapper>
           <StatCard 
             disabled={isEmpty}
             label="Best Performing Asset (24H)" 
@@ -195,6 +200,7 @@ export const Balance = ({ ...rest }) => {
               </IndicatorColor>
             )}
           />
+          </TempWrapper>
         </StatsWrapper>
         {/* </StatsOverflow> */}
       </Wrapper>
