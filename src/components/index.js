@@ -83,6 +83,7 @@ const Main = styled.main`
   overflow: hidden;
   align-items: stretch;
   flex-grow: 1;
+  max-height: 100%;
   ${props => props.theme.isMobile && css`
     flex-direction: column;
     margin-bottom: 3.5rem;
