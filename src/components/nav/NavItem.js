@@ -32,7 +32,7 @@ const Wrapper = styled(Link)`
         `
       }
       return css`
-          border-top: 0.125rem solid ${props.theme.colors.neutral[1400]};
+          border-bottom: 0.125rem solid ${props.theme.colors.neutral[1400]};
           /* padding-top: -0.125rem;
           padding-bottom: +0.125rem; */
         `
