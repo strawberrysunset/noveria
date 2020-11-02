@@ -1,6 +1,7 @@
 import React from 'react'
 import { motion, useTransform, useMotionValue } from 'framer-motion'
 import styled from 'styled-components/macro'
+import {useResize} from '../../utils'
 
 const Wrapper = styled.div`
   position: relative;
@@ -43,6 +44,8 @@ const Light = styled(motion.div)`
 export const PulldownRebound = ({ disabled, action = () => {}, children, ...rest }) => {
   const y = useMotionValue(0) // Create source value
   const opacity = useTransform(y, [0, 20], [0, 1]) // Map source value range to opacity range.
+  const myRef = React.useRef(null);
+  const {height} = useResize(myRef);
 
   const options = {
     onDragEnd: (_, info) => {
@@ -51,7 +54,7 @@ export const PulldownRebound = ({ disabled, action = () => {}, children, ...rest
     drag: 'y',
     style: { y },
     // Always rebounds to within constraints, therefore will rebound back to origin.
-    dragConstraints: { bottom: 0, top: 0 },
+    dragConstraints: { bottom: 0, top: height},
     dragElastic: 0.2,
     // Custom transition that fires after drag is released.
     dragTransition: { bounceStiffness: 600 },
@@ -60,7 +63,7 @@ export const PulldownRebound = ({ disabled, action = () => {}, children, ...rest
   if (disabled) return <Wrapper {...rest}>{children}</Wrapper>
 
   return (
-    <Wrapper {...rest}>
+    <Wrapper ref={myRef} {...rest}>
         <Light style={{ opacity }} />
         <Text style={{opacity }}>Refresh</Text>
         <motion.div {...options}>{children}</motion.div>
