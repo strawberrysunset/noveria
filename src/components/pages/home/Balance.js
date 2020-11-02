@@ -19,7 +19,7 @@ const StyledCard = styled(Card)`
 
 const Wrapper = styled.div`
   display: grid;
-  grid-template-rows: min-content 1fr;
+  grid-template-rows: 1fr auto;
   width: 100%;
   height: 100%;
   min-width: 100%;
