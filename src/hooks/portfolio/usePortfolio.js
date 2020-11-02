@@ -63,7 +63,7 @@ export const usePortfolio = () => {
 
   const {currency} = useSettings()
   const {data: exchangeRates} = useExchangeRates({config: {isEnabled: currency}})
-  const {data: coinData, ...async} = useCoinData({config: {isEnabled: exchangeRates && currency}});
+  const {data: coinData, ...async} = useCoinData({config: {isEnabled: exchangeRates}});
   const portfolio = React.useMemo(() => createPortfolio({coinData, assets, currency, exchangeRates, updatePortfolio}), [coinData, assets, currency, exchangeRates, updatePortfolio]);
   return {...portfolio, updatePortfolio, ...async}
 }
