@@ -78,7 +78,7 @@ const Color = styled(IndicatorColor)`
 `
 
 const Label = styled.div`
-  height: min-content;
+  min-height: min-content;
   display: flex;
   align-items: center;
   flex-direction: column;
