@@ -2,9 +2,10 @@ import React from 'react'
 import styled from 'styled-components/macro'
 import {NoveriaLogo, DarkModeButton} from '../assets'
 import {MenuButton} from '../menu'
-import {Button} from '../common'
 import {useNotification, useSettings} from '../../context'
 import {motion, useAnimation} from 'framer-motion'
+import {useIsFetching, useQueryCache} from 'react-query'
+import {Spinner} from '../common'
 
 const Wrapper = styled.header`
   border-bottom: 1px solid ${props => props.theme.colors.neutral[1200]}; 
@@ -35,6 +36,10 @@ const Message = styled(motion.div)`
 
 const Logo = styled(NoveriaLogo)`
   margin: 0 auto;
+  :hover {
+    cursor: pointer;
+    color: ${props => props.theme.colors.neutral[1200]};
+  }
 `
 
 const DarkMode = styled(DarkModeButton)`
@@ -47,6 +52,8 @@ export const Header = ({ ...rest }) => {
   const notification = useNotification()
   const settings = useSettings()
   const controls = useAnimation()
+  const queryCache = useQueryCache()
+  const isFetching = useIsFetching()
 
   React.useEffect(() => {
     controls.start({
@@ -62,15 +69,12 @@ export const Header = ({ ...rest }) => {
   }, [])
 
   return (
-    <Wrapper {...rest}>
+    <Wrapper  {...rest}>
       <MenuButton />
       <Message animate={controls}>{notification.message}</Message>
-      <Logo/>
-      <DarkMode onClick={darkModeClickHandler}/>
+      <Logo onClick={() => queryCache.refetchQueries('coinData')}/>
+      {/* {isFetching && <Spinner css="position: absolute;" height="1rem" width="1rem"/>} */}
+      <DarkMode onClick={() => settings.updateSettings({ type: 'toggle_dark_mode' })}/>
     </Wrapper>
   )
-
-  function darkModeClickHandler () {
-    settings.updateSettings({ type: 'toggle_dark_mode' })
-  }
 }
