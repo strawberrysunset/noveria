@@ -20,7 +20,7 @@ export async function getPortfolioHistory ({assets, currency, days}) {
   let histories = []
   for (let i = 0; i < assets.length; i++) {
     histories[i] = await getCoinHistory({id: assets[i].id, currency, days})
+    //  = history.filter((_, idx) => !(idx % 5))
   }
-  const history = sumHistories(histories)
-  return history
+  return sumHistories(histories) //.filter((_, idx) => !(idx % 5))
 }
