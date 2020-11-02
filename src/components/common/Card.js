@@ -10,6 +10,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   width: 100%;
   max-height: 100%;
+  /* border: 0.5px solid ${props => props.theme.colors.neutral[1200]}; */
 `
 
 const Label = styled.div`
@@ -32,7 +33,7 @@ const Header = styled.div`
   min-height: 3.5rem;
   max-height: 3.5rem;
   padding: 0.25rem 1.5rem;
-  border-top: 0.5rem solid ${props => props.theme.colors.neutral[1100]};
+  /* border-top: 0.5rem solid ${props => props.theme.colors.neutral[1100]}; */
   border-bottom: 1px solid ${props => props.theme.colors.neutral[1100]};
   /* background: linear-gradient(90deg, ${props => props.theme.colors.neutral[400]}, ${props => props.theme.colors.neutral[100]}); */
   background: ${props => props.theme.colors.neutral[800]};
@@ -45,7 +46,7 @@ const Header = styled.div`
 const ContentWrapper = styled.div`
   position: relative;
   width: 100%;
-  height: calc(100% - 3.5rem);
+  max-height: calc(100% - 3.5rem);
   flex-grow: 1;
   display: flex;
   align-items: stretch;
@@ -86,19 +87,19 @@ const PlaceHolderWrapper = styled.div`
 `
 
 
-export const Card = ({ children, icon: Icon, transparentBackground=false, label, items, message, isLoading, error, ...rest }) => {
+export const Card = ({ children, icon: Icon, hideHeader=false, transparentBackground=false, label, items, message, isLoading, error, ...rest }) => {
 
   const placeholderState = getPlaceholderState();
 
   return (
     <Wrapper {...rest}>
-      <Header>
+      {!hideHeader && <Header>
         <LabelWrapper>
           {Icon && <Icon size="1.25rem" />}
           <Label>{label}</Label>
         </LabelWrapper>
         {items}
-      </Header>
+      </Header>}
       <ContentWrapper>
         {placeholderState && <PlaceHolderWrapper transparentBackground={transparentBackground}>{placeholderState}</PlaceHolderWrapper>}
         {children}
