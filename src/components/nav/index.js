@@ -41,7 +41,7 @@ const Wrapper = styled.div`
     border-right: none;
   `}
   
-  border-right: 1px solid ${(props) => props.theme.colors.neutral[800]};
+  border-right: 1px solid ${(props) => props.theme.colors.neutral[1100]};
 `
 
 export const Nav = ({ ...rest }) => {
