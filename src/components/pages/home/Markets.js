@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components/macro'
+import styled, {css} from 'styled-components/macro'
 import { TiChartPie as Icon } from 'react-icons/ti'
 import { Card } from '../../common'
 import {useCoinData} from '../../../hooks/api'
@@ -14,7 +14,9 @@ const ContentWrapper = styled.div`
   flex-direction: column;
   max-height: 100%;
   flex-grow: 1;
-  overflow-y: auto;
+  ${props => !props.theme.isMobile && css`
+    overflow-y: auto;
+  `}
 `
 
 const ViewAllCoinsButton = styled(Link)`
