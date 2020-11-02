@@ -1,13 +1,14 @@
 import {jsonFetch} from 'utilities'
-// import {getCoinColor} from './getCoinColor'
+import {getCoinColor} from './getCoinColor'
 
-const formatCoin = (coin) => {
+const formatCoin = (coin, colors) => {
   new Image().src = coin.image // Force preloading of images      
   return {
     id: coin.id,
     image: coin.image,
     symbol: coin.symbol,
     name: coin.name,
+    color: colors ? colors?.[coin.id]?.vibrant?.hex : '#ccc',
     spotPrice: {
       value: coin.current_price || 0,
       change: {
@@ -44,6 +45,7 @@ const formatCoin = (coin) => {
 
 export const getCoinData = async ({currency, limit = 500} = {}) => {
   if (!currency) throw new Error('Currency is undefined.')
+ 
   const pages = Math.ceil(limit / 250)
   const remainder = (limit - 1) % 250 + 1;
   let list = []
@@ -52,7 +54,10 @@ export const getCoinData = async ({currency, limit = 500} = {}) => {
     list = [...list, ...coins] 
   }
 
-  const formattedCoins = list.map(coin => formatCoin(coin));
+  const colors = await getCoinColor({assets: list})
+  .catch(() => ({}))
+
+  const formattedCoins = list.map(coin => formatCoin(coin, colors));
 
   return formattedCoins
 }
