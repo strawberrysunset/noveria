@@ -4,8 +4,8 @@ import {neutralShades, hues, colors, fonts, typeScale} from './theme'
 import {useIsMobile} from 'utilities'
 import {createColorPalette} from './createColorPalette'
 
-export const useTheme = () => {
-  const {theme, darkMode} = useSettings()
+export const useTheme = ({theme, darkMode}) => {
+  
   const isMobile = useIsMobile(768)
 
   const colorPalette = React.useMemo(() => {

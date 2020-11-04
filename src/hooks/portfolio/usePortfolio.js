@@ -1,5 +1,4 @@
 import React from 'react'
-import {useSettings} from '../../context'
 import {createPortfolio} from './createPortfolio'
 import {useExchangeRates, useCoinData} from '../../hooks/api'
 import {useReducerCustom} from '../common'
@@ -49,8 +48,7 @@ export const logger = (state) => {
 }
 
 
-
-export const usePortfolio = () => {
+export const usePortfolio = ({currency}) => {
 
   const [assets, updatePortfolio] = useReducerCustom({
     reducerArgs: [reducer, []],
@@ -61,7 +59,6 @@ export const usePortfolio = () => {
     }
   })
 
-  const {currency} = useSettings()
   const {data: exchangeRates} = useExchangeRates({config: {isEnabled: currency}})
   const {data: coinData, ...async} = useCoinData({config: {isEnabled: exchangeRates}});
   const portfolio = React.useMemo(() => createPortfolio({coinData, assets, currency, exchangeRates, updatePortfolio}), [coinData, assets, currency, exchangeRates, updatePortfolio]);
