@@ -1,11 +1,11 @@
 import React from 'react'
 
 // Creates a custom useContext hook. It automatically consumes the associated context value and verifies whether there is a provider.
-export const createCustomUseContextHook = ({contextObj, name}) => {
+export const createCustomUseContextHook = ({contextObj, name = 'Unnamed'}) => {
   return () => {
     const context = React.useContext(contextObj)
     if (context === undefined) {
-      throw new Error(`${name || 'Unnamed'} hook must be used within a ${name || 'unnamed'} provider.`)
+      throw new Error(`${name} hook must be used within a ${name} provider.`)
     }
     return context
   }
