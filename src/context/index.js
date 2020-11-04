@@ -49,22 +49,22 @@ const reactQueryConfig = {
 }
 
 export const ContextProvider = ({children}) => (
-  <MenuProvider>
-    <NotificationProvider>
-      <SettingsProvider>
-        <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
-          <ReactQueryCacheProvider cache={queryCache}>
-            <ReactQueryConfigProvider config={reactQueryConfig}>
-              <PortfolioProvider>
-                <ThemeProvider>
+  <SettingsProvider>
+    <ReactQueryCacheProvider cache={queryCache}>
+      <ReactQueryConfigProvider config={reactQueryConfig}>
+        <PortfolioProvider>
+          <ThemeProvider>
+            <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
+              <MenuProvider>
+                <NotificationProvider>
                   {children}
-                </ThemeProvider>
-              </PortfolioProvider>
-            </ReactQueryConfigProvider>
-          </ReactQueryCacheProvider>
-        </IconContext.Provider>
-      </SettingsProvider>
-    </NotificationProvider>
-  </MenuProvider>
+                </NotificationProvider>
+              </MenuProvider>
+            </IconContext.Provider>
+          </ThemeProvider>
+        </PortfolioProvider>
+      </ReactQueryConfigProvider>
+    </ReactQueryCacheProvider>
+  </SettingsProvider>
 )
 
