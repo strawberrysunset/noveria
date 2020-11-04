@@ -10,7 +10,7 @@ const [useMenuContext, MenuProvider] = createContext({hook: useMenu, name: 'Menu
 const [useNotificationContext, NotificationProvider] = createContext({hook: useNotification, name: 'Notification'})
 const [useSettingsContext, SettingsProvider] = createContext({hook: useSettings, name: 'Settings'})
 
-// Since some context values depend on parent provider state, we link up the hook dependencies before creating the child contexts.
+// Since some context values depend on others we link up any those dependencies before creating the relevant contexts.
 const usePortfolioWithDependency = () => {
   const {currency} = useSettingsContext()
   return usePortfolio({currency})
@@ -24,8 +24,6 @@ const useThemeWithDependency = () => {
 // Context dependencies have been declared, now we create the remaining context.
 const [usePortfolioContext, PortfolioProvider] = createContext({hook: usePortfolioWithDependency, name: 'Portfolio'})
 const [useThemeContext, ThemeProvider] = createContext({context: ThemeContext, hook: useThemeWithDependency, name: 'Theme'})
-
-// The benefit of this method is that context relations are clear.
 
 export {
   useThemeContext as useTheme,
