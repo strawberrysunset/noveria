@@ -72,7 +72,7 @@ export const Header = ({ ...rest }) => {
     <Wrapper  {...rest}>
       <MenuButton />
       <Message animate={controls}>{notification.message}</Message>
-      <Logo onClick={() => queryCache.refetchQueries('coinData')}/>
+      <Logo text="Refresh app." onClick={() => queryCache.refetchQueries('coinData')}/>
       {/* {isFetching && <Spinner css="position: absolute;" height="1rem" width="1rem"/>} */}
       <DarkMode onClick={() => settings.updateSettings({ type: 'toggle_dark_mode' })}/>
     </Wrapper>
