@@ -5,7 +5,7 @@ export const createCustomUseContextHook = ({contextObj, name}) => {
   return () => {
     const context = React.useContext(contextObj)
     if (context === undefined) {
-      throw new Error(`${name} hook must be used within a ${name} provider.`)
+      throw new Error(`${name || 'Unnamed'} hook must be used within a ${name || 'unnamed'} provider.`)
     }
     return context
   }
