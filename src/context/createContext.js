@@ -12,9 +12,7 @@ export const createCustomUseContextHook = ({contextObj, name}) => {
 }
 
 
-// Create a context consumer and provider from a hook. 
-// Optionally override the default context value with your own. 
-// Optionally pass a name for more descriptive error messages.
+// Create a context consumer and provider from a hook. Optionally override the default context value with your own. Optionally pass a name for more descriptive error messages.
 export const createContext = ({context, hook, name}) => {
   
   const Context = context || React.createContext()
