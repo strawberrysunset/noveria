@@ -1,5 +1,4 @@
 import React from 'react'
-import {useSettings} from '../../context'
 import {neutralShades, hues, colors, fonts, typeScale} from './theme'
 import {useIsMobile} from 'utilities'
 import {createColorPalette} from './createColorPalette'
