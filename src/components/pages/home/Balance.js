@@ -80,6 +80,7 @@ const Color = styled(IndicatorColor)`
 `
 
 const Label = styled.div`
+  position: relative;
   min-height: min-content;
   height: 100%;
   display: flex;
@@ -98,6 +99,24 @@ const Label = styled.div`
     border: none;
     border-bottom: 1px solid ${props => props.theme.colors.neutral[1200]};
   `}
+  ${props => props.isFetching && css`
+    > *:not(:first-child) {
+      visibility: hidden;
+    }
+  `}
+`
+
+const SpinnerWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
 `
 
 const StatsWrapper = styled.div`
@@ -128,18 +147,18 @@ export const Balance = ({ ...rest }) => {
   const {formatPrice} = useFormatPrice()
   const stats = getAssetStatistics({assets})
   const theme = useTheme()
-  const iFetching = useIsFetching()
 
   return (
     <StyledCard hideHeader={theme.isMobile} label="Portfolio (24H)" icon={Icon} {...rest}>
       <Wrapper>
-        <Label isLoading={isFetching} positive={change['24h'].percentage >= 0}>
-            <Color value={change['24h'].percentage}>
-              <IndicatorArrow value={change['24h'].percentage}/>
-              <IndicatorValue>{formatPercentage(change['24h'].percentage)}</IndicatorValue>
-            </Color>
-            <Total>{formatPrice(total)}</Total>
-            <AltTotal>(<Price currency="btc">{totalBTC}</Price>)</AltTotal>
+        <Label isFetching={isFetching} positive={change['24h'].percentage >= 0}>
+          {isFetching && <SpinnerWrapper><Spinner/></SpinnerWrapper>} 
+          <Color value={change['24h'].percentage}>
+            <IndicatorArrow value={change['24h'].percentage}/>
+            <IndicatorValue>{formatPercentage(change['24h'].percentage)}</IndicatorValue>
+          </Color>
+          <Total>{formatPrice(total)}</Total>
+          <AltTotal>(<Price currency="btc">{totalBTC}</Price>)</AltTotal>
         </Label>
         {/* <StatsOverflow> */}
         <StatsWrapper>
