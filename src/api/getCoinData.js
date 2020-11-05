@@ -2,13 +2,19 @@ import {jsonFetch} from 'utilities'
 import {getCoinColor} from './getCoinColor'
 
 const formatCoin = (coin, colors) => {
-  new Image().src = coin.image // Force preloading of images      
+  new Image().src = coin.image // Force preloading of images   
+  let color = '';
+  try {
+    color = colors[coin.id].vibrant.hex
+  }  catch {
+    color = '#ccc'
+  }
   return {
     id: coin.id,
     image: coin.image,
     symbol: coin.symbol,
     name: coin.name,
-    color: colors ? colors?.[coin.id]?.vibrant?.hex : '#ccc',
+    color,
     spotPrice: {
       value: coin.current_price || 0,
       change: {
