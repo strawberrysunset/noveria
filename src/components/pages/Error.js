@@ -21,13 +21,13 @@ const Title = styled.h1`
 `
 
 const SubTitle = styled(Link)`
-  color: ${props => props.theme.colors.neutral[800]};
+  color: ${props => props.theme.colors.neutral[1200]};
 `
 
 const Icon = styled(WarningIcon)`
   height: 3rem;
   width: 3rem;
-  font-size: ${props => props.theme.colors.neutral[1200]};
+  font-size: ${props => props.theme.colors.neutral[1400]};
 `
 
 export const Error = () => {
