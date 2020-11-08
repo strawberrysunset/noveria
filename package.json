@@ -7,17 +7,17 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "color-convert": "^2.0.1",
-    "framer-motion": "^2.7.7",
+    "framer-motion": "^2.9.4",
     "polished": "^3.6.7",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "react-icons": "^3.11.0",
-    "react-query": "^2.23.1",
+    "react-query": "^2.26.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
-    "styled-components": "^5.2.0",
+    "styled-components": "^5.2.1",
     "utilities": "github:strawberrysunset/utilities",
-    "victory": "^35.1.1"
+    "victory": "^35.3.3"
   },
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
