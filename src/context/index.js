@@ -5,25 +5,18 @@ import {useMenu, useNotification, usePortfolio, useSettings, useTheme} from '../
 import {createContextAndProvider} from './createContextAndProvider'
 import {ThemeContext} from 'styled-components'
 
-// We create a context consumer and provider for each hook.
-const [useMenuContext, MenuProvider] = createContextAndProvider({hook: useMenu, name: 'Menu'})
-const [useNotificationContext, NotificationProvider] = createContextAndProvider({hook: useNotification, name: 'Notification'})
-const [useSettingsContext, SettingsProvider] = createContextAndProvider({hook: useSettings, name: 'Settings'})
-
-// Since some context values depend on others we link up any those dependencies before creating the relevant contexts.
-const usePortfolioWithDependency = () => {
+// We create a context consumer and provider for each useHook.
+const [useMenuContext, MenuProvider] = createContextAndProvider(useMenu)
+const [useNotificationContext, NotificationProvider] = createContextAndProvider(useNotification)
+const [useSettingsContext, SettingsProvider] = createContextAndProvider(useSettings)
+const [usePortfolioContext, PortfolioProvider] = createContextAndProvider(() => {
   const {currency} = useSettingsContext()
   return usePortfolio({currency})
-}
-
-const useThemeWithDependency = () => {
+})
+const [useThemeContext, ThemeProvider] = createContextAndProvider(() => {
   const {theme, darkMode} = useSettingsContext()
   return useTheme({theme, darkMode})
-}
-
-// Context dependencies have been declared, now we create the remaining context.
-const [usePortfolioContext, PortfolioProvider] = createContextAndProvider({hook: usePortfolioWithDependency, name: 'Portfolio'})
-const [useThemeContext, ThemeProvider] = createContextAndProvider({context: ThemeContext, hook: useThemeWithDependency, name: 'Theme'})
+}, ThemeContext)
 
 export {
   useThemeContext as useTheme,
