@@ -2,7 +2,7 @@ import {jsonFetch} from 'utilities'
 import {getCoinColor} from './getCoinColor'
 
 const formatCoin = (coin, colors) => {
-  new Image().src = coin.image // Force preloading of images   
+  // new Image().src = coin.image // Force preloading of images   
   let color = '';
   try {
     color = colors[coin.id].vibrant.hex
