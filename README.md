@@ -16,7 +16,7 @@ ___
 - Get the latest crypto news (powered by CoinTelegraph).
 - High frequency data refreshing to ensure you are continually provided the latest prices.
 - Re-focusing the window automatically refreshes the application.
-- Your portfolio data persists across browser sessions (providing you have not disabled cookies/caching).
+- Your portfolio data persists across browser sessions (provided you have not disabled cookies/caching).
 
 #### Noveria is proud to be an open-source project. Any issues or feature requests can be created at [the repo](https://github.com/strawberrysunset/noveria/).
 
